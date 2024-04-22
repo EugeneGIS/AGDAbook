@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Random Forest | Advanced Geospatial Data Analysis in R: Environmental Applications</title>
+  <meta name="description" content="This book will be used for the UNIL Master courses, and also open for the publich who are interested in." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Random Forest | Advanced Geospatial Data Analysis in R: Environmental Applications" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://eugenegis.github.io/AGDAbook/images/UNIL_logo.png" />
+  <meta property="og:description" content="This book will be used for the UNIL Master courses, and also open for the publich who are interested in." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Random Forest | Advanced Geospatial Data Analysis in R: Environmental Applications" />
+  
+  <meta name="twitter:description" content="This book will be used for the UNIL Master courses, and also open for the publich who are interested in." />
+  <meta name="twitter:image" content="https://eugenegis.github.io/AGDAbook/images/UNIL_logo.png" />
+
+<meta name="author" content="Marj Tonini, Haokun Liu" />
+
+
+<meta name="date" content="2024-04-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="self-organizing-map.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Advanced Geospatial Data Analysis in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#author-information"><i class="fa fa-check"></i>Author Information</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-language"><i class="fa fa-check"></i><b>1.1</b> R Language</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-packages"><i class="fa fa-check"></i><b>1.1.1</b> R Packages</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#some-tips"><i class="fa fa-check"></i><b>1.1.2</b> Some tips</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-commands-online-resources"><i class="fa fa-check"></i><b>1.1.3</b> R Commands (online resources)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-markdown"><i class="fa fa-check"></i><b>1.2</b> R Markdown</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-type-in-computational-analysis"><i class="fa fa-check"></i><b>1.3</b> Data type in computational analysis</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#variables"><i class="fa fa-check"></i><b>1.3.1</b> Variables</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-structure-in-r"><i class="fa fa-check"></i><b>1.3.2</b> Data structure in R</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frame"><i class="fa fa-check"></i><b>1.3.3</b> Data Frame</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html"><i class="fa fa-check"></i><b>2</b> Geographically Weighted Summary Statistics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#the-overall-methodology"><i class="fa fa-check"></i><b>2.2</b> The overall methodology</a></li>
+<li class="chapter" data-level="2.3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#forest-fires-dataset"><i class="fa fa-check"></i><b>2.3</b> Forest fires dataset</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#load-the-libraries"><i class="fa fa-check"></i><b>2.3.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="2.3.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#import-the-portuguese-forest-fire-dataset"><i class="fa fa-check"></i><b>2.3.2</b> Import the Portuguese forest fire dataset</a></li>
+<li class="chapter" data-level="2.3.3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#forest-fires-spatial-distribution"><i class="fa fa-check"></i><b>2.3.3</b> Forest fires spatial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#compute-the-geographically-whited-statistics"><i class="fa fa-check"></i><b>2.4</b> Compute the geographically whited statistics</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#look-at-the-results"><i class="fa fa-check"></i><b>2.4.1</b> Look at the results</a></li>
+<li class="chapter" data-level="2.4.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#gwss-maps"><i class="fa fa-check"></i><b>2.4.2</b> GWSS maps</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#conclusions-and-further-analyses"><i class="fa fa-check"></i><b>2.5</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html"><i class="fa fa-check"></i><b>3</b> Kernel Density Estimator</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#method"><i class="fa fa-check"></i><b>3.2</b> Method</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ripleys-k-function"><i class="fa fa-check"></i><b>3.2.1</b> Ripley’s K-function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#kernel-density-estimator-1"><i class="fa fa-check"></i><b>3.2.2</b> Kernel density estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#load-the-libraries-1"><i class="fa fa-check"></i><b>3.3</b> Load the libraries</a></li>
+<li class="chapter" data-level="3.4" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#import-the-portuguese-forest-fire-dataset-1"><i class="fa fa-check"></i><b>3.4</b> Import the Portuguese forest fire dataset</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ff-subsets-based-on-the-burned-areas-size"><i class="fa fa-check"></i><b>3.4.1</b> FF-subsets based on the burned areas’ size</a></li>
+<li class="chapter" data-level="3.4.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ff-subsets-based-on-their-geographical-distribution"><i class="fa fa-check"></i><b>3.4.2</b> FF-subsets based on their geographical distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#the-space-time-k-function"><i class="fa fa-check"></i><b>3.5</b> The space-time K-function</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#extract-time-and-pts-object"><i class="fa fa-check"></i><b>3.5.1</b> Extract Time and PTS object</a></li>
+<li class="chapter" data-level="3.5.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#compute-the-space-time-k-function"><i class="fa fa-check"></i><b>3.5.2</b> Compute the space-time K-function</a></li>
+<li class="chapter" data-level="3.5.3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#assess-the-space-time-clustering-behavior"><i class="fa fa-check"></i><b>3.5.3</b> Assess the space-time clustering behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#conclusions-and-further-analyses-1"><i class="fa fa-check"></i><b>3.6</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html"><i class="fa fa-check"></i><b>4</b> Density-based Clustering Algorithm</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#introduction-2"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#the-overall-methodology-1"><i class="fa fa-check"></i><b>4.2</b> The overall methodology</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#dbscan-3-d-density-based-clustering-algorithm"><i class="fa fa-check"></i><b>4.2.1</b> DBSCAN: 3-D density based clustering algorithm</a></li>
+<li class="chapter" data-level="4.2.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#field-campaign"><i class="fa fa-check"></i><b>4.2.2</b> Field campaign</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#dbscan-feature-detection-from-points-clouds"><i class="fa fa-check"></i><b>4.3</b> DBSCAN: feature detection from points clouds</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#load-the-libraries-2"><i class="fa fa-check"></i><b>4.3.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="4.3.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#import-and-visualise-the-point-clouds-dataset"><i class="fa fa-check"></i><b>4.3.2</b> Import and visualise the point clouds dataset</a></li>
+<li class="chapter" data-level="4.3.3" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#run-dbscan"><i class="fa fa-check"></i><b>4.3.3</b> Run DBSCAN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#conclusions-and-further-analyses-2"><i class="fa fa-check"></i><b>4.4</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="self-organizing-map.html"><a href="self-organizing-map.html"><i class="fa fa-check"></i><b>5</b> Self-organizing Map</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#introduction-3"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#material-and-method"><i class="fa fa-check"></i><b>5.2</b> Material and method</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#the-geo-demographic-context"><i class="fa fa-check"></i><b>5.2.1</b> The geo-demographic context</a></li>
+<li class="chapter" data-level="5.2.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#som"><i class="fa fa-check"></i><b>5.2.2</b> SOM</a></li>
+<li class="chapter" data-level="5.2.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#swiss-census-data"><i class="fa fa-check"></i><b>5.2.3</b> Swiss census data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#variables-inspection"><i class="fa fa-check"></i><b>5.3</b> Variables inspection</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#import-the-data"><i class="fa fa-check"></i><b>5.3.1</b> Import the data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#inspect-the-data"><i class="fa fa-check"></i><b>5.3.2</b> Inspect the data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#data-transformation"><i class="fa fa-check"></i><b>5.3.3</b> Data transformation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="self-organizing-map.html"><a href="self-organizing-map.html#running-som"><i class="fa fa-check"></i><b>5.4</b> Running SOM</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#load-the-libraries-3"><i class="fa fa-check"></i><b>5.4.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="5.4.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#compute-som"><i class="fa fa-check"></i><b>5.4.2</b> Compute SOM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="self-organizing-map.html"><a href="self-organizing-map.html#soms-main-outputs"><i class="fa fa-check"></i><b>5.5</b> SOM’s main outputs</a></li>
+<li class="chapter" data-level="5.6" data-path="self-organizing-map.html"><a href="self-organizing-map.html#hierarchical-clustering"><i class="fa fa-check"></i><b>5.6</b> Hierarchical clustering</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#clusters-characterization"><i class="fa fa-check"></i><b>5.6.1</b> Clusters characterization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="self-organizing-map.html"><a href="self-organizing-map.html#conclusions"><i class="fa fa-check"></i><b>5.7</b> Conclusions</a></li>
+<li class="chapter" data-level="5.8" data-path="self-organizing-map.html"><a href="self-organizing-map.html#further-analyses"><i class="fa fa-check"></i><b>5.8</b> Further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="random-forest.html"><a href="random-forest.html"><i class="fa fa-check"></i><b>6</b> Random Forest</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="random-forest.html"><a href="random-forest.html#introduction-4"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="random-forest.html"><a href="random-forest.html#the-main-objective"><i class="fa fa-check"></i><b>6.1.1</b> The main objective</a></li>
+<li class="chapter" data-level="6.1.2" data-path="random-forest.html"><a href="random-forest.html#load-the-libraries-4"><i class="fa fa-check"></i><b>6.1.2</b> Load the libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="random-forest.html"><a href="random-forest.html#import-the-data-1"><i class="fa fa-check"></i><b>6.2</b> Import the data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="random-forest.html"><a href="random-forest.html#landslides-dataset"><i class="fa fa-check"></i><b>6.2.1</b> Landslides dataset</a></li>
+<li class="chapter" data-level="6.2.2" data-path="random-forest.html"><a href="random-forest.html#predictor-variables"><i class="fa fa-check"></i><b>6.2.2</b> Predictor variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="random-forest.html"><a href="random-forest.html#create-the-input-dataset"><i class="fa fa-check"></i><b>6.3</b> Create the input dataset</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="random-forest.html"><a href="random-forest.html#split-the-input-dataset-into-training-80-and-testing-20"><i class="fa fa-check"></i><b>6.3.1</b> Split the input dataset into training (80%) and testing (20%)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="random-forest.html"><a href="random-forest.html#run-random-forest"><i class="fa fa-check"></i><b>6.4</b> Run Random Forest</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="random-forest.html"><a href="random-forest.html#rf-main-outputs"><i class="fa fa-check"></i><b>6.4.1</b> RF main outputs</a></li>
+<li class="chapter" data-level="6.4.2" data-path="random-forest.html"><a href="random-forest.html#model-evaluation"><i class="fa fa-check"></i><b>6.4.2</b> Model evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="random-forest.html"><a href="random-forest.html#susceptibility-map"><i class="fa fa-check"></i><b>6.5</b> Susceptibility map</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="random-forest.html"><a href="random-forest.html#class-intervals-for-decision-maker"><i class="fa fa-check"></i><b>6.5.1</b> Class intervals for decision maker</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="random-forest.html"><a href="random-forest.html#variable-importance-plot"><i class="fa fa-check"></i><b>6.6</b> Variable importance plot</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="random-forest.html"><a href="random-forest.html#partial-dependence-plot"><i class="fa fa-check"></i><b>6.6.1</b> Partial dependence plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="random-forest.html"><a href="random-forest.html#conclusions-and-further-analyses-3"><i class="fa fa-check"></i><b>6.7</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Geospatial Data Analysis in R: Environmental Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="random-forest" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Random Forest<a href="random-forest.html#random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-4" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Introduction<a href="random-forest.html#introduction-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this application, we explore the capabilities of a stochastic approach based on a machine learning (ML) algorithm to elaborate landslides susceptibility mapping in Canton Vaud, Switzerland.
+Generally speaking, ML includes a class of algorithms for the analysis, modelling, and visualization of environmental data and it performs particularly well to model environmental hazards, which naturally have a complex and non-linear behavior.
+Here we use Random Forest, an ensemble ML algorithm based on decision trees.</p>
+<p>The research framework that inspired this computational lab refers to a pioneering study in susceptibility mapping for wildfire eventy by <span class="citation">Marj Tonini et al.<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></span> and further developed for the assessment of variable importance by <span class="citation">Andrea Trucchia et al.<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a></span></p>
+<div id="the-main-objective" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> The main objective<a href="random-forest.html#the-main-objective" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Landslides are one of the major hazard occurring around the world.
+In Switzerland, landslides cause damages to infrastructures and sometimes threaten human lives.
+Shallow landslides are triggered by intense rainfalls.
+Such slope movements are generally very rapid and hardly predictable.
+Different quantitative approaches have been developed to assess the most susceptible areas.</p>
+<p>This project applies a data-driven methodology based on Random Forest (RF) (<span class="citation">Leo Breiman<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></span>) to elaborate the landslides susceptibility map of canton of Vaud, in Switzerland.
+RF is applied to a set of independent variables (i.e., the predictors) and dependent variables (the inventoried landslides and an equal number of locations for absences).
+The overall methodology is described in the following graphic ().</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:gen-met"></span>
+<img src="images/Methodology.png" alt="Basic elements of the generic methodology \label{Methodology}" width="80%" height="80%" />
+<p class="caption">
+Figure 6.1: Basic elements of the generic methodology
+</p>
+</div>
+</div>
+<div id="load-the-libraries-4" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Load the libraries<a href="random-forest.html#load-the-libraries-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To perform the analysis, you have first to install the following libraries:</p>
+<ul>
+<li><p><strong>library(raster)</strong>: The raster package provides classes and functions to manipulate geographic (spatial) data in ‘raster’ format.</p></li>
+<li><p><strong>library(readr)</strong>: The goal of ‘readr’ is to provide a fast and friendly way to read rectangular data (like ‘csv’, ‘tsv’, and ‘fwf’).</p></li>
+<li><p><strong>library(randomForest)</strong>: Classification and regression based on a forest of trees using random inputs, based on <a href="https://link.springer.com/article/10.1023/A:1010933404324">Breiman (2001)</a>.</p></li>
+<li><p><strong>library(dplyr)</strong>: It is the next iteration of plyr, focused on tools for working with data frames (hence the d in the name).</p></li>
+<li><p><strong>library(pROC)</strong>: Allowing to compute, analyze ROC curves, and</p>
+<ul>
+<li><strong>library(plotROC)</strong> to display ROC curve</li>
+</ul></li>
+<li><p><strong>(ggplot2)</strong>: Is a system for declaratively creating graphics.</p></li>
+<li><p><strong>library(sf)</strong>: Support for simple features, a standardized way to encode spatial vector data.</p></li>
+</ul>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="random-forest.html#cb136-1" tabindex="-1"></a><span class="fu">library</span>(raster) </span>
+<span id="cb136-2"><a href="random-forest.html#cb136-2" tabindex="-1"></a><span class="fu">library</span>(readr) </span>
+<span id="cb136-3"><a href="random-forest.html#cb136-3" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb136-4"><a href="random-forest.html#cb136-4" tabindex="-1"></a><span class="fu">library</span>(dplyr) </span>
+<span id="cb136-5"><a href="random-forest.html#cb136-5" tabindex="-1"></a><span class="fu">library</span>(pROC) </span>
+<span id="cb136-6"><a href="random-forest.html#cb136-6" tabindex="-1"></a><span class="fu">library</span>(plotROC) </span>
+<span id="cb136-7"><a href="random-forest.html#cb136-7" tabindex="-1"></a><span class="fu">library</span>(ggplot2)  </span>
+<span id="cb136-8"><a href="random-forest.html#cb136-8" tabindex="-1"></a><span class="fu">library</span>(sf) </span>
+<span id="cb136-9"><a href="random-forest.html#cb136-9" tabindex="-1"></a><span class="fu">library</span>(classInt)</span>
+<span id="cb136-10"><a href="random-forest.html#cb136-10" tabindex="-1"></a></span>
+<span id="cb136-11"><a href="random-forest.html#cb136-11" tabindex="-1"></a>(<span class="fu">.packages</span>())</span></code></pre></div>
+<pre><code>##  [1] &quot;classInt&quot;     &quot;sf&quot;           &quot;plotROC&quot;      &quot;ggplot2&quot;      &quot;pROC&quot;        
+##  [6] &quot;dplyr&quot;        &quot;randomForest&quot; &quot;readr&quot;        &quot;raster&quot;       &quot;sp&quot;          
+## [11] &quot;stats&quot;        &quot;graphics&quot;     &quot;grDevices&quot;    &quot;utils&quot;        &quot;datasets&quot;    
+## [16] &quot;methods&quot;      &quot;base&quot;</code></pre>
+<p><strong>List of the libraries</strong></p>
+</div>
+</div>
+<div id="import-the-data-1" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Import the data<a href="random-forest.html#import-the-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Import the <strong>landslides punctual dataset</strong> presences and pseudo-absences (LS_pa) and <em>predictors</em> (in raster format).
+This help the exploratory data analyses steps and to understand the input data structure.</p>
+<div id="landslides-dataset" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Landslides dataset<a href="random-forest.html#landslides-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <strong>landslide inventory</strong> has been provided by the environmental office of the canton of Vaud.
+Only <em>shallow landslides</em> are used for susceptibility modelling.
+One pixel per landslide-area (namely the one located at the highest elevation) has been extracted.
+Since the landslide scarp is located in the upper part of the polygon, it makes sense to consider the highest pixel to characterize each single event.</p>
+<p>Our model includes the implementation of the landslide <strong>pseudo-absences</strong>, which are the areas where the hazardous events did not took place (i.e. landslide location is known and the mapped footprint areas are available, but the non-landslide areas have to be defined).
+Indeed, to assure a good generalization of the model and to avoid the overestimation of the absence, pseudo-absences need to be generated in all the cases where they are not explicitly expressed.
+In this case study, an equal number of point as for presences has been randomly generated in the study area, except within landslides polygons, lakes and glaciers (that is what is called “validity domain”, where events could potentially occur).</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="random-forest.html#cb138-1" tabindex="-1"></a><span class="co"># Import the landslides dataset (dependent variable)</span></span>
+<span id="cb138-2"><a href="random-forest.html#cb138-2" tabindex="-1"></a>LS_pa <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/Lab05/LS_pa.csv&quot;</span>) </span>
+<span id="cb138-3"><a href="random-forest.html#cb138-3" tabindex="-1"></a></span>
+<span id="cb138-4"><a href="random-forest.html#cb138-4" tabindex="-1"></a><span class="co"># Convert the numeric values (0/1) as factor </span></span>
+<span id="cb138-5"><a href="random-forest.html#cb138-5" tabindex="-1"></a><span class="do">##(i.e. categorical value)</span></span>
+<span id="cb138-6"><a href="random-forest.html#cb138-6" tabindex="-1"></a>LS_pa<span class="sc">$</span>LS<span class="ot">&lt;-</span><span class="fu">as.factor</span>(LS_pa<span class="sc">$</span>LS)</span>
+<span id="cb138-7"><a href="random-forest.html#cb138-7" tabindex="-1"></a></span>
+<span id="cb138-8"><a href="random-forest.html#cb138-8" tabindex="-1"></a><span class="co"># Display the structure (str) and result summaries (summary)</span></span>
+<span id="cb138-9"><a href="random-forest.html#cb138-9" tabindex="-1"></a><span class="fu">str</span>(LS_pa)</span>
+<span id="cb138-10"><a href="random-forest.html#cb138-10" tabindex="-1"></a><span class="fu">summary</span>(LS_pa)</span>
+<span id="cb138-11"><a href="random-forest.html#cb138-11" tabindex="-1"></a><span class="co"># Plot the events</span></span>
+<span id="cb138-12"><a href="random-forest.html#cb138-12" tabindex="-1"></a><span class="fu">plot</span>(LS_pa<span class="sc">$</span>X,LS_pa<span class="sc">$</span>Y, <span class="at">col=</span>LS_pa<span class="sc">$</span>LS, <span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="fl">0.7</span>)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/import-data-1.png" width="672" /></p>
+</div>
+<div id="predictor-variables" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Predictor variables<a href="random-forest.html#predictor-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Selecting predictor variables is a key stage on susceptibility ans risk modelling when using a data-driven approach.
+There is no consensus about the number of variables and which variables should be used for landslides assesment.
+In the present exercise we will use the following:</p>
+<ul>
+<li><p><strong>DEM (digital elevation model)</strong>: provided by the Swiss Federal Office of Topography.
+The elevation is not a direct conditioning factor for landslide; however, it can reflect differences in vegetation characteristics and soil.</p></li>
+<li><p><strong>Slope</strong>: is one of the most explicating factor in landslide susceptibility modelling.
+It is computing as:</p></li>
+</ul>
+<p><span class="math display">\[Slope = arctan(\sqrt{(dz/dx)^2 + (dz/dy)^2)} * (\pi/2)\]</span></p>
+<ul>
+<li><p><strong>Curvature</strong>: curvature is widely used in landslide susceptibility modelling.
+It allows assessing the water flow acceleration and sediment transport process (<em>profile curvature</em>) and the water flow propensity to converge and diverge (<em>plan curvature</em>).
+They were derived from DEM using the curvature tool in ArcGIS.</p></li>
+<li><p><strong>TWI (topographical water index)</strong>: topography plays a key role in the spatial distribution of soil hydrological conditions.
+Defining <span class="math inline">\(\alpha\)</span> as the upslope contributing area describing the propensity of a cell to receive water, and <span class="math inline">\(\beta\)</span> as the slope angle, TWI (compute by the formula below), reflects the propensity of a cell to evacuate water:</p></li>
+</ul>
+<p><span class="math display">\[TWI=ln(\alpha/tan(\beta))\]</span></p>
+<ul>
+<li><p><strong>Distance to roads</strong>: roads build in mountainous areas often cut the slope, weakening the cohesion of the soil.
+Moreover, roads surfaces are highly impermeable.
+This raster has been elaborated using the euclidean distance tool in ArcGIS, from the swissTLMRegio map where roads are represented by lines.</p></li>
+<li><p><strong>Land Cover</strong>: developed by the Swiss administration and based on aerial photographs and control points.
+It includes 27 categories distributed in the following 6 domains: human modified surfaces, herbaceous vegetation, shrubs vegetation, tree vegetation, surfaces without vegetation, water surfaces (glaciers included).</p></li>
+<li><p><strong>Geology</strong>: The use of the lithology increase the performance of the susceptibility landslide models.
+We use here the map elaborated by the Canton Vaud, defining the geotypes and reclassified in 10 classes in order to differentiate sedimentary rocks.</p></li>
+</ul>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="random-forest.html#cb139-1" tabindex="-1"></a><span class="do">## Import raster (independent variables) 25 meter resolution</span></span>
+<span id="cb139-2"><a href="random-forest.html#cb139-2" tabindex="-1"></a></span>
+<span id="cb139-3"><a href="random-forest.html#cb139-3" tabindex="-1"></a>landCover<span class="ot">&lt;-</span><span class="fu">as.factor</span>(<span class="fu">raster</span>(<span class="st">&quot;data/Lab05/landCover.tif&quot;</span>))</span>
+<span id="cb139-4"><a href="random-forest.html#cb139-4" tabindex="-1"></a>geology<span class="ot">&lt;-</span><span class="fu">as.factor</span>(<span class="fu">raster</span>(<span class="st">&quot;data/Lab05/geology.tif&quot;</span>))</span>
+<span id="cb139-5"><a href="random-forest.html#cb139-5" tabindex="-1"></a>planCurv<span class="ot">&lt;-</span><span class="fu">raster</span>(<span class="st">&quot;data/Lab05/plan_curvature.tif&quot;</span>)<span class="sc">/</span><span class="dv">100</span> <span class="co"># this because ArcGIS multiply </span></span>
+<span id="cb139-6"><a href="random-forest.html#cb139-6" tabindex="-1"></a>profCurv<span class="ot">&lt;-</span><span class="fu">raster</span>(<span class="st">&quot;data/Lab05/profil_curvature.tif&quot;</span>)<span class="sc">/</span><span class="dv">100</span> <span class="co"># ....curvature values by 100</span></span>
+<span id="cb139-7"><a href="random-forest.html#cb139-7" tabindex="-1"></a>TWI<span class="ot">&lt;-</span><span class="fu">raster</span>(<span class="st">&quot;data/Lab05/TWI.tif&quot;</span>)</span>
+<span id="cb139-8"><a href="random-forest.html#cb139-8" tabindex="-1"></a>Slope<span class="ot">&lt;-</span><span class="fu">raster</span>(<span class="st">&quot;data/Lab05/Slope.tif&quot;</span>)</span>
+<span id="cb139-9"><a href="random-forest.html#cb139-9" tabindex="-1"></a>dem<span class="ot">&lt;-</span><span class="fu">raster</span>(<span class="st">&quot;data/Lab05/DEM.tif&quot;</span>)</span>
+<span id="cb139-10"><a href="random-forest.html#cb139-10" tabindex="-1"></a>dist<span class="ot">&lt;-</span><span class="fu">raster</span>(<span class="st">&quot;data/Lab05/dist_roads.tif&quot;</span>)</span></code></pre></div>
+<p>Than the predictor variables (features) have to be aggregated.
+We use here the function <strong>stack</strong> to create a collection of RasterLayer objects with the same spatial extent and resolution.</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="random-forest.html#cb140-1" tabindex="-1"></a><span class="co">#create a Raster stack</span></span>
+<span id="cb140-2"><a href="random-forest.html#cb140-2" tabindex="-1"></a>features<span class="ot">&lt;-</span><span class="fu">stack</span>(dist, dem, TWI, planCurv, profCurv, Slope, geology, landCover)</span>
+<span id="cb140-3"><a href="random-forest.html#cb140-3" tabindex="-1"></a></span>
+<span id="cb140-4"><a href="random-forest.html#cb140-4" tabindex="-1"></a><span class="co"># Renames the variables</span></span>
+<span id="cb140-5"><a href="random-forest.html#cb140-5" tabindex="-1"></a><span class="fu">names</span>(features)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;distRoad&quot;</span>, <span class="st">&quot;DEM&quot;</span>, <span class="st">&quot;TWI&quot;</span>, <span class="st">&quot;planCurv&quot;</span>, <span class="st">&quot;profCurv&quot;</span>, </span>
+<span id="cb140-6"><a href="random-forest.html#cb140-6" tabindex="-1"></a>                   <span class="st">&quot;Slope&quot;</span>, <span class="st">&quot;Geology&quot;</span>, <span class="st">&quot;LandCover&quot;</span>)</span>
+<span id="cb140-7"><a href="random-forest.html#cb140-7" tabindex="-1"></a><span class="fu">plot</span>(features)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/stack-feature-1.png" width="672" /></p>
+<div id="the-use-of-categorical-variables-in-machine-learning" class="section level4 hasAnchor" number="6.2.2.1">
+<h4><span class="header-section-number">6.2.2.1</span> The use of categorical variables in Machine Learning<a href="random-forest.html#the-use-of-categorical-variables-in-machine-learning" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The majority of ML algorithms (e.g., support vector machines, artificial neural network, deep learning) makes predictions on the base of the proximity between the values of the predictors, computed in terms of euclidean distance.
+This means that these algorithms can not handle directly categorical values (i.e., qualitative descriptors).
+Thus, in most of the cases, categorical variables need to be transformed into a numerical format.
+One of the advantage of using Random Forest (as implemented in R) is that it can handle directly categorical variables, since the algorithm operate by constructing a multitude of decision trees at training time and the best split is chosen just by counting the proportion of each class observation.</p>
+<p>To understand the characteristics of the categorical variables, you can plot the tow rasters <strong>Land Cover</strong> and <strong>Geology</strong> by using their original classes.
+To visualize the data, you can use R as a GIS, but you need to perform few data manipulations.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="random-forest.html#cb141-1" tabindex="-1"></a><span class="co"># Create a random color palette </span></span>
+<span id="cb141-2"><a href="random-forest.html#cb141-2" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb141-3"><a href="random-forest.html#cb141-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb141-4"><a href="random-forest.html#cb141-4" tabindex="-1"></a>qual_col_pals <span class="ot">=</span> brewer.pal.info[brewer.pal.info<span class="sc">$</span>category <span class="sc">==</span> <span class="st">&#39;qual&#39;</span>,]</span>
+<span id="cb141-5"><a href="random-forest.html#cb141-5" tabindex="-1"></a>col_vector <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">mapply</span>(brewer.pal, qual_col_pals<span class="sc">$</span>maxcolors, </span>
+<span id="cb141-6"><a href="random-forest.html#cb141-6" tabindex="-1"></a>                           <span class="fu">rownames</span>(qual_col_pals)))</span>
+<span id="cb141-7"><a href="random-forest.html#cb141-7" tabindex="-1"></a></span>
+<span id="cb141-8"><a href="random-forest.html#cb141-8" tabindex="-1"></a><span class="co"># Load libraries for levelplot function, </span></span>
+<span id="cb141-9"><a href="random-forest.html#cb141-9" tabindex="-1"></a><span class="co"># allowing to plot raster based of categorical data.</span></span>
+<span id="cb141-10"><a href="random-forest.html#cb141-10" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb141-11"><a href="random-forest.html#cb141-11" tabindex="-1"></a><span class="fu">library</span>(rasterVis)</span></code></pre></div>
+<ul>
+<li><strong>Raster geology</strong>: extract the attribute table and plot the map based on the geological classes.</li>
+</ul>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="random-forest.html#cb142-1" tabindex="-1"></a><span class="co"># ensure that the raster attributes are read as type &quot;factor&quot;</span></span>
+<span id="cb142-2"><a href="random-forest.html#cb142-2" tabindex="-1"></a>geology <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">raster</span>(<span class="st">&quot;data/Lab05/geology.tif&quot;</span>))</span>
+<span id="cb142-3"><a href="random-forest.html#cb142-3" tabindex="-1"></a></span>
+<span id="cb142-4"><a href="random-forest.html#cb142-4" tabindex="-1"></a><span class="co"># Add a geological class column to the Raster Attribute Table</span></span>
+<span id="cb142-5"><a href="random-forest.html#cb142-5" tabindex="-1"></a>rat <span class="ot">&lt;-</span> <span class="fu">levels</span>(geology)[[<span class="dv">1</span>]] </span>
+<span id="cb142-6"><a href="random-forest.html#cb142-6" tabindex="-1"></a>rat<span class="sc">$</span>Geology_classes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;glacial deposits&quot;</span>, <span class="st">&quot;carbonates&quot;</span>, <span class="st">&quot;marly-limestone&quot;</span>,</span>
+<span id="cb142-7"><a href="random-forest.html#cb142-7" tabindex="-1"></a>                         <span class="st">&quot;alluvial deposits&quot;</span>, <span class="st">&quot;artificial materials&quot;</span>, </span>
+<span id="cb142-8"><a href="random-forest.html#cb142-8" tabindex="-1"></a>                         <span class="st">&quot;slope deposits&quot;</span>, <span class="st">&quot;detrital rocks&quot;</span>, <span class="st">&quot;metamorphic rocks&quot;</span>,</span>
+<span id="cb142-9"><a href="random-forest.html#cb142-9" tabindex="-1"></a>                         <span class="st">&quot;evaporitic rocks&quot;</span>,<span class="st">&quot;magmatic rocks&quot;</span>)</span>
+<span id="cb142-10"><a href="random-forest.html#cb142-10" tabindex="-1"></a><span class="fu">levels</span>(geology) <span class="ot">&lt;-</span> rat</span>
+<span id="cb142-11"><a href="random-forest.html#cb142-11" tabindex="-1"></a><span class="fu">levels</span>(geology)</span>
+<span id="cb142-12"><a href="random-forest.html#cb142-12" tabindex="-1"></a></span>
+<span id="cb142-13"><a href="random-forest.html#cb142-13" tabindex="-1"></a><span class="co"># Plot the raster based on the geological classes </span></span>
+<span id="cb142-14"><a href="random-forest.html#cb142-14" tabindex="-1"></a><span class="fu">levelplot</span>(geology, <span class="at">col.regions=</span>col_vector)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/geology-map-1.png" width="672" /></p>
+<ul>
+<li><strong>Raster land cover</strong>: extract the attribute table and plot the map based on the land cover classes.</li>
+</ul>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="random-forest.html#cb143-1" tabindex="-1"></a>landCover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">raster</span>(<span class="st">&quot;data/Lab05/landCover.tif&quot;</span>))</span>
+<span id="cb143-2"><a href="random-forest.html#cb143-2" tabindex="-1"></a>ratLC <span class="ot">&lt;-</span> <span class="fu">levels</span>(landCover)[[<span class="dv">1</span>]]  </span>
+<span id="cb143-3"><a href="random-forest.html#cb143-3" tabindex="-1"></a></span>
+<span id="cb143-4"><a href="random-forest.html#cb143-4" tabindex="-1"></a>ratLC<span class="sc">$</span>LandCover_classes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;impermeable man-made&quot;</span>,<span class="st">&quot;permeable man-made&quot;</span>,</span>
+<span id="cb143-5"><a href="random-forest.html#cb143-5" tabindex="-1"></a>                             <span class="st">&quot;herbaceous vegetation&quot;</span>,<span class="st">&quot;shrub vegetation&quot;</span>,</span>
+<span id="cb143-6"><a href="random-forest.html#cb143-6" tabindex="-1"></a>                             <span class="st">&quot;forest&quot;</span>,<span class="st">&quot;no vegetation&quot;</span>,<span class="st">&quot;glacier and water body&quot;</span>)</span>
+<span id="cb143-7"><a href="random-forest.html#cb143-7" tabindex="-1"></a><span class="fu">levels</span>(landCover) <span class="ot">&lt;-</span> ratLC</span>
+<span id="cb143-8"><a href="random-forest.html#cb143-8" tabindex="-1"></a><span class="fu">levels</span>(landCover)</span>
+<span id="cb143-9"><a href="random-forest.html#cb143-9" tabindex="-1"></a></span>
+<span id="cb143-10"><a href="random-forest.html#cb143-10" tabindex="-1"></a><span class="co"># Plot the raster based on the land cover classes </span></span>
+<span id="cb143-11"><a href="random-forest.html#cb143-11" tabindex="-1"></a><span class="fu">levelplot</span>(landCover, <span class="at">col.regions=</span>col_vector)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/landCover-map-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="create-the-input-dataset" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Create the input dataset<a href="random-forest.html#create-the-input-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this step, you will extract the values of the predictors at each location in the landslides (presences and absences) dataset.</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="random-forest.html#cb144-1" tabindex="-1"></a><span class="co"># Shuffle the rows</span></span>
+<span id="cb144-2"><a href="random-forest.html#cb144-2" tabindex="-1"></a>LS_sh <span class="ot">&lt;-</span> LS_pa [<span class="fu">sample</span>(<span class="fu">nrow</span>(LS_pa), <span class="fu">nrow</span>(LS_pa)), ]</span>
+<span id="cb144-3"><a href="random-forest.html#cb144-3" tabindex="-1"></a></span>
+<span id="cb144-4"><a href="random-forest.html#cb144-4" tabindex="-1"></a><span class="co"># Convert to spatial point dataframe</span></span>
+<span id="cb144-5"><a href="random-forest.html#cb144-5" tabindex="-1"></a>LS_spdf<span class="ot">&lt;-</span><span class="fu">SpatialPointsDataFrame</span>(LS_sh[,<span class="fu">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>)], LS_sh, <span class="at">proj4string=</span><span class="fu">crs</span>(features))</span>
+<span id="cb144-6"><a href="random-forest.html#cb144-6" tabindex="-1"></a></span>
+<span id="cb144-7"><a href="random-forest.html#cb144-7" tabindex="-1"></a>LS_input <span class="ot">&lt;-</span> <span class="fu">extract</span>(features, LS_spdf, <span class="at">df=</span><span class="cn">TRUE</span>)</span>
+<span id="cb144-8"><a href="random-forest.html#cb144-8" tabindex="-1"></a></span>
+<span id="cb144-9"><a href="random-forest.html#cb144-9" tabindex="-1"></a><span class="co"># Add independent variable (LS) as additional column to the dataframe</span></span>
+<span id="cb144-10"><a href="random-forest.html#cb144-10" tabindex="-1"></a>LS_input<span class="sc">$</span>LS <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(LS_spdf<span class="sc">$</span>LS)</span>
+<span id="cb144-11"><a href="random-forest.html#cb144-11" tabindex="-1"></a></span>
+<span id="cb144-12"><a href="random-forest.html#cb144-12" tabindex="-1"></a><span class="co"># Convert Land cover and Geology classes as factor</span></span>
+<span id="cb144-13"><a href="random-forest.html#cb144-13" tabindex="-1"></a>LS_input<span class="sc">$</span>LandCover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(LS_input<span class="sc">$</span>LandCover)</span>
+<span id="cb144-14"><a href="random-forest.html#cb144-14" tabindex="-1"></a>LS_input<span class="sc">$</span>Geology <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(LS_input<span class="sc">$</span>Geology)</span>
+<span id="cb144-15"><a href="random-forest.html#cb144-15" tabindex="-1"></a></span>
+<span id="cb144-16"><a href="random-forest.html#cb144-16" tabindex="-1"></a><span class="co"># Remove extra column (ID)</span></span>
+<span id="cb144-17"><a href="random-forest.html#cb144-17" tabindex="-1"></a>LS_input <span class="ot">&lt;-</span> LS_input[,<span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(LS_input)]</span>
+<span id="cb144-18"><a href="random-forest.html#cb144-18" tabindex="-1"></a>LS_input <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(LS_input)</span>
+<span id="cb144-19"><a href="random-forest.html#cb144-19" tabindex="-1"></a></span>
+<span id="cb144-20"><a href="random-forest.html#cb144-20" tabindex="-1"></a><span class="co"># Explore the newly created input dataset.</span></span>
+<span id="cb144-21"><a href="random-forest.html#cb144-21" tabindex="-1"></a><span class="fu">head</span>(LS_input)</span>
+<span id="cb144-22"><a href="random-forest.html#cb144-22" tabindex="-1"></a><span class="fu">str</span>(LS_input)</span></code></pre></div>
+<div id="split-the-input-dataset-into-training-80-and-testing-20" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Split the input dataset into training (80%) and testing (20%)<a href="random-forest.html#split-the-input-dataset-into-training-80-and-testing-20" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A well-established procedure in ML is to split the input dataset into training, validation, and testing.</p>
+<ul>
+<li><p>The <strong>training dataset</strong> is needed to calibrate the parameters of the model, which will be used to get predictions on new data.</p></li>
+<li><p>The purpose of the <strong>validation dataset</strong> is to optimize the hyperparameter of the model (<em>training phase</em>).
+<strong>NB</strong>: in Random Forest this subset is represented by the Out-Of-Bag (<strong>OOB</strong>)!</p></li>
+<li><p>To provide an unbiased evaluation of the final model and to assess its performance, results are then predicted over unused observations (<em>prediction phase</em>), defined as the <strong>testing dataset</strong>.</p></li>
+</ul>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="random-forest.html#cb145-1" tabindex="-1"></a><span class="co"># Split the input dataset into training (80%) and testing (20%)</span></span>
+<span id="cb145-2"><a href="random-forest.html#cb145-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span> (LS_input)</span>
+<span id="cb145-3"><a href="random-forest.html#cb145-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb145-4"><a href="random-forest.html#cb145-4" tabindex="-1"></a>n_train <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fl">0.80</span> <span class="sc">*</span> n) </span>
+<span id="cb145-5"><a href="random-forest.html#cb145-5" tabindex="-1"></a>train_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n, n_train)</span>
+<span id="cb145-6"><a href="random-forest.html#cb145-6" tabindex="-1"></a></span>
+<span id="cb145-7"><a href="random-forest.html#cb145-7" tabindex="-1"></a><span class="co"># Create indices</span></span>
+<span id="cb145-8"><a href="random-forest.html#cb145-8" tabindex="-1"></a>LS_input_train <span class="ot">&lt;-</span> LS_input[train_indices, ]  </span>
+<span id="cb145-9"><a href="random-forest.html#cb145-9" tabindex="-1"></a>LS_input_test <span class="ot">&lt;-</span> LS_input[<span class="sc">-</span>train_indices, ]</span>
+<span id="cb145-10"><a href="random-forest.html#cb145-10" tabindex="-1"></a></span>
+<span id="cb145-11"><a href="random-forest.html#cb145-11" tabindex="-1"></a><span class="co"># Count the number of elements in the two subset: training and testing</span></span>
+<span id="cb145-12"><a href="random-forest.html#cb145-12" tabindex="-1"></a><span class="fu">count</span>(LS_input_train)</span>
+<span id="cb145-13"><a href="random-forest.html#cb145-13" tabindex="-1"></a><span class="fu">count</span>(LS_input_test)</span></code></pre></div>
+</div>
+</div>
+<div id="run-random-forest" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Run Random Forest<a href="random-forest.html#run-random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Computationally, a subset of the training dataset is generated by bootstrapping (i.e. random sampling with replacement).
+For each subset a decision tree is grown and, at each split, the algorithm randomly selects a number of variables (<em>mtry</em>) and it computes the Gini index to identify the best one.
+The process stops when each node contains less than a fixed number of data points.
+The fundamental hyperparameters that needs to be defined in RF are <em>mtry</em> and the total number of trees (<em>ntrees</em>).</p>
+<p>The prediction error on the training dataset is finally assessed by evaluating predictions on those observations that were not used in the subset, defined as “out-of-bag” (<strong>OOB</strong>).
+This values is used the optimize the values of the hyperparameters, by a trial and error process (that is, trying to minimize the OOB estimate of error rate).</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="random-forest.html#cb146-1" tabindex="-1"></a><span class="co"># Set the seed of R‘s random number generator, </span></span>
+<span id="cb146-2"><a href="random-forest.html#cb146-2" tabindex="-1"></a><span class="do">## this is useful for creating simulations that can be reproduced.</span></span>
+<span id="cb146-3"><a href="random-forest.html#cb146-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) </span>
+<span id="cb146-4"><a href="random-forest.html#cb146-4" tabindex="-1"></a></span>
+<span id="cb146-5"><a href="random-forest.html#cb146-5" tabindex="-1"></a><span class="co"># Run RF model</span></span>
+<span id="cb146-6"><a href="random-forest.html#cb146-6" tabindex="-1"></a>RF_LS<span class="ot">&lt;-</span><span class="fu">randomForest</span>(<span class="at">y=</span>LS_input_train<span class="sc">$</span>LS, <span class="at">x=</span>LS_input_train[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>],<span class="at">data=</span>LS_input_train,</span>
+<span id="cb146-7"><a href="random-forest.html#cb146-7" tabindex="-1"></a>                    <span class="at">ntree=</span><span class="dv">200</span>, <span class="at">mtry=</span><span class="dv">3</span>,<span class="at">importance=</span><span class="cn">TRUE</span>, <span class="at">do.trace=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div id="rf-main-outputs" class="section level3 hasAnchor" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> RF main outputs<a href="random-forest.html#rf-main-outputs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Printing the results of RF allows you to gain insight into the outputs of the implemented model, namelly the following: - a summary of the model hyperparameters - the OOB estimate of error rate - the confusion matrix; in this case a 2x2 matrix used for evaluating the performance of the classification model (1-presence vs 0-absence).</p>
+<p>The plotting the of the error rate is useful to estimate the decreasing values on the OOB and on the predictions (presence (1) / absence (0)) over increasing number of treees.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="random-forest.html#cb147-1" tabindex="-1"></a><span class="fu">print</span>(RF_LS)</span></code></pre></div>
+<pre><code>## 
+## Call:
+##  randomForest(x = LS_input_train[1:8], y = LS_input_train$LS,      ntree = 200, mtry = 3, importance = TRUE, do.trace = TRUE,      data = LS_input_train) 
+##                Type of random forest: classification
+##                      Number of trees: 200
+## No. of variables tried at each split: 3
+## 
+##         OOB estimate of  error rate: 16.54%
+## Confusion matrix:
+##      0    1 class.error
+## 0 1673  413   0.1979866
+## 1  273 1789   0.1323957</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="random-forest.html#cb149-1" tabindex="-1"></a><span class="fu">plot</span>(RF_LS)</span>
+<span id="cb149-2"><a href="random-forest.html#cb149-2" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="st">&quot;topright&quot;</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;perd 0&quot;</span>, <span class="st">&quot;pred 1&quot;</span>, <span class="st">&quot;OOB error&quot;</span>), </span>
+<span id="cb149-3"><a href="random-forest.html#cb149-3" tabindex="-1"></a> <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;black&quot;</span>), <span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">0.8</span>)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/RF-outputs-1.png" width="672" /></p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="random-forest.html#cb150-1" tabindex="-1"></a><span class="co"># Show the predicted probability values</span></span>
+<span id="cb150-2"><a href="random-forest.html#cb150-2" tabindex="-1"></a>RF.predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(RF_LS,<span class="at">type=</span><span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb150-3"><a href="random-forest.html#cb150-3" tabindex="-1"></a><span class="fu">head</span>(RF.predict) <span class="co"># 0==abstece ; 1== presence</span></span></code></pre></div>
+<pre><code>##               0          1
+## 2465 0.97333333 0.02666667
+## 2513 0.97674419 0.02325581
+## 2229 0.71250000 0.28750000
+## 527  0.52564103 0.47435897
+## 4293 0.05194805 0.94805195
+## 2988 0.04918033 0.95081967</code></pre>
+</div>
+<div id="model-evaluation" class="section level3 hasAnchor" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> Model evaluation<a href="random-forest.html#model-evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The prediction capability of the implemented RF model can be evaluated by predicting the results over previously unseen data, that is the testing dataset.
+The <em>Area Under the “Receiver Operating Characteristic (ROC)” Curve</em> (<strong>AUC</strong>) represents the evaluation score used here as indicator of the goodness of the model in classifying areas more susceptible to landslides.
+ROC curve is a graphical technique based on the plot of the percentage of correct classification (the true positives rate) against the false positives rate (occurring when an outcome is incorrectly predicted as belonging to the class “1” when it actually belongs to the class “0”), evaluates for many thresholds.
+The AUC value lies between 0.5, denoting a bad classifier, and 1, denoting an excellent classifier.</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="random-forest.html#cb152-1" tabindex="-1"></a><span class="co"># Make predictions on the testing dataset</span></span>
+<span id="cb152-2"><a href="random-forest.html#cb152-2" tabindex="-1"></a>RFpred_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> RF_LS, <span class="at">newdata =</span> LS_input_test, <span class="at">type=</span><span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb152-3"><a href="random-forest.html#cb152-3" tabindex="-1"></a> </span>
+<span id="cb152-4"><a href="random-forest.html#cb152-4" tabindex="-1"></a>roc <span class="ot">&lt;-</span> <span class="fu">roc</span>(LS_input_test<span class="sc">$</span>LS,RFpred_test[,<span class="dv">2</span>])</span>
+<span id="cb152-5"><a href="random-forest.html#cb152-5" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">-</span>roc<span class="sc">$</span>specificities,roc<span class="sc">$</span>sensitivities, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>,</span>
+<span id="cb152-6"><a href="random-forest.html#cb152-6" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;False positive rate&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;True positive rate&quot;</span>)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/RF-val-1.png" width="672" /></p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="random-forest.html#cb153-1" tabindex="-1"></a>roc </span></code></pre></div>
+</div>
+</div>
+<div id="susceptibility-map" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Susceptibility map<a href="random-forest.html#susceptibility-map" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You have now all the elements to elaborate the final landslide susceptibility map.
+This will be achieved by making predictions (of presence only) based on the values of the predictors, which are stored into the RasterStack named *features*, created above.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="random-forest.html#cb154-1" tabindex="-1"></a><span class="co"># Index=2 indicate the prediction of presence (1) </span></span>
+<span id="cb154-2"><a href="random-forest.html#cb154-2" tabindex="-1"></a>Scp_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(features, RF_LS,<span class="at">type=</span><span class="st">&quot;prob&quot;</span>, <span class="at">index=</span><span class="dv">2</span>)</span>
+<span id="cb154-3"><a href="random-forest.html#cb154-3" tabindex="-1"></a></span>
+<span id="cb154-4"><a href="random-forest.html#cb154-4" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
+<span id="cb154-5"><a href="random-forest.html#cb154-5" tabindex="-1"></a><span class="fu">summary</span>(Scp_pred)</span>
+<span id="cb154-6"><a href="random-forest.html#cb154-6" tabindex="-1"></a><span class="fu">hist</span>(Scp_pred)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/Scp-map-1.png" width="672" /></p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="random-forest.html#cb155-1" tabindex="-1"></a><span class="co"># Export ratster</span></span>
+<span id="cb155-2"><a href="random-forest.html#cb155-2" tabindex="-1"></a><span class="fu">writeRaster</span>(Scp_pred,<span class="st">&quot;Scp_map25.tif&quot;</span>, <span class="at">overwrite=</span><span class="cn">TRUE</span>)</span>
+<span id="cb155-3"><a href="random-forest.html#cb155-3" tabindex="-1"></a></span>
+<span id="cb155-4"><a href="random-forest.html#cb155-4" tabindex="-1"></a><span class="co"># Plot the output susceptibility map</span></span>
+<span id="cb155-5"><a href="random-forest.html#cb155-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
+<span id="cb155-6"><a href="random-forest.html#cb155-6" tabindex="-1"></a><span class="fu">plot</span>(Scp_pred, <span class="at">xlab =</span> <span class="st">&quot;East [m]&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;North [m]&quot;</span>, </span>
+<span id="cb155-7"><a href="random-forest.html#cb155-7" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Landslides susceptibility map&quot;</span>, </span>
+<span id="cb155-8"><a href="random-forest.html#cb155-8" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">terrain.colors</span>(<span class="dv">5</span>))</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/Scp-map-2.png" width="672" /></p>
+<div id="class-intervals-for-decision-maker" class="section level3 hasAnchor" number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> Class intervals for decision maker<a href="random-forest.html#class-intervals-for-decision-maker" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>What can you say by looking at the map?
+Actually a risk heat map is a data visualization tool for communicating the level for a specific risk to occur.
+These maps helps authorities to identify and prioritize the risks associated with a given hazard.</p>
+<p>Normally an authority (i.e., a decision maker) prioritize its efforts based on the available resources it has.
+So, it can be more useful to detect the areas with the highest probability of burning based given intervals (i.e., breaks).
+The authority can thus concentrate its resources for preventive actions on a given percentage (such as 5%, 10%, or 20%) of the area with the highest probability of burning, instead of concentrate on the areas with a “stochastic” output probability value of 0.8 (for example).</p>
+<ul>
+<li>Breaks chosen based on the <strong>summary statics</strong>: these values corresponds to 0-25%-50%-75%-100% of the p-value distribution.</li>
+</ul>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="random-forest.html#cb156-1" tabindex="-1"></a>brk<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.03</span>, <span class="fl">0.14</span>, <span class="fl">0.4</span>, <span class="dv">1</span>) </span>
+<span id="cb156-2"><a href="random-forest.html#cb156-2" tabindex="-1"></a></span>
+<span id="cb156-3"><a href="random-forest.html#cb156-3" tabindex="-1"></a><span class="fu">plot</span>(Scp_pred, <span class="at">xlab =</span> <span class="st">&quot;East [m]&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;North [m]&quot;</span>, </span>
+<span id="cb156-4"><a href="random-forest.html#cb156-4" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Landslides susceptibility map&quot;</span>, </span>
+<span id="cb156-5"><a href="random-forest.html#cb156-5" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">&quot;brown&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;grey&quot;</span>)), <span class="at">breaks=</span>brk)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/quantile-map-1.png" width="672" /></p>
+<ul>
+<li>Breaks chosen based on well-estabished <strong>percentile classes</strong></li>
+</ul>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="random-forest.html#cb157-1" tabindex="-1"></a><span class="co"># Output predicted values are transformed to a vector</span></span>
+<span id="cb157-2"><a href="random-forest.html#cb157-2" tabindex="-1"></a>pred.vect <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(Scp_pred<span class="sc">@</span>data<span class="sc">@</span>values)</span>
+<span id="cb157-3"><a href="random-forest.html#cb157-3" tabindex="-1"></a></span>
+<span id="cb157-4"><a href="random-forest.html#cb157-4" tabindex="-1"></a><span class="co"># The function &quot;quantile&quot; is used to fix classes</span></span>
+<span id="cb157-5"><a href="random-forest.html#cb157-5" tabindex="-1"></a>qtl.pred <span class="ot">&lt;-</span> <span class="fu">quantile</span>(pred.vect,<span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.5</span>,<span class="fl">0.75</span>,<span class="fl">0.85</span>,<span class="fl">0.95</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb157-6"><a href="random-forest.html#cb157-6" tabindex="-1"></a><span class="co"># and then extract the corresponding values</span></span>
+<span id="cb157-7"><a href="random-forest.html#cb157-7" tabindex="-1"></a>qtl.int<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.03</span>,<span class="fl">0.14</span>,<span class="fl">0.42</span>,<span class="fl">0.6</span>,<span class="fl">0.82</span>,<span class="dv">1</span>)</span>
+<span id="cb157-8"><a href="random-forest.html#cb157-8" tabindex="-1"></a><span class="fu">plot</span>(Scp_pred, <span class="at">xlab =</span> <span class="st">&quot;East [m]&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;North [m]&quot;</span>, </span>
+<span id="cb157-9"><a href="random-forest.html#cb157-9" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Landslides susceptibility map&quot;</span>, </span>
+<span id="cb157-10"><a href="random-forest.html#cb157-10" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">&quot;brown&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>,<span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;grey&quot;</span>)), <span class="at">breaks=</span>qtl.int)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/percentile-map-1.png" width="672" /></p>
+</div>
+</div>
+<div id="variable-importance-plot" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Variable importance plot<a href="random-forest.html#variable-importance-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Although machine learning algorithms are often considered as a black box, RF provides two metrics allowing to assess the importance of each variables in the model: the mean decrease in accuracy (MDA), and the mean decrease in Gini index.
+The higher values indicate the most important variables.
+In addition, it is possible to plot a sample tree (selected randomly) to analyse its structure.</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="random-forest.html#cb158-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;party&quot;</span>)</span>
+<span id="cb158-2"><a href="random-forest.html#cb158-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">ctree</span>(LS<span class="sc">~</span>., <span class="at">data=</span>LS_input_train)</span>
+<span id="cb158-3"><a href="random-forest.html#cb158-3" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="at">type=</span><span class="st">&quot;simple&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="random-forest.html#cb159-1" tabindex="-1"></a><span class="co"># Display the plot with the relative importance of each variable</span></span>
+<span id="cb159-2"><a href="random-forest.html#cb159-2" tabindex="-1"></a><span class="fu">importance</span>(RF_LS)</span>
+<span id="cb159-3"><a href="random-forest.html#cb159-3" tabindex="-1"></a><span class="fu">varImpPlot</span>(RF_LS)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/var-imp-1.png" width="672" /></p>
+<div id="partial-dependence-plot" class="section level3 hasAnchor" number="6.6.1">
+<h3><span class="header-section-number">6.6.1</span> Partial dependence plot<a href="random-forest.html#partial-dependence-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In addition, the partial dependent plot allows to estimate, for each single variable, the relative probability of prediction success over different ranges of values.
+It gives a graphical depiction of the marginal effect of each variable on the class probability over different ranges of continuous or discrete values.
+Positive values are associated with the probability of occurrence of the phenomena (i.e., landslides presence), while negative vales indicate its absence.</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="random-forest.html#cb160-1" tabindex="-1"></a><span class="co"># Slope</span></span>
+<span id="cb160-2"><a href="random-forest.html#cb160-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_input_train, <span class="at">x.var =</span> Slope, <span class="at">rug =</span> <span class="cn">TRUE</span>, <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],</span>
+<span id="cb160-3"><a href="random-forest.html#cb160-3" tabindex="-1"></a>            <span class="at">xlab=</span> <span class="st">&quot;Slope [Â°]&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Partial dependence&quot;</span>)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/par-plot-1.png" width="672" /></p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="random-forest.html#cb161-1" tabindex="-1"></a><span class="co"># Elevation</span></span>
+<span id="cb161-2"><a href="random-forest.html#cb161-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_input_train, <span class="at">x.var =</span> DEM, <span class="at">rug =</span> <span class="cn">TRUE</span>, <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],</span>
+<span id="cb161-3"><a href="random-forest.html#cb161-3" tabindex="-1"></a>            <span class="at">xlab=</span> <span class="st">&quot;Elevation [m]&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>,<span class="at">ylab =</span> <span class="st">&quot;Partial dependence&quot;</span>)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/par-plot-2.png" width="672" /></p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="random-forest.html#cb162-1" tabindex="-1"></a><span class="co"># Profile curvature</span></span>
+<span id="cb162-2"><a href="random-forest.html#cb162-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_input_train, <span class="at">x.var =</span> profCurv, <span class="at">rug =</span> <span class="cn">TRUE</span>, <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],</span>
+<span id="cb162-3"><a href="random-forest.html#cb162-3" tabindex="-1"></a>            <span class="at">xlab=</span> <span class="st">&quot;Profile curvature [1/m]&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Partial dependence&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.04</span>,<span class="fl">0.04</span>))</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/par-plot-3.png" width="672" /></p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="random-forest.html#cb163-1" tabindex="-1"></a><span class="co"># Plan Curvature</span></span>
+<span id="cb163-2"><a href="random-forest.html#cb163-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_input_train, <span class="at">x.var =</span> planCurv, <span class="at">rug =</span> <span class="cn">TRUE</span>, <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],</span>
+<span id="cb163-3"><a href="random-forest.html#cb163-3" tabindex="-1"></a>            <span class="at">xlab=</span> <span class="st">&quot;Plan curvature [1/m]&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Partial dependence&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.04</span>,<span class="fl">0.04</span>))</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/par-plot-4.png" width="672" /></p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="random-forest.html#cb164-1" tabindex="-1"></a><span class="co"># Distance to roard</span></span>
+<span id="cb164-2"><a href="random-forest.html#cb164-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_input_train, <span class="at">x.var =</span> distRoad, <span class="at">rug =</span> <span class="cn">TRUE</span>, <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],</span>
+<span id="cb164-3"><a href="random-forest.html#cb164-3" tabindex="-1"></a>            <span class="at">xlab=</span> <span class="st">&quot;Distance to road [m]&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Partial dependence&quot;</span>)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/par-plot-5.png" width="672" /></p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="random-forest.html#cb165-1" tabindex="-1"></a><span class="co"># Topographic wetness index</span></span>
+<span id="cb165-2"><a href="random-forest.html#cb165-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_input_train, <span class="at">x.var =</span> TWI, <span class="at">rug =</span> <span class="cn">TRUE</span>, <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],</span>
+<span id="cb165-3"><a href="random-forest.html#cb165-3" tabindex="-1"></a>            <span class="at">xlab=</span> <span class="st">&quot;TWI [-]&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Partial dependence&quot;</span>)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/par-plot-6.png" width="672" /></p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="random-forest.html#cb166-1" tabindex="-1"></a><span class="co"># Geology</span></span>
+<span id="cb166-2"><a href="random-forest.html#cb166-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_input_train, <span class="at">x.var =</span> Geology, <span class="at">rug =</span> <span class="cn">TRUE</span>, <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],</span>
+<span id="cb166-3"><a href="random-forest.html#cb166-3" tabindex="-1"></a>            <span class="at">xlab=</span> <span class="st">&quot;Geology&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Partial dependence&quot;</span>)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/par-plot-7.png" width="672" /></p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="random-forest.html#cb167-1" tabindex="-1"></a><span class="co"># Land Cover</span></span>
+<span id="cb167-2"><a href="random-forest.html#cb167-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_input_train, <span class="at">x.var =</span> LandCover, <span class="at">rug =</span> <span class="cn">TRUE</span>, <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],</span>
+<span id="cb167-3"><a href="random-forest.html#cb167-3" tabindex="-1"></a>            <span class="at">xlab=</span> <span class="st">&quot;Land Cover&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Partial dependence&quot;</span>)</span></code></pre></div>
+<p><img src="06-RF_files/figure-html/par-plot-8.png" width="672" /></p>
+</div>
+</div>
+<div id="conclusions-and-further-analyses-3" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Conclusions and further analyses<a href="random-forest.html#conclusions-and-further-analyses-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This exercise allowed you to familiarize with Random Forest, by the proposed application about landslides susceptibility mapping and variables importance assessment.</p>
+<p>To be sure that everything is perfectly clear for you, we propose you to <strong>answer the following questions</strong> and to discuss your answers with the other participants to the course or directly with the teacher.</p>
+<ol style="list-style-type: decimal">
+<li><p>Why is it important to implement the pseudo-absence, other that the presences (i.e., the observations) in a data-driven modelization?</p></li>
+<li><p>What is the difference between a numerical and a categorical variable?
+Give some examples of both types.</p></li>
+<li><p>Which is the values of the OOB estimate error rate of your model?
+Which parameters you can change to try to reduce it?
+Be brave and do it (i.e., change the values for <em>ntree</em> and <em>mtry,</em> than analyse which values for the AUC you obtain and which model perform better.</p></li>
+<li><p>Which are the three most important variables of your model (based on the MDA)?</p></li>
+<li><p>What is the slope value (or range of values) that gives the highest probability of landslides occurrence?
+And for the geology, which are the most important classes?</p></li>
+<li><p>In a model seeking to estimate the vulnerability to wildfire, which is the dependent variable and which can be the independent variables?
+The reading of the paper @tonini_evolution_2017, which inspired this lab, can help you in in this task.</p></li>
+</ol>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-breiman_random_2001" class="csl-entry">
+Breiman, Leo. <span>“Random Forest.”</span> <em>Machine Learning</em> 45, no. 1 (2001): 5–32. <a href="https://doi.org/10.1023/A:1010933404324">https://doi.org/10.1023/A:1010933404324</a>.
+</div>
+<div id="ref-tonini_machine_2020" class="csl-entry">
+Tonini, Marj, Mirko D’Andrea, Guido Biondi, Silvia Degli Esposti, Andrea Trucchia, and Paolo Fiorucci. <span>“A Machine Learning-Based Approach for Wildfire Susceptibility Mapping. The Case Study of the Liguria Region in Italy.”</span> <em>Geosciences</em> 10, no. 3 (March 2020): 105. <a href="https://doi.org/10.3390/geosciences10030105">https://doi.org/10.3390/geosciences10030105</a>.
+</div>
+<div id="ref-trucchia_machine-learning_2022" class="csl-entry">
+Trucchia, Andrea, Hamed Izadgoshasb, Sara Isnardi, Paolo Fiorucci, and Marj Tonini. <span>“Machine-Learning Applications in Geosciences: Comparison of Different Algorithms and Vegetation Classes’ Importance Ranking in Wildfire Susceptibility.”</span> <em>Geosciences</em> 12, no. 11 (November 2022): 424. <a href="https://doi.org/10.3390/geosciences12110424">https://doi.org/10.3390/geosciences12110424</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="12">
+<li id="fn12"><p><a href="#ref-tonini_machine_2020"><span>“A Machine Learning-Based Approach for Wildfire Susceptibility Mapping. The Case Study of the Liguria Region in Italy,”</span> <em>Geosciences</em> 10, no. 3 (March 2020): 105, <span>https://doi.org/10.3390/geosciences10030105</span></a>.<a href="random-forest.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p><a href="#ref-trucchia_machine-learning_2022"><span>“Machine-Learning Applications in Geosciences: Comparison of Different Algorithms and Vegetation Classes’ Importance Ranking in Wildfire Susceptibility,”</span> <em>Geosciences</em> 12, no. 11 (November 2022): 424, <span>https://doi.org/10.3390/geosciences12110424</span></a>.<a href="random-forest.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p><a href="#ref-breiman_random_2001"><span>“Random Forest,”</span> <em>Machine Learning</em> 45, no. 1 (2001): 5–32, <span>https://doi.org/10.1023/A:1010933404324</span></a>.<a href="random-forest.html#fnref14" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="self-organizing-map.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-RF.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["fake-book.pdf", "fake-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

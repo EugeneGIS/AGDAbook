@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Density-based Clustering Algorithm | Advanced Geospatial Data Analysis in R: Environmental Applications</title>
+  <meta name="description" content="This book will be used for the UNIL Master courses, and also open for the publich who are interested in." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Density-based Clustering Algorithm | Advanced Geospatial Data Analysis in R: Environmental Applications" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://eugenegis.github.io/AGDAbook/images/UNIL_logo.png" />
+  <meta property="og:description" content="This book will be used for the UNIL Master courses, and also open for the publich who are interested in." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Density-based Clustering Algorithm | Advanced Geospatial Data Analysis in R: Environmental Applications" />
+  
+  <meta name="twitter:description" content="This book will be used for the UNIL Master courses, and also open for the publich who are interested in." />
+  <meta name="twitter:image" content="https://eugenegis.github.io/AGDAbook/images/UNIL_logo.png" />
+
+<meta name="author" content="Marj Tonini, Haokun Liu" />
+
+
+<meta name="date" content="2024-04-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="kernel-density-estimator.html"/>
+<link rel="next" href="self-organizing-map.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Advanced Geospatial Data Analysis in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#author-information"><i class="fa fa-check"></i>Author Information</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-language"><i class="fa fa-check"></i><b>1.1</b> R Language</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-packages"><i class="fa fa-check"></i><b>1.1.1</b> R Packages</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#some-tips"><i class="fa fa-check"></i><b>1.1.2</b> Some tips</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-commands-online-resources"><i class="fa fa-check"></i><b>1.1.3</b> R Commands (online resources)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-markdown"><i class="fa fa-check"></i><b>1.2</b> R Markdown</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-type-in-computational-analysis"><i class="fa fa-check"></i><b>1.3</b> Data type in computational analysis</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#variables"><i class="fa fa-check"></i><b>1.3.1</b> Variables</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-structure-in-r"><i class="fa fa-check"></i><b>1.3.2</b> Data structure in R</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frame"><i class="fa fa-check"></i><b>1.3.3</b> Data Frame</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html"><i class="fa fa-check"></i><b>2</b> Geographically Weighted Summary Statistics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#the-overall-methodology"><i class="fa fa-check"></i><b>2.2</b> The overall methodology</a></li>
+<li class="chapter" data-level="2.3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#forest-fires-dataset"><i class="fa fa-check"></i><b>2.3</b> Forest fires dataset</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#load-the-libraries"><i class="fa fa-check"></i><b>2.3.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="2.3.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#import-the-portuguese-forest-fire-dataset"><i class="fa fa-check"></i><b>2.3.2</b> Import the Portuguese forest fire dataset</a></li>
+<li class="chapter" data-level="2.3.3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#forest-fires-spatial-distribution"><i class="fa fa-check"></i><b>2.3.3</b> Forest fires spatial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#compute-the-geographically-whited-statistics"><i class="fa fa-check"></i><b>2.4</b> Compute the geographically whited statistics</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#look-at-the-results"><i class="fa fa-check"></i><b>2.4.1</b> Look at the results</a></li>
+<li class="chapter" data-level="2.4.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#gwss-maps"><i class="fa fa-check"></i><b>2.4.2</b> GWSS maps</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#conclusions-and-further-analyses"><i class="fa fa-check"></i><b>2.5</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html"><i class="fa fa-check"></i><b>3</b> Kernel Density Estimator</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#method"><i class="fa fa-check"></i><b>3.2</b> Method</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ripleys-k-function"><i class="fa fa-check"></i><b>3.2.1</b> Ripley’s K-function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#kernel-density-estimator-1"><i class="fa fa-check"></i><b>3.2.2</b> Kernel density estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#load-the-libraries-1"><i class="fa fa-check"></i><b>3.3</b> Load the libraries</a></li>
+<li class="chapter" data-level="3.4" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#import-the-portuguese-forest-fire-dataset-1"><i class="fa fa-check"></i><b>3.4</b> Import the Portuguese forest fire dataset</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ff-subsets-based-on-the-burned-areas-size"><i class="fa fa-check"></i><b>3.4.1</b> FF-subsets based on the burned areas’ size</a></li>
+<li class="chapter" data-level="3.4.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ff-subsets-based-on-their-geographical-distribution"><i class="fa fa-check"></i><b>3.4.2</b> FF-subsets based on their geographical distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#the-space-time-k-function"><i class="fa fa-check"></i><b>3.5</b> The space-time K-function</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#extract-time-and-pts-object"><i class="fa fa-check"></i><b>3.5.1</b> Extract Time and PTS object</a></li>
+<li class="chapter" data-level="3.5.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#compute-the-space-time-k-function"><i class="fa fa-check"></i><b>3.5.2</b> Compute the space-time K-function</a></li>
+<li class="chapter" data-level="3.5.3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#assess-the-space-time-clustering-behavior"><i class="fa fa-check"></i><b>3.5.3</b> Assess the space-time clustering behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#conclusions-and-further-analyses-1"><i class="fa fa-check"></i><b>3.6</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html"><i class="fa fa-check"></i><b>4</b> Density-based Clustering Algorithm</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#introduction-2"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#the-overall-methodology-1"><i class="fa fa-check"></i><b>4.2</b> The overall methodology</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#dbscan-3-d-density-based-clustering-algorithm"><i class="fa fa-check"></i><b>4.2.1</b> DBSCAN: 3-D density based clustering algorithm</a></li>
+<li class="chapter" data-level="4.2.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#field-campaign"><i class="fa fa-check"></i><b>4.2.2</b> Field campaign</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#dbscan-feature-detection-from-points-clouds"><i class="fa fa-check"></i><b>4.3</b> DBSCAN: feature detection from points clouds</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#load-the-libraries-2"><i class="fa fa-check"></i><b>4.3.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="4.3.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#import-and-visualise-the-point-clouds-dataset"><i class="fa fa-check"></i><b>4.3.2</b> Import and visualise the point clouds dataset</a></li>
+<li class="chapter" data-level="4.3.3" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#run-dbscan"><i class="fa fa-check"></i><b>4.3.3</b> Run DBSCAN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#conclusions-and-further-analyses-2"><i class="fa fa-check"></i><b>4.4</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="self-organizing-map.html"><a href="self-organizing-map.html"><i class="fa fa-check"></i><b>5</b> Self-organizing Map</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#introduction-3"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#material-and-method"><i class="fa fa-check"></i><b>5.2</b> Material and method</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#the-geo-demographic-context"><i class="fa fa-check"></i><b>5.2.1</b> The geo-demographic context</a></li>
+<li class="chapter" data-level="5.2.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#som"><i class="fa fa-check"></i><b>5.2.2</b> SOM</a></li>
+<li class="chapter" data-level="5.2.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#swiss-census-data"><i class="fa fa-check"></i><b>5.2.3</b> Swiss census data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#variables-inspection"><i class="fa fa-check"></i><b>5.3</b> Variables inspection</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#import-the-data"><i class="fa fa-check"></i><b>5.3.1</b> Import the data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#inspect-the-data"><i class="fa fa-check"></i><b>5.3.2</b> Inspect the data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#data-transformation"><i class="fa fa-check"></i><b>5.3.3</b> Data transformation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="self-organizing-map.html"><a href="self-organizing-map.html#running-som"><i class="fa fa-check"></i><b>5.4</b> Running SOM</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#load-the-libraries-3"><i class="fa fa-check"></i><b>5.4.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="5.4.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#compute-som"><i class="fa fa-check"></i><b>5.4.2</b> Compute SOM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="self-organizing-map.html"><a href="self-organizing-map.html#soms-main-outputs"><i class="fa fa-check"></i><b>5.5</b> SOM’s main outputs</a></li>
+<li class="chapter" data-level="5.6" data-path="self-organizing-map.html"><a href="self-organizing-map.html#hierarchical-clustering"><i class="fa fa-check"></i><b>5.6</b> Hierarchical clustering</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#clusters-characterization"><i class="fa fa-check"></i><b>5.6.1</b> Clusters characterization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="self-organizing-map.html"><a href="self-organizing-map.html#conclusions"><i class="fa fa-check"></i><b>5.7</b> Conclusions</a></li>
+<li class="chapter" data-level="5.8" data-path="self-organizing-map.html"><a href="self-organizing-map.html#further-analyses"><i class="fa fa-check"></i><b>5.8</b> Further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="random-forest.html"><a href="random-forest.html"><i class="fa fa-check"></i><b>6</b> Random Forest</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="random-forest.html"><a href="random-forest.html#introduction-4"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="random-forest.html"><a href="random-forest.html#the-main-objective"><i class="fa fa-check"></i><b>6.1.1</b> The main objective</a></li>
+<li class="chapter" data-level="6.1.2" data-path="random-forest.html"><a href="random-forest.html#load-the-libraries-4"><i class="fa fa-check"></i><b>6.1.2</b> Load the libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="random-forest.html"><a href="random-forest.html#import-the-data-1"><i class="fa fa-check"></i><b>6.2</b> Import the data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="random-forest.html"><a href="random-forest.html#landslides-dataset"><i class="fa fa-check"></i><b>6.2.1</b> Landslides dataset</a></li>
+<li class="chapter" data-level="6.2.2" data-path="random-forest.html"><a href="random-forest.html#predictor-variables"><i class="fa fa-check"></i><b>6.2.2</b> Predictor variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="random-forest.html"><a href="random-forest.html#create-the-input-dataset"><i class="fa fa-check"></i><b>6.3</b> Create the input dataset</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="random-forest.html"><a href="random-forest.html#split-the-input-dataset-into-training-80-and-testing-20"><i class="fa fa-check"></i><b>6.3.1</b> Split the input dataset into training (80%) and testing (20%)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="random-forest.html"><a href="random-forest.html#run-random-forest"><i class="fa fa-check"></i><b>6.4</b> Run Random Forest</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="random-forest.html"><a href="random-forest.html#rf-main-outputs"><i class="fa fa-check"></i><b>6.4.1</b> RF main outputs</a></li>
+<li class="chapter" data-level="6.4.2" data-path="random-forest.html"><a href="random-forest.html#model-evaluation"><i class="fa fa-check"></i><b>6.4.2</b> Model evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="random-forest.html"><a href="random-forest.html#susceptibility-map"><i class="fa fa-check"></i><b>6.5</b> Susceptibility map</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="random-forest.html"><a href="random-forest.html#class-intervals-for-decision-maker"><i class="fa fa-check"></i><b>6.5.1</b> Class intervals for decision maker</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="random-forest.html"><a href="random-forest.html#variable-importance-plot"><i class="fa fa-check"></i><b>6.6</b> Variable importance plot</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="random-forest.html"><a href="random-forest.html#partial-dependence-plot"><i class="fa fa-check"></i><b>6.6.1</b> Partial dependence plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="random-forest.html"><a href="random-forest.html#conclusions-and-further-analyses-3"><i class="fa fa-check"></i><b>6.7</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Geospatial Data Analysis in R: Environmental Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="density-based-clustering-algorithm" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Density-based Clustering Algorithm<a href="density-based-clustering-algorithm.html#density-based-clustering-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-2" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Introduction<a href="density-based-clustering-algorithm.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Terrestrial laser scanning (TLS) has been one of the most successful methods for 3D data collection in the last few years.
+Sequential acquisition can be used to detect and quantify surface changes.
+The three main challenges arising from TLS data collection are: 1) the large number of points acquired is computationally intense and datasets have to be filtered depending on the aim of the investigation; 2) data collection methods suffer from perspective effects, which can lead to either zones of occlusion (shadow effect) or spatially-variable point densities; 3) 3D point clouds are normally interpolated to digital elevation models either as regular grids or triangulated irregular networks.
+Thus, for change detection proposes (i.e. determination of topographic change, including erosion and deposition), it is appropriate to develop methods based upon the direct analysis of the point clouds using semi-automatic approaches allowing to detect and extract individual features.</p>
+<p>In this practical computer lab we introduce a semi-automated method developed for isolating and identifying features of topographic change (i.e., apparent changes caused by surface displacements and indicating erosion or deposition) directly from point cloud data using a Density-Based Spatial Clustering of Applications with Noise (DBSCAN).
+This methodology was developed by <span class="citation">Natan Micheletti, Marj Tonini, and Stuart N. Lane<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></span> for a very active rock glacier front located in the Swiss Alps: the Tsarmine rock glacier.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:jpg"></span>
+<img src="images/Tsarmine2.jpg" alt="The Tsarmine rock glacier, Hérens Valley, in the Western Swiss Alps. Source: Micheletti et al, 2016 \label{Tsarmine}" width="50%" height="70%" />
+<p class="caption">
+Figure 2.1: The Tsarmine rock glacier, Hérens Valley, in the Western Swiss Alps. Source: Micheletti et al, 2016
+</p>
+</div>
+</div>
+<div id="the-overall-methodology-1" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> The overall methodology<a href="density-based-clustering-algorithm.html#the-overall-methodology-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Stepwise analysis:</strong></p>
+<ol style="list-style-type: decimal">
+<li>Point clouds were generated using a TLS on a number of dates.</li>
+<li>Point clouds were co-registered using stable zones within the surveyed area.</li>
+<li>Using a threshold value, only the points where there may have been some topographical change were selected.</li>
+<li>The final dataset was treated with DBSCAN, aiming at grouping cluster-points into single features and filtering out noise points, found in low-density regions.</li>
+</ol>
+<p>The present lab deals with steps 2 and 3: feature detection using DBSCAN.
+The detected features are finally labeled as clusters and visualized in a 3D map.</p>
+<p>Material loss or gain can be analysed in a GIS environment according to the elevation assignment of the change and the volume of change computed for each cluster by a triangulation process (not performed in this lab).</p>
+<div id="dbscan-3-d-density-based-clustering-algorithm" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> DBSCAN: 3-D density based clustering algorithm<a href="density-based-clustering-algorithm.html#dbscan-3-d-density-based-clustering-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DBSCAN allows identification of spatial clusters of arbitrary shape on the base of the local density of points.
+Points that are close together are grouped into the same cluster, while isolated points are labelled as noise.</p>
+<p>Two parameters are required to perform this classification: the minimum number of points necessary to form a cluster (<span class="math inline">\(MinPts\)</span>), and the neighborhood size epsilon (<span class="math inline">\(eps\)</span>).
+The algorithm explores each point in the dataset, counting the number of the neighboring points falling within a circle (for the 2D model) or a sphere (for the 3D model) of radius equal to <span class="math inline">\(eps\)</span> (a).
+If this number is equal to or greater than <span class="math inline">\(MinPts\)</span>, points are labelled as belonging to the same cluster (b).
+If this number is lower than <span class="math inline">\(MinPts\)</span>, points are classified as noise.
+The central point of each cluster is called core-point.
+Since some points can be density-reachable by more than one core-point, they can belong to more than one cluster.
+In this case clusters are blended together to form a unique cluster feature of arbitrary shape (c).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig2"></span>
+<img src="images/parameters.png" alt="Parameters in DBSCAN to form a cluster \label{dbscan}" width="163" />
+<p class="caption">
+Figure 4.1: Parameters in DBSCAN to form a cluster
+</p>
+</div>
+</div>
+<div id="field-campaign" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Field campaign<a href="density-based-clustering-algorithm.html#field-campaign" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An ultra-long range LiDAR RIEGL VZ-6000 scanner was employed to acquire sequential 3D datasets of the rock glacier front.
+TLS scans were performed on different dates over two consecutive summers: a first survey was carried out on the 23th of September 2014, and the last one on the 22th of September 2015.</p>
+<p>The instrument is equipped with on-board inclination sensors: this allows to use the inclination data to obtain (locally) georeferenced datasets where the Z dimension represents the elevation above the X-Y plane.
+After co-registration, a mask was used to restrict point clouds to the area of interest: the front of the rock glacier and the corridor below.</p>
+<p>DBSCAN requires as input a 3-dimensional dataset, which in our case consists on the points clouds (X,Y,Z) plus the displacement distance.
+For the two co-registered datasets (2014 and 2015), we set the first as the target and the more recent as the reference.
+For each point in the target cloud the corresponding nearest point in the reference cloud was identified and the distance between them evaluated using the software Cloud Compare.
+Co-registration errors, estimated as noise and not real material loss/gain signals, has to be removed from the analysis.
+Here, we noted from field observations that the size of displaced boulders is typically &gt; 0.30 m and we use this as a change criteria to remove the noise.</p>
+</div>
+</div>
+<div id="dbscan-feature-detection-from-points-clouds" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> DBSCAN: feature detection from points clouds<a href="density-based-clustering-algorithm.html#dbscan-feature-detection-from-points-clouds" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="load-the-libraries-2" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Load the libraries<a href="density-based-clustering-algorithm.html#load-the-libraries-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Fist you have to load the following libraries: - <strong>dbscan</strong>: A fast implementation of several density-based algorithms of the DBSCAN family.
+- <strong>rgl</strong>: Provides medium to high level functions for 3D interactive graphics - <strong>plot3Drgl</strong>: Plot 3D graphs in rgl window.
+- <strong>classInt</strong>: Selected methods to choose class intervals for mapping puposes.<br />
+- <strong>RColorBrewer</strong>: Provides color schemes for mapping.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="density-based-clustering-algorithm.html#cb98-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dbscan&quot;</span>)</span>
+<span id="cb98-2"><a href="density-based-clustering-algorithm.html#cb98-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rgl&quot;</span>)</span>
+<span id="cb98-3"><a href="density-based-clustering-algorithm.html#cb98-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;plot3Drgl&quot;</span>)</span>
+<span id="cb98-4"><a href="density-based-clustering-algorithm.html#cb98-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;classInt&quot;</span>)</span>
+<span id="cb98-5"><a href="density-based-clustering-algorithm.html#cb98-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
+<span id="cb98-6"><a href="density-based-clustering-algorithm.html#cb98-6" tabindex="-1"></a></span>
+<span id="cb98-7"><a href="density-based-clustering-algorithm.html#cb98-7" tabindex="-1"></a>(<span class="fu">.packages</span>())</span></code></pre></div>
+<pre><code>##  [1] &quot;RColorBrewer&quot; &quot;classInt&quot;     &quot;plot3Drgl&quot;    &quot;plot3D&quot;       &quot;rgl&quot;         
+##  [6] &quot;dbscan&quot;       &quot;stats&quot;        &quot;graphics&quot;     &quot;grDevices&quot;    &quot;utils&quot;       
+## [11] &quot;datasets&quot;     &quot;methods&quot;      &quot;base&quot;</code></pre>
+</div>
+<div id="import-and-visualise-the-point-clouds-dataset" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Import and visualise the point clouds dataset<a href="density-based-clustering-algorithm.html#import-and-visualise-the-point-clouds-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We provide the dataset corresponding to one-year displacement distance, masked over the the rock glacier front.
+The noise-points are removed using a threshold of 30 cm.
+Finally we will plot the 3D-points cloud filtered dataset using the displacement distance as attribute to display the map.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="density-based-clustering-algorithm.html#cb100-1" tabindex="-1"></a><span class="co"># Import point cloud dataset (ptc)</span></span>
+<span id="cb100-2"><a href="density-based-clustering-algorithm.html#cb100-2" tabindex="-1"></a><span class="co"># 1 year displacement TLS campaigns; data masked over the active front only.</span></span>
+<span id="cb100-3"><a href="density-based-clustering-algorithm.html#cb100-3" tabindex="-1"></a>ptc <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/Lab03/TsarmineRG_230914_frontonly_XYZ_dist_ref_220915.txt&quot;</span>, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb100-4"><a href="density-based-clustering-algorithm.html#cb100-4" tabindex="-1"></a></span>
+<span id="cb100-5"><a href="density-based-clustering-algorithm.html#cb100-5" tabindex="-1"></a><span class="co"># Add names to columns: X,Y, Z coordinates and the displacement distance &quot;d&quot;.</span></span>
+<span id="cb100-6"><a href="density-based-clustering-algorithm.html#cb100-6" tabindex="-1"></a><span class="fu">colnames</span>(ptc)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;Y&quot;</span>,<span class="st">&quot;X&quot;</span>,<span class="st">&quot;Z&quot;</span>,<span class="st">&quot;d&quot;</span>) <span class="co"># rename columns</span></span>
+<span id="cb100-7"><a href="density-based-clustering-algorithm.html#cb100-7" tabindex="-1"></a></span>
+<span id="cb100-8"><a href="density-based-clustering-algorithm.html#cb100-8" tabindex="-1"></a><span class="co"># Inspect the dataset:</span></span>
+<span id="cb100-9"><a href="density-based-clustering-algorithm.html#cb100-9" tabindex="-1"></a><span class="fu">str</span>(ptc)</span>
+<span id="cb100-10"><a href="density-based-clustering-algorithm.html#cb100-10" tabindex="-1"></a><span class="fu">summary</span>(ptc<span class="sc">$</span>d)</span>
+<span id="cb100-11"><a href="density-based-clustering-algorithm.html#cb100-11" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log10</span>(ptc<span class="sc">$</span>d))</span></code></pre></div>
+<p><img src="04-DBSCAN_files/figure-html/import-data-1.png" width="672" /></p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="density-based-clustering-algorithm.html#cb101-1" tabindex="-1"></a><span class="co"># Create a subset: removing noise-points (d&gt;30cm).</span></span>
+<span id="cb101-2"><a href="density-based-clustering-algorithm.html#cb101-2" tabindex="-1"></a>ptc30 <span class="ot">&lt;-</span> <span class="fu">subset</span>(ptc, d<span class="sc">&gt;=</span><span class="fl">0.3</span>)</span>
+<span id="cb101-3"><a href="density-based-clustering-algorithm.html#cb101-3" tabindex="-1"></a></span>
+<span id="cb101-4"><a href="density-based-clustering-algorithm.html#cb101-4" tabindex="-1"></a><span class="co"># Inspect the subset:</span></span>
+<span id="cb101-5"><a href="density-based-clustering-algorithm.html#cb101-5" tabindex="-1"></a><span class="fu">str</span>(ptc30)</span>
+<span id="cb101-6"><a href="density-based-clustering-algorithm.html#cb101-6" tabindex="-1"></a><span class="fu">summary</span>(ptc30<span class="sc">$</span>d)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="density-based-clustering-algorithm.html#cb102-1" tabindex="-1"></a><span class="co"># Plot-3D: display 3D plot (X,Y,Z) with class intervals based on the distance d.</span></span>
+<span id="cb102-2"><a href="density-based-clustering-algorithm.html#cb102-2" tabindex="-1"></a></span>
+<span id="cb102-3"><a href="density-based-clustering-algorithm.html#cb102-3" tabindex="-1"></a><span class="co"># Create a class interval (int) based on natural breaks:</span></span>
+<span id="cb102-4"><a href="density-based-clustering-algorithm.html#cb102-4" tabindex="-1"></a>int <span class="ot">&lt;-</span> <span class="fu">classIntervals</span>(ptc30<span class="sc">$</span>d, <span class="at">n=</span><span class="dv">5</span>, <span class="at">style=</span><span class="st">&quot;fisher&quot;</span>) </span>
+<span id="cb102-5"><a href="density-based-clustering-algorithm.html#cb102-5" tabindex="-1"></a>  cut.vals<span class="ot">&lt;-</span>int<span class="sc">$</span>brks</span>
+<span id="cb102-6"><a href="density-based-clustering-algorithm.html#cb102-6" tabindex="-1"></a>  d.cut <span class="ot">&lt;-</span> <span class="fu">cut</span>(ptc30<span class="sc">$</span>d,cut.vals)</span>
+<span id="cb102-7"><a href="density-based-clustering-algorithm.html#cb102-7" tabindex="-1"></a>  cut.levels <span class="ot">&lt;-</span> <span class="fu">levels</span>(d.cut)</span>
+<span id="cb102-8"><a href="density-based-clustering-algorithm.html#cb102-8" tabindex="-1"></a>  cut.band <span class="ot">&lt;-</span> <span class="fu">match</span>(d.cut,cut.levels)</span>
+<span id="cb102-9"><a href="density-based-clustering-algorithm.html#cb102-9" tabindex="-1"></a>  cls <span class="ot">&lt;-</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="fu">length</span>(cut.levels), <span class="st">&quot;RdYlGn&quot;</span>))</span>
+<span id="cb102-10"><a href="density-based-clustering-algorithm.html#cb102-10" tabindex="-1"></a>  </span>
+<span id="cb102-11"><a href="density-based-clustering-algorithm.html#cb102-11" tabindex="-1"></a><span class="co"># Display the 3D-plot:</span></span>
+<span id="cb102-12"><a href="density-based-clustering-algorithm.html#cb102-12" tabindex="-1"></a><span class="fu">scatter3D</span>(ptc30<span class="sc">$</span>X, ptc30<span class="sc">$</span>Y, ptc30<span class="sc">$</span>Z, <span class="at">colvar =</span>ptc30<span class="sc">$</span>d, <span class="at">breaks=</span>cut.vals, <span class="at">cex=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="04-DBSCAN_files/figure-html/points-clouds-1.png" width="672" /></p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="density-based-clustering-algorithm.html#cb103-1" tabindex="-1"></a><span class="fu">plotrgl</span>() <span class="co">#animated 3D-plot</span></span></code></pre></div>
+</div>
+<div id="run-dbscan" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Run DBSCAN<a href="density-based-clustering-algorithm.html#run-dbscan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The two parameters <span class="math inline">\(eps\)</span> and <span class="math inline">\(MinPts\)</span> greatly affect the output cluster detection leading the the identification of a large number of small clusters (for small values) or a small number of large features of arbitrary shape (for large values).
+Once fixed the <span class="math inline">\(MinPts\)</span> parameter, a suitable value for the <span class="math inline">\(eps\)</span> neighborhood size can be estimated using a <strong>k-nearest neighbors (k-NN) distance graph</strong>, imposing k as equal to <span class="math inline">\(MinPts\)</span> and plotting the distance to the nearest neighbors.
+The optimal <span class="math inline">\(eps\)</span>-value should coincide with the stronger curvature of the curve.</p>
+<p>In the following, the minimum number of points allowing to form a cluster is fixed first, and then the plot of the k-nearest neighbor (k-NN) distance is used to find a suitable value for the <span class="math inline">\(eps\)</span> neighborhood size.
+We can use this function to find the NN-distance (for a given k-value) corresponding to the stronger curvature.
+This values gives the best neighborhood size <span class="math inline">\(eps\)</span></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="density-based-clustering-algorithm.html#cb104-1" tabindex="-1"></a><span class="co"># Plot the k-NN distance graph (with k=10)</span></span>
+<span id="cb104-2"><a href="density-based-clustering-algorithm.html#cb104-2" tabindex="-1"></a><span class="fu">kNNdistplot</span>(ptc30[,<span class="sc">-</span><span class="dv">4</span>], <span class="at">k =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p><img src="04-DBSCAN_files/figure-html/k-NN-graph-1.png" width="672" /></p>
+<p>Once the best <span class="math inline">\(MinPts\)</span> adnd <span class="math inline">\(eps\)</span> parameter have been selected, the DBSCAN function can be run.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="density-based-clustering-algorithm.html#cb105-1" tabindex="-1"></a><span class="co"># Eps=1m (~3xsigma) ; MinPts=10</span></span>
+<span id="cb105-2"><a href="density-based-clustering-algorithm.html#cb105-2" tabindex="-1"></a>cl30<span class="ot">&lt;-</span><span class="fu">dbscan</span>(ptc30, <span class="dv">1</span>, <span class="at">minPts=</span><span class="dv">10</span>)</span>
+<span id="cb105-3"><a href="density-based-clustering-algorithm.html#cb105-3" tabindex="-1"></a></span>
+<span id="cb105-4"><a href="density-based-clustering-algorithm.html#cb105-4" tabindex="-1"></a><span class="co"># Inspect the results:</span></span>
+<span id="cb105-5"><a href="density-based-clustering-algorithm.html#cb105-5" tabindex="-1"></a><span class="fu">str</span>(cl30)</span>
+<span id="cb105-6"><a href="density-based-clustering-algorithm.html#cb105-6" tabindex="-1"></a><span class="fu">summary</span>(cl30<span class="sc">$</span>cluster)</span>
+<span id="cb105-7"><a href="density-based-clustering-algorithm.html#cb105-7" tabindex="-1"></a><span class="fu">sum</span>(cl30<span class="sc">$</span>cluster<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb105-8"><a href="density-based-clustering-algorithm.html#cb105-8" tabindex="-1"></a></span>
+<span id="cb105-9"><a href="density-based-clustering-algorithm.html#cb105-9" tabindex="-1"></a><span class="co"># Plot only the detected clusters.</span></span>
+<span id="cb105-10"><a href="density-based-clustering-algorithm.html#cb105-10" tabindex="-1"></a></span>
+<span id="cb105-11"><a href="density-based-clustering-algorithm.html#cb105-11" tabindex="-1"></a><span class="co"># Join the data:</span></span>
+<span id="cb105-12"><a href="density-based-clustering-algorithm.html#cb105-12" tabindex="-1"></a>cl30<span class="ot">&lt;-</span><span class="fu">cbind</span>(ptc30, <span class="at">cluster=</span>cl30<span class="sc">$</span>cluster)</span>
+<span id="cb105-13"><a href="density-based-clustering-algorithm.html#cb105-13" tabindex="-1"></a><span class="co"># Save as data frame and remove the noise (label==0)</span></span>
+<span id="cb105-14"><a href="density-based-clustering-algorithm.html#cb105-14" tabindex="-1"></a>cl30_df<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(<span class="fu">subset</span>(cl30, cl30<span class="sc">$</span>cluster<span class="sc">&gt;=</span><span class="dv">1</span>))</span>
+<span id="cb105-15"><a href="density-based-clustering-algorithm.html#cb105-15" tabindex="-1"></a><span class="co"># Simple plot:</span></span>
+<span id="cb105-16"><a href="density-based-clustering-algorithm.html#cb105-16" tabindex="-1"></a><span class="fu">plot</span>(cl30_df<span class="sc">$</span>X, cl30_df<span class="sc">$</span>Y, <span class="at">col=</span>cl30_df<span class="sc">$</span>cluster, <span class="at">pch=</span><span class="dv">20</span>)</span></code></pre></div>
+<p><img src="04-DBSCAN_files/figure-html/dbscan-1.png" width="672" /></p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="density-based-clustering-algorithm.html#cb106-1" tabindex="-1"></a><span class="co"># Animated 3D-plot:</span></span>
+<span id="cb106-2"><a href="density-based-clustering-algorithm.html#cb106-2" tabindex="-1"></a><span class="fu">plot3d</span>(cl30_df, <span class="at">col=</span>cl30_df<span class="sc">$</span>cluster, <span class="at">pch=</span><span class="dv">20</span>)</span></code></pre></div>
+<p>Finally you can export the result as a .txt file and import in a GIS system for further analyses, such as to determine the volumes of loss or gain of material.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="density-based-clustering-algorithm.html#cb107-1" tabindex="-1"></a><span class="fu">write.table</span>(cl30_df, <span class="at">file=</span><span class="st">&quot;cls30_1_10.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="conclusions-and-further-analyses-2" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Conclusions and further analyses<a href="density-based-clustering-algorithm.html#conclusions-and-further-analyses-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The proposed method permitted detection of features of changes on a rock glacier front located in the Swiss Alps.
+Single cluster features of erosion and deposition/front movements were extracted directly from point clouds, detected by DBSCAN without the necessity of interpolate the 3-D original data.</p>
+<p>To be sure that everything is perfectly clear for you, we propose you to do this lab again, by changing the values of <em>MinPts</em> and <em>eps</em> and discuss the compare the resulting extracted features.</p>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-micheletti_geomorphological_2017" class="csl-entry">
+Micheletti, Natan, Marj Tonini, and Stuart N. Lane. <span>“Geomorphological Activity at a Rock Glacier Front Detected with a 3D Density-Based Clustering Algorithm.”</span> <em>Geomorphology</em> 278 (February 2017): 287–97. <a href="https://doi.org/10.1016/j.geomorph.2016.11.016">https://doi.org/10.1016/j.geomorph.2016.11.016</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="8">
+<li id="fn8"><p><a href="#ref-micheletti_geomorphological_2017"><span>“Geomorphological Activity at a Rock Glacier Front Detected with a 3D Density-Based Clustering Algorithm,”</span> <em>Geomorphology</em> 278 (February 2017): 287–97, <span>https://doi.org/10.1016/j.geomorph.2016.11.016</span></a>.<a href="density-based-clustering-algorithm.html#fnref8" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="kernel-density-estimator.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="self-organizing-map.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-DBSCAN.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["fake-book.pdf", "fake-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

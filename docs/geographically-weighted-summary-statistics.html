@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Geographically Weighted Summary Statistics | Advanced Geospatial Data Analysis in R: Environmental Applications</title>
+  <meta name="description" content="This book will be used for the UNIL Master courses, and also open for the publich who are interested in." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Geographically Weighted Summary Statistics | Advanced Geospatial Data Analysis in R: Environmental Applications" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://eugenegis.github.io/AGDAbook/images/UNIL_logo.png" />
+  <meta property="og:description" content="This book will be used for the UNIL Master courses, and also open for the publich who are interested in." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Geographically Weighted Summary Statistics | Advanced Geospatial Data Analysis in R: Environmental Applications" />
+  
+  <meta name="twitter:description" content="This book will be used for the UNIL Master courses, and also open for the publich who are interested in." />
+  <meta name="twitter:image" content="https://eugenegis.github.io/AGDAbook/images/UNIL_logo.png" />
+
+<meta name="author" content="Marj Tonini, Haokun Liu" />
+
+
+<meta name="date" content="2024-04-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-to-r.html"/>
+<link rel="next" href="kernel-density-estimator.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Advanced Geospatial Data Analysis in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#author-information"><i class="fa fa-check"></i>Author Information</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-language"><i class="fa fa-check"></i><b>1.1</b> R Language</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-packages"><i class="fa fa-check"></i><b>1.1.1</b> R Packages</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#some-tips"><i class="fa fa-check"></i><b>1.1.2</b> Some tips</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-commands-online-resources"><i class="fa fa-check"></i><b>1.1.3</b> R Commands (online resources)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-markdown"><i class="fa fa-check"></i><b>1.2</b> R Markdown</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-type-in-computational-analysis"><i class="fa fa-check"></i><b>1.3</b> Data type in computational analysis</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#variables"><i class="fa fa-check"></i><b>1.3.1</b> Variables</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-structure-in-r"><i class="fa fa-check"></i><b>1.3.2</b> Data structure in R</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frame"><i class="fa fa-check"></i><b>1.3.3</b> Data Frame</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html"><i class="fa fa-check"></i><b>2</b> Geographically Weighted Summary Statistics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#the-overall-methodology"><i class="fa fa-check"></i><b>2.2</b> The overall methodology</a></li>
+<li class="chapter" data-level="2.3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#forest-fires-dataset"><i class="fa fa-check"></i><b>2.3</b> Forest fires dataset</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#load-the-libraries"><i class="fa fa-check"></i><b>2.3.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="2.3.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#import-the-portuguese-forest-fire-dataset"><i class="fa fa-check"></i><b>2.3.2</b> Import the Portuguese forest fire dataset</a></li>
+<li class="chapter" data-level="2.3.3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#forest-fires-spatial-distribution"><i class="fa fa-check"></i><b>2.3.3</b> Forest fires spatial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#compute-the-geographically-whited-statistics"><i class="fa fa-check"></i><b>2.4</b> Compute the geographically whited statistics</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#look-at-the-results"><i class="fa fa-check"></i><b>2.4.1</b> Look at the results</a></li>
+<li class="chapter" data-level="2.4.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#gwss-maps"><i class="fa fa-check"></i><b>2.4.2</b> GWSS maps</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#conclusions-and-further-analyses"><i class="fa fa-check"></i><b>2.5</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html"><i class="fa fa-check"></i><b>3</b> Kernel Density Estimator</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#method"><i class="fa fa-check"></i><b>3.2</b> Method</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ripleys-k-function"><i class="fa fa-check"></i><b>3.2.1</b> Ripley’s K-function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#kernel-density-estimator-1"><i class="fa fa-check"></i><b>3.2.2</b> Kernel density estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#load-the-libraries-1"><i class="fa fa-check"></i><b>3.3</b> Load the libraries</a></li>
+<li class="chapter" data-level="3.4" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#import-the-portuguese-forest-fire-dataset-1"><i class="fa fa-check"></i><b>3.4</b> Import the Portuguese forest fire dataset</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ff-subsets-based-on-the-burned-areas-size"><i class="fa fa-check"></i><b>3.4.1</b> FF-subsets based on the burned areas’ size</a></li>
+<li class="chapter" data-level="3.4.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ff-subsets-based-on-their-geographical-distribution"><i class="fa fa-check"></i><b>3.4.2</b> FF-subsets based on their geographical distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#the-space-time-k-function"><i class="fa fa-check"></i><b>3.5</b> The space-time K-function</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#extract-time-and-pts-object"><i class="fa fa-check"></i><b>3.5.1</b> Extract Time and PTS object</a></li>
+<li class="chapter" data-level="3.5.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#compute-the-space-time-k-function"><i class="fa fa-check"></i><b>3.5.2</b> Compute the space-time K-function</a></li>
+<li class="chapter" data-level="3.5.3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#assess-the-space-time-clustering-behavior"><i class="fa fa-check"></i><b>3.5.3</b> Assess the space-time clustering behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#conclusions-and-further-analyses-1"><i class="fa fa-check"></i><b>3.6</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html"><i class="fa fa-check"></i><b>4</b> Density-based Clustering Algorithm</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#introduction-2"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#the-overall-methodology-1"><i class="fa fa-check"></i><b>4.2</b> The overall methodology</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#dbscan-3-d-density-based-clustering-algorithm"><i class="fa fa-check"></i><b>4.2.1</b> DBSCAN: 3-D density based clustering algorithm</a></li>
+<li class="chapter" data-level="4.2.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#field-campaign"><i class="fa fa-check"></i><b>4.2.2</b> Field campaign</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#dbscan-feature-detection-from-points-clouds"><i class="fa fa-check"></i><b>4.3</b> DBSCAN: feature detection from points clouds</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#load-the-libraries-2"><i class="fa fa-check"></i><b>4.3.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="4.3.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#import-and-visualise-the-point-clouds-dataset"><i class="fa fa-check"></i><b>4.3.2</b> Import and visualise the point clouds dataset</a></li>
+<li class="chapter" data-level="4.3.3" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#run-dbscan"><i class="fa fa-check"></i><b>4.3.3</b> Run DBSCAN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#conclusions-and-further-analyses-2"><i class="fa fa-check"></i><b>4.4</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="self-organizing-map.html"><a href="self-organizing-map.html"><i class="fa fa-check"></i><b>5</b> Self-organizing Map</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#introduction-3"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#material-and-method"><i class="fa fa-check"></i><b>5.2</b> Material and method</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#the-geo-demographic-context"><i class="fa fa-check"></i><b>5.2.1</b> The geo-demographic context</a></li>
+<li class="chapter" data-level="5.2.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#som"><i class="fa fa-check"></i><b>5.2.2</b> SOM</a></li>
+<li class="chapter" data-level="5.2.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#swiss-census-data"><i class="fa fa-check"></i><b>5.2.3</b> Swiss census data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#variables-inspection"><i class="fa fa-check"></i><b>5.3</b> Variables inspection</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#import-the-data"><i class="fa fa-check"></i><b>5.3.1</b> Import the data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#inspect-the-data"><i class="fa fa-check"></i><b>5.3.2</b> Inspect the data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#data-transformation"><i class="fa fa-check"></i><b>5.3.3</b> Data transformation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="self-organizing-map.html"><a href="self-organizing-map.html#running-som"><i class="fa fa-check"></i><b>5.4</b> Running SOM</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#load-the-libraries-3"><i class="fa fa-check"></i><b>5.4.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="5.4.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#compute-som"><i class="fa fa-check"></i><b>5.4.2</b> Compute SOM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="self-organizing-map.html"><a href="self-organizing-map.html#soms-main-outputs"><i class="fa fa-check"></i><b>5.5</b> SOM’s main outputs</a></li>
+<li class="chapter" data-level="5.6" data-path="self-organizing-map.html"><a href="self-organizing-map.html#hierarchical-clustering"><i class="fa fa-check"></i><b>5.6</b> Hierarchical clustering</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#clusters-characterization"><i class="fa fa-check"></i><b>5.6.1</b> Clusters characterization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="self-organizing-map.html"><a href="self-organizing-map.html#conclusions"><i class="fa fa-check"></i><b>5.7</b> Conclusions</a></li>
+<li class="chapter" data-level="5.8" data-path="self-organizing-map.html"><a href="self-organizing-map.html#further-analyses"><i class="fa fa-check"></i><b>5.8</b> Further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="random-forest.html"><a href="random-forest.html"><i class="fa fa-check"></i><b>6</b> Random Forest</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="random-forest.html"><a href="random-forest.html#introduction-4"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="random-forest.html"><a href="random-forest.html#the-main-objective"><i class="fa fa-check"></i><b>6.1.1</b> The main objective</a></li>
+<li class="chapter" data-level="6.1.2" data-path="random-forest.html"><a href="random-forest.html#load-the-libraries-4"><i class="fa fa-check"></i><b>6.1.2</b> Load the libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="random-forest.html"><a href="random-forest.html#import-the-data-1"><i class="fa fa-check"></i><b>6.2</b> Import the data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="random-forest.html"><a href="random-forest.html#landslides-dataset"><i class="fa fa-check"></i><b>6.2.1</b> Landslides dataset</a></li>
+<li class="chapter" data-level="6.2.2" data-path="random-forest.html"><a href="random-forest.html#predictor-variables"><i class="fa fa-check"></i><b>6.2.2</b> Predictor variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="random-forest.html"><a href="random-forest.html#create-the-input-dataset"><i class="fa fa-check"></i><b>6.3</b> Create the input dataset</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="random-forest.html"><a href="random-forest.html#split-the-input-dataset-into-training-80-and-testing-20"><i class="fa fa-check"></i><b>6.3.1</b> Split the input dataset into training (80%) and testing (20%)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="random-forest.html"><a href="random-forest.html#run-random-forest"><i class="fa fa-check"></i><b>6.4</b> Run Random Forest</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="random-forest.html"><a href="random-forest.html#rf-main-outputs"><i class="fa fa-check"></i><b>6.4.1</b> RF main outputs</a></li>
+<li class="chapter" data-level="6.4.2" data-path="random-forest.html"><a href="random-forest.html#model-evaluation"><i class="fa fa-check"></i><b>6.4.2</b> Model evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="random-forest.html"><a href="random-forest.html#susceptibility-map"><i class="fa fa-check"></i><b>6.5</b> Susceptibility map</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="random-forest.html"><a href="random-forest.html#class-intervals-for-decision-maker"><i class="fa fa-check"></i><b>6.5.1</b> Class intervals for decision maker</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="random-forest.html"><a href="random-forest.html#variable-importance-plot"><i class="fa fa-check"></i><b>6.6</b> Variable importance plot</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="random-forest.html"><a href="random-forest.html#partial-dependence-plot"><i class="fa fa-check"></i><b>6.6.1</b> Partial dependence plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="random-forest.html"><a href="random-forest.html#conclusions-and-further-analyses-3"><i class="fa fa-check"></i><b>6.7</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Geospatial Data Analysis in R: Environmental Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="geographically-weighted-summary-statistics" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Geographically Weighted Summary Statistics<a href="geographically-weighted-summary-statistics.html#geographically-weighted-summary-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introduction<a href="geographically-weighted-summary-statistics.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In fire management, it is crucial to investigate where fires occurred more frequently and to distinguish between <strong>small</strong> and <strong>large fires</strong>.
+This is key information to understand the ignition factors and planning strategies to reduce forest fires, control and manage ignition sources, and identify areas at risk.</p>
+<p>Despite the availability of forest fires spatio-temporal inventories, it is not evident to extract information about their pattern distribution simply by looking at the original arrangement of the mapped burnt areas.
+To this end, <strong>Geographically Weighed Summary Statistics (GWSS)</strong> can be computed, under the assumption that burned areas generally follow a geographic trend.</p>
+<p>We compute here the GW local means, the GW local standard deviation and the GW localized skewness of burned areas in continental Portugal, registered in the period 1990-2013.
+This application is inspired by the work of<span class="citation"><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></span></p>
+</div>
+<div id="the-overall-methodology" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> The overall methodology<a href="geographically-weighted-summary-statistics.html#the-overall-methodology" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Summary statistics</strong> include a number of measures that can be used to summarize a set of observations, the most important of which are measures of <em>central tendency</em> (arithmetic mean, median and mode) and measures of <em>dispersion around the mean</em> (variance and standard deviation).
+In addition, measures of <em>skewness</em> and <em>kurtosis</em> are descriptors of the shape of the probability distribution function, the former indicating the asymmetry and the latter the peakedness/tailedness of the curve.</p>
+<p>In the case of <strong>spatial data</strong>, these global statistical descriptors may vary from one region to another, as their values may be affected by local environmental and socio-economic factors.
+In this case, an appropriately localized calibration can provide a better description of the observed values.
+One way to achieve this goal is to <em>weight</em> the above statistical measures for a given quantitative variable based on their geographical location.</p>
+<p>We introduce here the method proposed by<span class="citation"><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></span> and implemented in the <strong>function GWSS</strong> presented in the .<span class="citation"><a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></span>
+The evaluation of geographically weighted summary statistics is obtained by computing a summary for a small area around each geolocalized punctual observation, by using the <em>kernel density estimation</em> technique (KDE).<span class="citation"><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></span>
+KDE is estimated at each point, taking into account the influence of the points falling within an area, with increasing weight towards the center, corresponding to the point location.
+A surface summary statistic is thus obtained.</p>
+</div>
+<div id="forest-fires-dataset" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Forest fires dataset<a href="geographically-weighted-summary-statistics.html#forest-fires-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Forest fires inventories indicating the location, the starting date and other related variables, such as the cause of ignition and the size of the area burned, are broadly available with a different degree of accuracy in different countries.</p>
+<p>In the present study, we consider the <strong>Portuguese National Mapping Burnt Areas (NMBA 2016)</strong>, freely available from the website of the Institute for the Conservation of Nature and Forests (ICNF).
+This is a long spatio-temporal dataset (from 1975) resulting from the processing of satellite images acquired once a year at the end of the summer season.
+Row data consist of records of observed fire scars.
+The burned areas were estimated by using image classification techniques, then compared with ground data to resolve the discrepancies.
+Polygons have been converted into point shapefile, where each point represent the centroid of the burned areas, while the size of the burned areas and the starting date of the fires events are given as attributes.
+In this work, for consistency reasons, we consider only fires occurred between 1990 and 2013 and with a burned area above 5 hectares.
+.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:jpg"></span>
+<img src="images/Histo_FF.jpg" alt="Total annual number of forest fire events, expressed in thousands of square metres \label{Histo_FF}" width="70%" height="70%" />
+<p class="caption">
+Figure 2.1: Total annual number of forest fire events, expressed in thousands of square metres
+</p>
+</div>
+<div id="load-the-libraries" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Load the libraries<a href="geographically-weighted-summary-statistics.html#load-the-libraries" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>First you have to load the following libraries:</p>
+<ul>
+<li><strong>splancs</strong>: for display and analysis of spatial point pattern data</li>
+<li><strong>GWmodel</strong>: techniques from a particular branch of spatial statistics, termed geographically-weighted (GW) models</li>
+<li><strong>sf</strong>: support for simple features, a standardized way to encode spatial vector data</li>
+<li><strong>ggplot2</strong>: a system for ‘declaratively’ creating graphics</li>
+<li><strong>sp</strong>: classes and methods for spatial data</li>
+</ul>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="geographically-weighted-summary-statistics.html#cb48-1" tabindex="-1"></a><span class="fu">library</span>(splancs)</span>
+<span id="cb48-2"><a href="geographically-weighted-summary-statistics.html#cb48-2" tabindex="-1"></a><span class="fu">library</span>(GWmodel)</span>
+<span id="cb48-3"><a href="geographically-weighted-summary-statistics.html#cb48-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb48-4"><a href="geographically-weighted-summary-statistics.html#cb48-4" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb48-5"><a href="geographically-weighted-summary-statistics.html#cb48-5" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb48-6"><a href="geographically-weighted-summary-statistics.html#cb48-6" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="geographically-weighted-summary-statistics.html#cb48-7" tabindex="-1"></a>(<span class="fu">.packages</span>())</span></code></pre></div>
+<pre><code>##  [1] &quot;ggplot2&quot;    &quot;sf&quot;         &quot;GWmodel&quot;    &quot;Rcpp&quot;       &quot;robustbase&quot;
+##  [6] &quot;splancs&quot;    &quot;sp&quot;         &quot;stats&quot;      &quot;graphics&quot;   &quot;grDevices&quot; 
+## [11] &quot;utils&quot;      &quot;datasets&quot;   &quot;methods&quot;    &quot;base&quot;</code></pre>
+</div>
+<div id="import-the-portuguese-forest-fire-dataset" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Import the Portuguese forest fire dataset<a href="geographically-weighted-summary-statistics.html#import-the-portuguese-forest-fire-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this section you will load the geodata representing the dataset of forest fires occurred in the continental Portuguese area in the period 1990-2013.
+You will also load the boundaries of the study area.
+You will start by exploring the datasets using mainly visual tools (plotting and histogram).</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="geographically-weighted-summary-statistics.html#cb50-1" tabindex="-1"></a><span class="co"># Import Portugal boundary </span></span>
+<span id="cb50-2"><a href="geographically-weighted-summary-statistics.html#cb50-2" tabindex="-1"></a>Portugal <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data/Lab01/Area_Portugal.shp&quot;</span>)</span>
+<span id="cb50-3"><a href="geographically-weighted-summary-statistics.html#cb50-3" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="geographically-weighted-summary-statistics.html#cb50-4" tabindex="-1"></a><span class="co"># Import the Portuguese forest fires dataset for the entire Portuguese area.</span></span>
+<span id="cb50-5"><a href="geographically-weighted-summary-statistics.html#cb50-5" tabindex="-1"></a>FFPorto<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">&quot;data/Lab01/FF_Portugal.shp&quot;</span>)</span></code></pre></div>
+<p>You can explore the dataset by using different tools for <strong>exploratory data analyses</strong>.
+You will start by visualizing the databases.
+In the GIS environment, this correspond to the attribute table of a vector punctual feature.</p>
+<p>Than you can <strong>plot the histogram</strong> of events distribution based on the variable <em>“Area_ha”</em> (the size in hectares of the burned area).
+Since this is a power low distribution, for a better understanding it’s recommended to transform the data using a logarithmic scale.
+Using Log10 you can easily evaluate the frequency distribution of the burned areas.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="geographically-weighted-summary-statistics.html#cb51-1" tabindex="-1"></a><span class="co"># Show the attribute table (first 10 rows) </span></span>
+<span id="cb51-2"><a href="geographically-weighted-summary-statistics.html#cb51-2" tabindex="-1"></a>FFPorto </span>
+<span id="cb51-3"><a href="geographically-weighted-summary-statistics.html#cb51-3" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="geographically-weighted-summary-statistics.html#cb51-4" tabindex="-1"></a><span class="co"># Open the attribute table in a new tab </span></span>
+<span id="cb51-5"><a href="geographically-weighted-summary-statistics.html#cb51-5" tabindex="-1"></a><span class="fu">View</span>(FFPorto) </span>
+<span id="cb51-6"><a href="geographically-weighted-summary-statistics.html#cb51-6" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="geographically-weighted-summary-statistics.html#cb51-7" tabindex="-1"></a><span class="co"># Summary statistics of all of the attributes associated with this dataset</span></span>
+<span id="cb51-8"><a href="geographically-weighted-summary-statistics.html#cb51-8" tabindex="-1"></a><span class="fu">summary</span>(FFPorto<span class="sc">$</span>Area_ha)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="geographically-weighted-summary-statistics.html#cb52-1" tabindex="-1"></a><span class="co"># Display the histogram of burned area distribution</span></span>
+<span id="cb52-2"><a href="geographically-weighted-summary-statistics.html#cb52-2" tabindex="-1"></a><span class="fu">hist</span>(FFPorto<span class="sc">$</span>Area_ha)</span></code></pre></div>
+<p><img src="02-GWSS_files/figure-html/histo_FF-1.png" width="672" /></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="geographically-weighted-summary-statistics.html#cb53-1" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log10</span>(FFPorto<span class="sc">$</span>Area_ha))</span></code></pre></div>
+<p><img src="02-GWSS_files/figure-html/histo_FF-2.png" width="672" /></p>
+</div>
+<div id="forest-fires-spatial-distribution" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Forest fires spatial distribution<a href="geographically-weighted-summary-statistics.html#forest-fires-spatial-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For a better understanding of the phenomenon, you can group the events according to the size of the burned area.
+Based on the frequency distribution of the burned areas, the following three classes can be defined:</p>
+<ul>
+<li><p><strong>Small fires</strong>: less than 15 ha</p></li>
+<li><p><strong>Medium fires</strong>: between 15 ha and 100 ha</p></li>
+<li><p><strong>Large fires</strong>: bigger than 100 ha</p></li>
+</ul>
+<p>Plotting the forest fires events using different colors, based on the size of the burned areas, can simplify the understanding of their <strong>pattern distribution</strong>, knowing that fires of different size have normally different drivers.</p>
+<p><img src="02-GWSS_files/figure-html/plot-all-fires-1.png" width="672" /></p>
+</div>
+</div>
+<div id="compute-the-geographically-whited-statistics" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Compute the geographically whited statistics<a href="geographically-weighted-summary-statistics.html#compute-the-geographically-whited-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>From the exploratory data analysis performed above, it seems that a simple plotting of the forest fires events based on their spatial distribution, even if classified based on their size, can not really help to understand their behaviors.
+This is because we face to a huge number of events and the variable that we are using to characterize them (i.e., the size of the burned area) is very heterogeneous.
+To this aim, we can compute basic and robust <strong>GWSS</strong> and plot the data accordingly.</p>
+<p>GWSS includes <em>geographically weighted means</em>, <em>standard deviations</em> and the <em>skweness</em>.
+As you can see from the R Documentation (command: , same data manipulations are necessary to transform the forest fires dataset in a compatible data frame format.</p>
+<p><strong>GWSS parameters</strong>:</p>
+<ul>
+<li><p>We summarize the data based on the size of the burned area (<em>vars</em>).</p></li>
+<li><p>We use here an adaptive kernel where the bandwidth (<em>bw</em>) corresponds to the number (100 in this case) of nearest neighbors (i.e. adaptive distance).</p></li>
+<li><p>We keep the default values for the other parameters.</p></li>
+</ul>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="geographically-weighted-summary-statistics.html#cb54-1" tabindex="-1"></a><span class="co"># Transform inputs data into a spatial points data frame</span></span>
+<span id="cb54-2"><a href="geographically-weighted-summary-statistics.html#cb54-2" tabindex="-1"></a>FFdf<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">X=</span>FFPorto<span class="sc">$</span>X, <span class="at">Y=</span>FFPorto<span class="sc">$</span>Y, <span class="at">Area=</span>FFPorto<span class="sc">$</span>Area_ha)</span>
+<span id="cb54-3"><a href="geographically-weighted-summary-statistics.html#cb54-3" tabindex="-1"></a>FFspdf<span class="ot">&lt;-</span><span class="fu">SpatialPointsDataFrame</span>(FFdf[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], FFdf)</span>
+<span id="cb54-4"><a href="geographically-weighted-summary-statistics.html#cb54-4" tabindex="-1"></a><span class="fu">str</span>(FFspdf)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="geographically-weighted-summary-statistics.html#cb55-1" tabindex="-1"></a><span class="co"># Run gwss: this operation can take several minutes...be patient!</span></span>
+<span id="cb55-2"><a href="geographically-weighted-summary-statistics.html#cb55-2" tabindex="-1"></a><span class="co"># While waiting, you can look at gwss R Documentation</span></span>
+<span id="cb55-3"><a href="geographically-weighted-summary-statistics.html#cb55-3" tabindex="-1"></a><span class="fu">help</span>(gwss)</span>
+<span id="cb55-4"><a href="geographically-weighted-summary-statistics.html#cb55-4" tabindex="-1"></a></span>
+<span id="cb55-5"><a href="geographically-weighted-summary-statistics.html#cb55-5" tabindex="-1"></a>FFgwss <span class="ot">&lt;-</span> <span class="fu">gwss</span>(FFspdf,<span class="at">vars=</span>(<span class="st">&quot;Area&quot;</span>),<span class="at">adaptive=</span><span class="cn">TRUE</span>, <span class="at">bw=</span><span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="geographically-weighted-summary-statistics.html#cb56-1" tabindex="-1"></a><span class="do">## RUN IT ONLY IF YOU FAIL TO RUN THE CODE ABOVE</span></span>
+<span id="cb56-2"><a href="geographically-weighted-summary-statistics.html#cb56-2" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="geographically-weighted-summary-statistics.html#cb56-3" tabindex="-1"></a><span class="do">##  If it&#39;s too slow, you can stop the job </span></span>
+<span id="cb56-4"><a href="geographically-weighted-summary-statistics.html#cb56-4" tabindex="-1"></a><span class="do">## and load the result directly</span></span>
+<span id="cb56-5"><a href="geographically-weighted-summary-statistics.html#cb56-5" tabindex="-1"></a></span>
+<span id="cb56-6"><a href="geographically-weighted-summary-statistics.html#cb56-6" tabindex="-1"></a><span class="co">#load (&quot;FFgwss&quot;)</span></span></code></pre></div>
+<div id="look-at-the-results" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Look at the results<a href="geographically-weighted-summary-statistics.html#look-at-the-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The resulting object (<strong>FFgwss</strong>) has a number of components.
+The most important one is the spatial data frame containing the results of local summary statistics for each data point location, stored in <em>FFgwss$SDF</em> (that is a spatial DataFrame).</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="geographically-weighted-summary-statistics.html#cb57-1" tabindex="-1"></a><span class="co"># display the first 6 rows</span></span>
+<span id="cb57-2"><a href="geographically-weighted-summary-statistics.html#cb57-2" tabindex="-1"></a><span class="fu">head</span>(FFgwss<span class="sc">$</span>SDF) </span>
+<span id="cb57-3"><a href="geographically-weighted-summary-statistics.html#cb57-3" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="geographically-weighted-summary-statistics.html#cb57-4" tabindex="-1"></a><span class="co"># Inspect the resulting object: </span></span>
+<span id="cb57-5"><a href="geographically-weighted-summary-statistics.html#cb57-5" tabindex="-1"></a>FFgwss</span></code></pre></div>
+</div>
+<div id="gwss-maps" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> GWSS maps<a href="geographically-weighted-summary-statistics.html#gwss-maps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To produce a map of the local geographically weighted summary statistic of your choice, firstly we need to enter a small R function definition.
+This is just a short R program to draw a map: you can think of it as a command that tells R how to draw a map (see <a href="geographically-weighted-summary-statistics.html#geographically-weighted-summary-statistics">Geographically Weighted Summary Statistics</a> (<a href="https://rpubs.com/chrisbrunsdon/99667" class="uri">https://rpubs.com/chrisbrunsdon/99667</a>) for more details).
+The advantage of defining a function is that the entire map can now be drawn using a single command for each variable, rather than having to repeat those steps each time.
+To define the intervals for the classification we used Jenks natural breaks classification method (textcolor{red}{style=“fisher”}).</p>
+<p>Finally the function is called by entering:</p>
+<pre><code>quick.map(gwss.object,variable.name,legend.title,main.map.title)</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="geographically-weighted-summary-statistics.html#cb59-1" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer) <span class="co">#a useful tool for designing map color palettes.</span></span>
+<span id="cb59-2"><a href="geographically-weighted-summary-statistics.html#cb59-2" tabindex="-1"></a><span class="fu">library</span>(classInt) <span class="co">#to define class intervals</span></span>
+<span id="cb59-3"><a href="geographically-weighted-summary-statistics.html#cb59-3" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="geographically-weighted-summary-statistics.html#cb59-4" tabindex="-1"></a><span class="co"># The function definition to draw the map:</span></span>
+<span id="cb59-5"><a href="geographically-weighted-summary-statistics.html#cb59-5" tabindex="-1"></a></span>
+<span id="cb59-6"><a href="geographically-weighted-summary-statistics.html#cb59-6" tabindex="-1"></a>quick.map <span class="ot">&lt;-</span> <span class="cf">function</span>(spdf,var,legend.title,main.title) {</span>
+<span id="cb59-7"><a href="geographically-weighted-summary-statistics.html#cb59-7" tabindex="-1"></a>  x <span class="ot">&lt;-</span> spdf<span class="sc">@</span>data[,var]</span>
+<span id="cb59-8"><a href="geographically-weighted-summary-statistics.html#cb59-8" tabindex="-1"></a>  int <span class="ot">&lt;-</span> <span class="fu">classIntervals</span>(x, <span class="at">n=</span><span class="dv">5</span>, <span class="at">style=</span><span class="st">&quot;fisher&quot;</span>)</span>
+<span id="cb59-9"><a href="geographically-weighted-summary-statistics.html#cb59-9" tabindex="-1"></a>  cut.vals<span class="ot">&lt;-</span>int<span class="sc">$</span>brks</span>
+<span id="cb59-10"><a href="geographically-weighted-summary-statistics.html#cb59-10" tabindex="-1"></a>  x.cut <span class="ot">&lt;-</span> <span class="fu">cut</span>(x,cut.vals)</span>
+<span id="cb59-11"><a href="geographically-weighted-summary-statistics.html#cb59-11" tabindex="-1"></a>  cut.levels <span class="ot">&lt;-</span> <span class="fu">levels</span>(x.cut)</span>
+<span id="cb59-12"><a href="geographically-weighted-summary-statistics.html#cb59-12" tabindex="-1"></a>  cut.band <span class="ot">&lt;-</span> <span class="fu">match</span>(x.cut,cut.levels)</span>
+<span id="cb59-13"><a href="geographically-weighted-summary-statistics.html#cb59-13" tabindex="-1"></a>  colors <span class="ot">&lt;-</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="fu">length</span>(cut.levels), <span class="st">&quot;RdYlGn&quot;</span>))</span>
+<span id="cb59-14"><a href="geographically-weighted-summary-statistics.html#cb59-14" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb59-15"><a href="geographically-weighted-summary-statistics.html#cb59-15" tabindex="-1"></a>  <span class="fu">plot</span>(Portugal<span class="sc">$</span>geometry,<span class="at">col=</span><span class="st">&#39;lightgrey&#39;</span>)</span>
+<span id="cb59-16"><a href="geographically-weighted-summary-statistics.html#cb59-16" tabindex="-1"></a>  <span class="fu">title</span>(main.title)</span>
+<span id="cb59-17"><a href="geographically-weighted-summary-statistics.html#cb59-17" tabindex="-1"></a>  <span class="fu">plot</span>(spdf,<span class="at">add=</span><span class="cn">TRUE</span>,<span class="at">col=</span>colors[cut.band],<span class="at">pch=</span><span class="dv">16</span>, <span class="at">cex=</span><span class="fl">0.5</span>)</span>
+<span id="cb59-18"><a href="geographically-weighted-summary-statistics.html#cb59-18" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>,cut.levels,<span class="at">col=</span>colors,<span class="at">pch=</span><span class="dv">16</span>,<span class="at">bty=</span><span class="st">&quot;n&quot;</span>,<span class="at">title=</span>legend.title)</span>
+<span id="cb59-19"><a href="geographically-weighted-summary-statistics.html#cb59-19" tabindex="-1"></a>  }</span>
+<span id="cb59-20"><a href="geographically-weighted-summary-statistics.html#cb59-20" tabindex="-1"></a></span>
+<span id="cb59-21"><a href="geographically-weighted-summary-statistics.html#cb59-21" tabindex="-1"></a><span class="co"># Call the function to display the maps of the Local Mean (LM), Local Standard Deviation(LSD), and Local Skweness (LSKe)</span></span>
+<span id="cb59-22"><a href="geographically-weighted-summary-statistics.html#cb59-22" tabindex="-1"></a></span>
+<span id="cb59-23"><a href="geographically-weighted-summary-statistics.html#cb59-23" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb59-24"><a href="geographically-weighted-summary-statistics.html#cb59-24" tabindex="-1"></a><span class="fu">quick.map</span>(FFgwss<span class="sc">$</span>SDF, <span class="st">&quot;Area_LM&quot;</span>, <span class="st">&quot;Area (ha)&quot;</span>, <span class="st">&quot;GWL Means&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in classIntervals(x, n = 5, style = &quot;fisher&quot;): N is large, and some
+## styles will run very slowly; sampling imposed</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="geographically-weighted-summary-statistics.html#cb61-1" tabindex="-1"></a><span class="fu">quick.map</span>(FFgwss<span class="sc">$</span>SDF, <span class="st">&quot;Area_LSD&quot;</span>, <span class="st">&quot;Area (ha)&quot;</span>, <span class="st">&quot;GWL Standard Deviation&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in classIntervals(x, n = 5, style = &quot;fisher&quot;): N is large, and some
+## styles will run very slowly; sampling imposed</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="geographically-weighted-summary-statistics.html#cb63-1" tabindex="-1"></a><span class="fu">quick.map</span>(FFgwss<span class="sc">$</span>SDF, <span class="st">&quot;Area_LSKe&quot;</span>, <span class="st">&quot;Area (ha)&quot;</span>, <span class="st">&quot;GWL Skewness&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in classIntervals(x, n = 5, style = &quot;fisher&quot;): N is large, and some
+## styles will run very slowly; sampling imposed</code></pre>
+<p><img src="02-GWSS_files/figure-html/gwss-maps-1.png" width="672" /></p>
+</div>
+</div>
+<div id="conclusions-and-further-analyses" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Conclusions and further analyses<a href="geographically-weighted-summary-statistics.html#conclusions-and-further-analyses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This practical computer lab allowed you to familiarize with GWSS, by the proposed application about geographically weighted summary statistics.
+This method allowed us to explore how the average burned area vary locally through Continental Portugal in the period 1990-2013.</p>
+<p>The global Geographically Weighted (GW) means informs you about the local average value of the burned area, based of the neighboring events occurred in a given period.
+Similarly, you may compute a GW standard deviation to see the extent to which the size of the burned area spread around this mean.
+Finally you can compute the GW skewness to measure the symmetry of distribution: a positively skewed distribution means that there is a higher number of data points having low values, with mean value lower that the median; and the contrary for a negatively skewed distribution.</p>
+<p>To be sure that everything is perfectly clear for you, we propose you to <strong>answer the following questions</strong> and to discuss your answers with the other participants to the course or directly with the teacher.</p>
+<ol style="list-style-type: decimal">
+<li><p>What is the pattern distribution of the GW-means for burned area in Portugal during the investigated periods?</p></li>
+<li><p>Does the GW-standard deviation follows the same pattern?
+How can you interpret the two pattern in terms of burned area and their characterization?</p></li>
+<li><p>GW-skewness has positive values everywhere: what does it means?
+What do these values suggest to be the distribution of the burned areas, in terms of their size, around the local means?</p></li>
+<li><p>Which can be other applications of GWSS for geo-environmental data?
+In other words, can you imagine other geo-environmental dataset that can be analysed using GWSS?</p></li>
+<li><p>You can finally play with the code and try to run it using a different numbers of nearest neighbors (bw=x) and comparing the results.</p>
+<p><strong>NB:</strong> You have to rename the original pdf to avoid overwriting it.
+In addition, if a pdf with the same name saved in the same destination folder is open, you will receive an error message, so close it before Knitting.</p></li>
+</ol>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-brunsdon_geographically_2002" class="csl-entry">
+Brunsdon, C., A. S. Fotheringham, and M. Charlton. <span>“Geographically Weighted Summary Statistics - a Framework for Localised Exploratory Data Analysis.”</span> <em>Computers, Environment and Urban Systems</em> 26, no. 6 (November 2002): 501–24. <a href="https://doi.org/10.1016/s0198-9715(01)00009-6">https://doi.org/10.1016/s0198-9715(01)00009-6</a>.
+</div>
+<div id="ref-brunsdon_estimating_1995" class="csl-entry">
+Brunsdon, Chris. <span>“Estimating Probability Surfaces for Geographical Point Data: An Adaptive Kernel Algorithm.”</span> <em>Computers &amp; Geosciences</em> 21, no. 7 (August 1995): 877–94. <a href="https://doi.org/10.1016/0098-3004(95)00020-9">https://doi.org/10.1016/0098-3004(95)00020-9</a>.
+</div>
+<div id="ref-brunsdon_rpubs_2019" class="csl-entry">
+———. <span>“<span>RPubs</span> - <span>GWSS</span> - (7th Channel Network Conference),”</span> July 2019. <a href="https://rpubs.com/chrisbrunsdon/503649">https://rpubs.com/chrisbrunsdon/503649</a>.
+</div>
+<div id="ref-lu_gwmodel_2014" class="csl-entry">
+Lu, Binbin, Paul Harris, Martin Charlton, and Chris Brunsdon. <span>“The <span>GWmodel</span> r Package: Further Topics for Exploring Spatial Heterogeneity Using Geographically Weighted Models.”</span> <em>Geo-Spatial Information Science</em> 17, no. 2 (April 3, 2014): 85–101. <a href="https://doi.org/10.1080/10095020.2014.917453">https://doi.org/10.1080/10095020.2014.917453</a>.
+</div>
+<div id="ref-tonini_evolution_2017" class="csl-entry">
+Tonini, Marj, Mário Gonzalez Pereira, Joana Parente, and Carmen Vega Orozco. <span>“Evolution of Forest Fires in Portugal: From Spatio-Temporal Point Events to Smoothed Density Maps.”</span> <em>Natural Hazards</em> 85, no. 3 (February 1, 2017): 1489–1510. <a href="https://doi.org/10.1007/s11069-016-2637-x">https://doi.org/10.1007/s11069-016-2637-x</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><a href="#ref-tonini_evolution_2017">Marj Tonini et al., <span>“Evolution of Forest Fires in Portugal: From Spatio-Temporal Point Events to Smoothed Density Maps,”</span> <em>Natural Hazards</em> 85, no. 3 (February 1, 2017): 1489–1510, <span>https://doi.org/10.1007/s11069-016-2637-x</span></a>.<a href="geographically-weighted-summary-statistics.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><a href="#ref-brunsdon_geographically_2002">C. Brunsdon, A. S. Fotheringham, and M. Charlton, <span>“Geographically Weighted Summary Statistics - a Framework for Localised Exploratory Data Analysis,”</span> <em>Computers, Environment and Urban Systems</em> 26, no. 6 (November 2002): 501–24, <span>https://doi.org/10.1016/s0198-9715(01)00009-6</span></a>.<a href="geographically-weighted-summary-statistics.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p><a href="#ref-lu_gwmodel_2014">Binbin Lu et al., <span>“The <span>GWmodel</span> r Package: Further Topics for Exploring Spatial Heterogeneity Using Geographically Weighted Models,”</span> <em>Geo-Spatial Information Science</em> 17, no. 2 (April 3, 2014): 85–101, <span>https://doi.org/10.1080/10095020.2014.917453</span></a>; <a href="#ref-brunsdon_rpubs_2019">Chris Brunsdon, <span>“<span>RPubs</span> - <span>GWSS</span> - (7th Channel Network Conference),”</span> July 2019, <span>https://rpubs.com/chrisbrunsdon/503649</span></a>.<a href="geographically-weighted-summary-statistics.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><a href="#ref-brunsdon_estimating_1995">Chris Brunsdon, <span>“Estimating Probability Surfaces for Geographical Point Data: An Adaptive Kernel Algorithm,”</span> <em>Computers &amp; Geosciences</em> 21, no. 7 (August 1995): 877–94, <span>https://doi.org/10.1016/0098-3004(95)00020-9</span></a>.<a href="geographically-weighted-summary-statistics.html#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="kernel-density-estimator.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-GWSS.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["fake-book.pdf", "fake-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
