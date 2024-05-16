@@ -56,6 +56,8 @@ Explored algorithms include:
 -   *Self-Organizing Maps* as an example of unsupervised machine learning approach to data clustering and visualization;
 -   *Random Forest* as an example of a supervised machine learning algorithm, applied here for classification.
 
+To perfom the compution labs presented in the next chapters you can dowload data from here: [AGDA Book Gihub] (https://github.com/EugeneGIS/AGDAbook)
+
 ## Author Information {.unnumbered}
 
 Marj Tonini is a spatial data scientist with a strong interest on geospatial modelling for risk assessment, mainly related to wildfires and landslides. She gained her PhD in 2002 at Sant’Anna School of advanced studies (Pisa, Italy), defending a thesis on agro-environmental modelling. She started working at the University of Lausanne in 2004, as post-doc and, in 2008, she was appointed senior research manager at the Institute of Earth Surface Dynamics (current position).
