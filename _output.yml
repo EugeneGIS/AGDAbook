@@ -6,7 +6,7 @@ bookdown::gitbook:
         <li class="toc-logo"><a href="./"><img src="images/AGDA_ImageCover.webp"></a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/USERNAME/REPO/edit/BRANCH/%s
+    edit: https://github.com/EugeneGIS/AGDAbook/edit/master%s
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:

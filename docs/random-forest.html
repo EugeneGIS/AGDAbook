@@ -584,11 +584,11 @@ This values is used the optimize the values of the hyperparameters, by a trial a
 ##                      Number of trees: 200
 ## No. of variables tried at each split: 3
 ## 
-##         OOB estimate of  error rate: 15.94%
+##         OOB estimate of  error rate: 16.3%
 ## Confusion matrix:
 ##      0    1 class.error
-## 0 1657  399   0.1940661
-## 1  262 1830   0.1252390</code></pre>
+## 0 1695  379   0.1827387
+## 1  297 1777   0.1432015</code></pre>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="random-forest.html#cb149-1" tabindex="-1"></a><span class="fu">plot</span>(RF_LS)</span>
 <span id="cb149-2"><a href="random-forest.html#cb149-2" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="st">&quot;topright&quot;</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;perd 0&quot;</span>, <span class="st">&quot;pred 1&quot;</span>, <span class="st">&quot;OOB error&quot;</span>), </span>
 <span id="cb149-3"><a href="random-forest.html#cb149-3" tabindex="-1"></a> <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;black&quot;</span>), <span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">0.8</span>)</span></code></pre></div>
@@ -596,13 +596,13 @@ This values is used the optimize the values of the hyperparameters, by a trial a
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="random-forest.html#cb150-1" tabindex="-1"></a><span class="co"># Show the predicted probability values</span></span>
 <span id="cb150-2"><a href="random-forest.html#cb150-2" tabindex="-1"></a>RF.predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(RF_LS,<span class="at">type=</span><span class="st">&quot;prob&quot;</span>)</span>
 <span id="cb150-3"><a href="random-forest.html#cb150-3" tabindex="-1"></a><span class="fu">head</span>(RF.predict) <span class="co"># 0==abstece ; 1== presence</span></span></code></pre></div>
-<pre><code>##               0         1
-## 2464 0.33333333 0.6666667
-## 2512 0.08219178 0.9178082
-## 2228 0.84931507 0.1506849
-## 526  0.80597015 0.1940299
-## 4294 1.00000000 0.0000000
-## 2988 0.16470588 0.8352941</code></pre>
+<pre><code>##              0          1
+## 2464 0.9577465 0.04225352
+## 2512 0.1460674 0.85393258
+## 2228 0.9565217 0.04347826
+## 526  0.2656250 0.73437500
+## 4292 1.0000000 0.00000000
+## 2987 0.6891892 0.31081081</code></pre>
 </div>
 <div id="model-evaluation" class="section level3 hasAnchor" number="6.4.2">
 <h3><span class="header-section-number">6.4.2</span> Model evaluation<a href="random-forest.html#model-evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -801,7 +801,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-RF.Rmd",
+"link": "https://github.com/EugeneGIS/AGDAbook/edit/master06-RF.Rmd",
 "text": "Edit"
 },
 "history": {

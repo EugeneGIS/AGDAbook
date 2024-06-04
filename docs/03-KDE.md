@@ -255,7 +255,7 @@ install.packages('patchwork', repos = "http://cran.us.r-project.org")
 ```
 ## 
 ## The downloaded binary packages are in
-## 	/var/folders/hf/q_2qq0tn1dngf4r3nzfhj3xh0000gn/T//RtmpecFLqD/downloaded_packages
+## 	/var/folders/hf/q_2qq0tn1dngf4r3nzfhj3xh0000gn/T//Rtmp0Pvrpw/downloaded_packages
 ```
 
 ```r
