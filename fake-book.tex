@@ -1,0 +1,3056 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Advanced Geospatial Data Analysis in R: Environmental Applications},
+  pdfauthor={Marj Tonini, Haokun Liu},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Advanced Geospatial Data Analysis in R: Environmental Applications}
+\author{Marj Tonini, Haokun Liu}
+\date{2024-06-04}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{preface}{%
+\chapter*{Preface}\label{preface}}
+\addcontentsline{toc}{chapter}{Preface}
+
+Earth surface environmental processes exhibit distinctive characteristics, encompassing both spatial and temporal dimensions, along with various attributes and predictive variables.
+Furthermore, in the era of Data Science, the wealth of available data and the rapid development of analytical models have emerged as distinctive aspects in the realm of \textbf{Geospatial Data Analysis (GDA)}.
+Coupled with uncertainty and complexity issues, all this contribute to making this field of research highly challenging.
+The domain of GDA encompasses data exploration, manipulation, and modelling, from the acquisition phase up to the visualization and interpretation of the results.
+Mapping where events are located and how they relate to each other provides a better understanding of the process being studied.
+Finally, as an increasing volume of geo-environmental data becomes more and more accessible, the demand for experts in this domain is growing rapidly, both in public research institutions as well as in private companies.
+
+Defined for the first time by Naur as \emph{``The science of dealing with data''}, the term \textbf{Data Science} evolved over time around the original concept of \emph{``\ldots converting data into information and knowledge''} (IASC, 1977).
+In the disciplines like Environmental and Earth Sciences, Physical Geography, Humanities and Social Sciences, the use of Data Science procedures is emerging only recently, proving to be extremely efficient to deal with the complexity of the investigated process and the heterogeneity of the underlying data sources.
+This leads to a cultural shift, moving scientists away from individual working within their own research domain.
+Indeed, disciplinary boundaries are more and more permeable, pushing scientists to be more open to collaborate among them and with decision makers on the investigation and understanding of real-world problems.
+Modern earth and environmental scientists need to interact with other disciplines, apparently far from their domain.
+This openness is increasingly important as society struggles to respond to the implication of anthropogenic pressures on different issues, such as natural hazards and climate change, or the harmful impacts of human activities on biodiversity, water and air quality, human health.
+
+\textbf{The target audience of this eBook} are master and graduate (PhD) students in Earth/Environmental Sciences, Biology and Spatial Ecology, Physical Geography, and equivalent disciplines.
+We strive to empower students by guiding them through both theoretical knowledge and hands-on practical applications, enabling them to cultivate effective problem-solving skills.
+The primary focus here delves into applying Data Science methodologies to understand and analyze Earth's surface environmental processes.
+The scientific approaches related to this emerging discipline, ranging from statistics, mathematics, geomatics and computer science, are often hard to be acquired.
+While maintaining a strong emphasis on rigorous mathematical and statistical formalism in the methods presented, this eBook primarily accentuates their practical applications within the realm of Geosciences
+
+The book is addressed to intermediate to advanced R users with some experience on geospatial data and a great interest in geocomputing.
+If you have some very basic knowledge in these fields, we encourage you to explore links provided in each chapter, which redirect you to further useful documentation.
+
+\textbf{This eBook seeks to provide the audience with}:
+
+\begin{itemize}
+\tightlist
+\item
+  A good understanding of main practical concepts and applied aspects in GDA;
+\item
+  Advanced tools designed to proficiently navigate various techniques for analysing spatial datasets in geosciences.
+\end{itemize}
+
+Specifically, the methodologies outlined will equip readers with expertise in various algorithms tailored for analyzing complex geo-environmental datasets.
+This knowledge will empower them to extract valuable insights and translate them into actionable decisions.
+
+Explored algorithms include:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Geographically Weighted Summary Statistics} for exploratory data analyses and visualization of geographical variations in the statistical data distribution;
+\item
+  \emph{Ripley's K-function, Kernel Density Estimator, DBSCAN} for cluster detection and mapping;
+\item
+  \emph{Self-Organizing Maps} as an example of unsupervised machine learning approach to data clustering and visualization;
+\item
+  \emph{Random Forest} as an example of a supervised machine learning algorithm, applied here for classification.
+\end{itemize}
+
+\hypertarget{author-information}{%
+\section*{Author Information}\label{author-information}}
+\addcontentsline{toc}{section}{Author Information}
+
+Marj Tonini is a spatial data scientist with a strong interest on geospatial modelling for risk assessment, mainly related to wildfires and landslides. She gained her PhD in 2002 at Sant'Anna School of advanced studies (Pisa, Italy), defending a thesis on agro-environmental modelling. She started working at the University of Lausanne in 2004, as post-doc and, in 2008, she was appointed senior research manager at the Institute of Earth Surface Dynamics (current position).
+
+Her research focuses on the development of innovative approaches allowing to enable efficient learning from complex environmental datasets. She seeks to set up a methodological framework to understand the spatio-temporal dynamic of environmental processes and to assess the influence of predictor variables. Her current research targets are on land use/land cover change analyses and on the elaboration of predictive scenario and susceptibility / risk assessment for natural hazard.
+
+Haokun Liu is a Ph.D.~student at the Group of Cities and dynamics of networks (CITADYNE Group), University of Lausanne. Meanwhile, he is also a student assistant at Swiss Geocomputing Center (SGC). Benefiting from the strict and effective training in China and Switzerland, his research interests and experience include, but are not limited to: 1) Urban analytics, 2) Health geography, 3) Spatial data science. With the goal of bridging the gap between theories and practical applications, he am focusing on the intersections among urban health, complex perspective, activity space, and the Spatial-social-semantic framework.
+
+\hypertarget{prerequisites}{%
+\section*{Prerequisites}\label{prerequisites}}
+\addcontentsline{toc}{section}{Prerequisites}
+
+\begin{itemize}
+\tightlist
+\item
+  Knowledge of basic statistics: methods of descriptive statistics (measures of central tendency and dispersion); how to assess relationships between variables; concepts of correlation and regression.
+\item
+  Basic knowledge in geomatics (GIS): basic operations with raster and vector datasets.
+\item
+  R programming basics and RStudio.
+\end{itemize}
+
+\hypertarget{acknowledgements}{%
+\section*{Acknowledgements}\label{acknowledgements}}
+\addcontentsline{toc}{section}{Acknowledgements}
+
+The case study presented in each chapter came from different projects carried out in collaboration with several colleagues, including master and PhD students.
+All the produced scientific papers are duly cited in the bibliography.
+
+We would like to thank the following collaborators:
+
+\begin{itemize}
+\item
+  Mário Gonzalez Pereira and Joana Parente, for the extensive and fruitful collaboration we have had in investigating the spatio-temporal distribution of wildfires in Portugal; one of our studies seeking to investigate the evolution of forest fires, from spatio-temporal point events to smoothed density maps, is an integral part of Chapters 2 and 3.
+\item
+  Stuart Lane and Natan Micheletti, for introducing me to the fascinating world of rock glacier research; notably, the 3D-points clouds dataset analysed in Chapter 4 was acquired and processed by Natan during his PhD studies.
+\item
+  Axelle Bersier, for the meticulous work she did in acquiring and pre-processing the Swiss national population census dataset, which have been used for the exercise about unsupervised learning in Chapter 5.
+\item
+  Julien Riese, for producing the input dataset and collaborating with me in developing the code allowing to assess the landslides susceptibility in canton Vaud, that is the main topic of Chapter 6.
+\item
+  Both Julien and Axelle serve as a shining example of a highly successful master's students whom I had the pleasure of supervising.
+\end{itemize}
+
+\hypertarget{introduction-to-r}{%
+\chapter{Introduction to R}\label{introduction-to-r}}
+
+\hypertarget{r-language}{%
+\section{R Language}\label{r-language}}
+
+R is a complete programming language and software environment for statistical computing and graphical representation.
+As part of the GNU Project (free software, mass collaboration project), the source code is free available.
+Its functionalities can be expanded by importing packages.
+For more details on R see \url{https://www.r-project.org/}.
+
+\hypertarget{r-packages}{%
+\subsection{R Packages}\label{r-packages}}
+
+A package is a file generally composed of R scripts (e.g., functions).
+On all operation systems the function ``install.packages()'' can be used to download and install a package automatically.
+Otherwise, a package already installed in R can be loaded in a session by using the command \textcolor{red}{library(package_name)}.
+In R, the directories where the packages are stored are called ``libraries''. The terms ``package'' and ``library'' are sometimes used synonymously.
+For example, to check the list of the installed packeges, the function \textcolor{red}{library()} can be used.
+When you open an \textbf{R Markdown} document (.Rmd) the program propose you automatically to install the libraries listed there.
+
+\hypertarget{some-tips}{%
+\subsection{Some tips}\label{some-tips}}
+
+\begin{itemize}
+\tightlist
+\item
+  R is case sensitive!
+\item
+  Previously used command can be recalled in the console by using the \emph{up arrow} on the keyboard.
+\item
+  The working directory by default is ``\emph{C:/user/\ldots/Documents}''.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    It can be found using the command \textcolor{red}{getwd()}
+  \item
+    It can be changed using the command line \textcolor{red}{setwd("C:/Your/own/path")}
+  \end{itemize}
+\item
+  In \textbf{R Markdown}: the working directory when evaluating R code chunks is the directory of the input document by default.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    To access to a specific file in a sub-folder use ``. /subfolder/file.ext''
+  \item
+    To access to a specific file in a up-folder use ``. . /upfolder/file.ext''
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{r-commands-online-resources}{%
+\subsection{R Commands (online resources)}\label{r-commands-online-resources}}
+
+Many table resuming the main R commands can be found online.
+Here some useful links:
+
+\begin{itemize}
+\item
+  \href{https://www.maths.usyd.edu.au/u/jchan/Rcommands.pdf}{A short list of the most useful R commands}
+\item
+  \href{https://sites.calvin.edu/scofield/courses/m143/materials/RcmdsFromClass.pdf}{Table of Useful R commands}
+\item
+  \href{https://rpubs.com/ssammut/ResearchStats}{Basic Commands to Get Started with R}
+\end{itemize}
+
+\hypertarget{r-markdown}{%
+\section{R Markdown}\label{r-markdown}}
+
+This is an R Markdown document :-)
+
+Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents.
+It is a simple and easy to use \textbf{plain text language} allowing to combine R code, results from data analysis (including plots and tables), and comments into a single nicely formatted and \emph{reproducible} document (like a report, publication, thesis chapter or web pages).
+
+Code lines are organized into code blocks, seeking to solve specified tasks, and referred to as \textbf{``code chunk''}.
+For more details on using R Markdown see \url{http://rmarkdown.rstudio.com}.
+
+All what you have to do during the computing labs is to read each explanatory paragraph before running each individual R code chunk, one by one, and to interpret the results.
+Finally, to create a personal document (usually a PDF) from rmarkdown, you need to \textbf{Knit} the document.
+Knitting a document simply means taking all the text and code and creating a nicely formatted document.
+
+\hypertarget{data-type-in-computational-analysis}{%
+\section{Data type in computational analysis}\label{data-type-in-computational-analysis}}
+
+\hypertarget{variables}{%
+\subsection{Variables}\label{variables}}
+
+Variables are used to store values in a computer program.
+Values can be numbers (real and complex), words (string), matrices, and even tables.
+
+The fundamental or atomic data in R Programming can be:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{integer}: number without decimals
+\item
+  \textbf{numeric}: number with decimals (\emph{float} or \emph{double} depending on the precision)
+\item
+  \textbf{character}: string, label
+\item
+  \textbf{factors}: a label with a limited number of categories
+\item
+  \textbf{logical}: true/false
+\end{itemize}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth,height=0.8\textheight]{images/Rvariablesdata} 
+
+}
+
+\caption{Data Types in R \label{data_Type}}\label{fig:img1}
+\end{figure}
+
+\newpage
+
+\hypertarget{data-structure-in-r}{%
+\subsection{Data structure in R}\label{data-structure-in-r}}
+
+R's base data structures can be organised by their dimensionality (1d, 2d, or nd) and whether they are homogeneous (all contents must be of the same type) or heterogeneous (the contents can be of different types).
+
+This gives rise to the four data structures most often used in data analysis:
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth,height=0.6\textheight]{images/data_type} 
+
+}
+
+\caption{Data structures in R \label{data_str}}\label{fig:img2}
+\end{figure}
+
+A \textbf{Vector} is a one-dimensional structure winch can contain object of one type only: numerical (integer and double), character, and logical.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Investigate vector\textquotesingle{}s types:}
+
+\NormalTok{v1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.7}\NormalTok{); v1; }\FunctionTok{typeof}\NormalTok{(v1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5 0.7
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v2 }\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{); v2; }\FunctionTok{typeof}\NormalTok{(v2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v3 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{); v3; }\FunctionTok{typeof}\NormalTok{(v3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE FALSE
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "logical"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v4 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Swiss"}\NormalTok{, }\StringTok{"Itay"}\NormalTok{, }\StringTok{"France"}\NormalTok{, }\StringTok{"Germany"}\NormalTok{); v4; }\FunctionTok{typeof}\NormalTok{(v4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Swiss"   "Itay"    "France"  "Germany"
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Create a sequence from 0 to 5 with a step of 0.5:}
+
+\NormalTok{v5 }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\AttributeTok{by=}\FloatTok{0.5}\NormalTok{); v5; }\FunctionTok{typeof}\NormalTok{(v5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(v5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(v5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       1       2       3       3       4       5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Extract the third element of the vector}
+\NormalTok{v5[}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Exclude the third element from the vector and save as new vector}
+\NormalTok{v5[}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.0 1.5 2.5 3.0 3.5 4.0 4.5 5.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{w5}\OtherTok{\textless{}{-}}\NormalTok{v5[}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{]; w5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.0 1.5 2.5 3.0 3.5 4.0 4.5 5.0
+\end{verbatim}
+
+A \textbf{Matrix} is a two-dimensional structure winch can contain object of one type only.
+The function \textcolor{red}{matrix()} can be used to construct matrices with specific dimensions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Matrix of elements equal to "zero" and dimension 2x5 }
+\NormalTok{m1}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{); m1  }\CommentTok{\#(two rows by five columns)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    0    0    0    0
+## [2,]    0    0    0    0    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Matrix of integer elements (1 to 12, 3x4) }
+\NormalTok{m2}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{12}\NormalTok{, }\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{); m2 }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    4    7   10
+## [2,]    2    5    8   11
+## [3,]    3    6    9   12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Extract the second row}
+\NormalTok{m2[}\DecValTok{2}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  2  5  8 11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Extract the third column}
+\NormalTok{m2[,}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7 8 9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Extract the the second element of the third column}
+\NormalTok{m2[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8
+\end{verbatim}
+
+\hypertarget{data-frame}{%
+\subsection{Data Frame}\label{data-frame}}
+
+A \textbf{data frame} allows to collect data of different type.
+All elements must have the same length.
+
+A \textbf{list} is a more flexible structure since it can contain variables of different types and lengths.
+Nevertheless, the preferred structure for statistical analyses and computation is the data frame.
+
+It is a good practice to explore the data frame before performing further computation on the data.
+This can be simply accomplished by using the commands \textcolor{red}{str} to explore the structure of the data and \textcolor{red}{summary} to display the summary statistics and quickly summarize the data.
+For numerical vectors the command \textcolor{red}{hist()} can be used to plot the basic histogram of the given values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create the vectors with the variables}
+
+\NormalTok{cities }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Berlin"}\NormalTok{, }\StringTok{"New York"}\NormalTok{, }\StringTok{"Paris"}\NormalTok{, }\StringTok{"Tokyo"}\NormalTok{)}
+\NormalTok{area }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{892}\NormalTok{, }\DecValTok{1214}\NormalTok{, }\DecValTok{105}\NormalTok{, }\DecValTok{2188}\NormalTok{)}
+\NormalTok{population }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{3.4}\NormalTok{, }\FloatTok{8.1}\NormalTok{, }\FloatTok{2.1}\NormalTok{, }\FloatTok{12.9}\NormalTok{)}
+\NormalTok{continent }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Europe"}\NormalTok{, }\StringTok{"Norh America"}\NormalTok{, }\StringTok{"Europe"}\NormalTok{, }\StringTok{"Asia"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Concatenate the vectors into a new data frame}
+\NormalTok{df1 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(cities, area, population, continent)}
+\NormalTok{df1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     cities area population    continent
+## 1   Berlin  892        3.4       Europe
+## 2 New York 1214        8.1 Norh America
+## 3    Paris  105        2.1       Europe
+## 4    Tokyo 2188       12.9         Asia
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Add a column (e.g., language spoken) using the command "cbind"}
+\NormalTok{df2 }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{ (df1, }\StringTok{"Language"} \OtherTok{=} \FunctionTok{c}\NormalTok{ (}\StringTok{"German"}\NormalTok{, }\StringTok{"English"}\NormalTok{, }\StringTok{"Freanch"}\NormalTok{, }\StringTok{"Japanese"}\NormalTok{))}
+\NormalTok{df2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     cities area population    continent Language
+## 1   Berlin  892        3.4       Europe   German
+## 2 New York 1214        8.1 Norh America  English
+## 3    Paris  105        2.1       Europe  Freanch
+## 4    Tokyo 2188       12.9         Asia Japanese
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Explore the data frame}
+\FunctionTok{str}\NormalTok{(df2) }\CommentTok{\# see the structure}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    4 obs. of  5 variables:
+##  $ cities    : chr  "Berlin" "New York" "Paris" "Tokyo"
+##  $ area      : num  892 1214 105 2188
+##  $ population: num  3.4 8.1 2.1 12.9
+##  $ continent : chr  "Europe" "Norh America" "Europe" "Asia"
+##  $ Language  : chr  "German" "English" "Freanch" "Japanese"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(df2) }\CommentTok{\# compute basic statistics}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     cities               area          population      continent        
+##  Length:4           Min.   : 105.0   Min.   : 2.100   Length:4          
+##  Class :character   1st Qu.: 695.2   1st Qu.: 3.075   Class :character  
+##  Mode  :character   Median :1053.0   Median : 5.750   Mode  :character  
+##                     Mean   :1099.8   Mean   : 6.625                     
+##                     3rd Qu.:1457.5   3rd Qu.: 9.300                     
+##                     Max.   :2188.0   Max.   :12.900                     
+##    Language        
+##  Length:4          
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Use the symbol "$" to address a particular column}
+\NormalTok{pop}\OtherTok{\textless{}{-}}\NormalTok{(df2}\SpecialCharTok{$}\NormalTok{population)}
+\NormalTok{pop}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  3.4  8.1  2.1 12.9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(pop) }\CommentTok{\# plot the histogram}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{01-IntrotoR_files/figure-latex/data-frame3-1.pdf}
+
+\hypertarget{geographically-weighted-summary-statistics}{%
+\chapter{Geographically Weighted Summary Statistics}\label{geographically-weighted-summary-statistics}}
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+In fire management, it is crucial to investigate where fires occurred more frequently and to distinguish between \textbf{small} and \textbf{large fires}.
+This is key information to understand the ignition factors and planning strategies to reduce forest fires, control and manage ignition sources, and identify areas at risk.
+
+Despite the availability of forest fires spatio-temporal inventories, it is not evident to extract information about their pattern distribution simply by looking at the original arrangement of the mapped burnt areas.
+To this end, \textbf{Geographically Weighed Summary Statistics (GWSS)} can be computed, under the assumption that burned areas generally follow a geographic trend.
+
+We compute here the GW local means, the GW local standard deviation and the GW localized skewness of burned areas in continental Portugal, registered in the period 1990-2013.
+This application is inspired by the work of \citep{tonini_evolution_2017}
+
+\hypertarget{the-overall-methodology}{%
+\section{The overall methodology}\label{the-overall-methodology}}
+
+\textbf{Summary statistics} include a number of measures that can be used to summarize a set of observations, the most important of which are measures of \emph{central tendency} (arithmetic mean, median and mode) and measures of \emph{dispersion around the mean} (variance and standard deviation).
+In addition, measures of \emph{skewness} and \emph{kurtosis} are descriptors of the shape of the probability distribution function, the former indicating the asymmetry and the latter the peakedness/tailedness of the curve.
+
+In the case of \textbf{spatial data}, these global statistical descriptors may vary from one region to another, as their values may be affected by local environmental and socio-economic factors.
+In this case, an appropriately localized calibration can provide a better description of the observed values.
+One way to achieve this goal is to \emph{weight} the above statistical measures for a given quantitative variable based on their geographical location.
+
+We introduce here the method proposed by \citep{brunsdon_geographically_2002} and implemented in the \textbf{function GWSS} presented in the \textcolor{red} {R package GWmodel} \citep{lu_gwmodel_2014, brunsdon_rpubs_2019}.
+The evaluation of geographically weighted summary statistics is obtained by computing a summary for a small area around each geolocalized punctual observation, by using the \emph{kernel density estimation} technique (KDE) \citep{brunsdon_estimating_1995}.
+KDE is estimated at each point, taking into account the influence of the points falling within an area, with increasing weight towards the center, corresponding to the point location.
+A surface summary statistic is thus obtained.
+
+\hypertarget{forest-fires-dataset}{%
+\section{Forest fires dataset}\label{forest-fires-dataset}}
+
+Forest fires inventories indicating the location, the starting date and other related variables, such as the cause of ignition and the size of the area burned, are broadly available with a different degree of accuracy in different countries.
+
+In the present study, we consider the \textbf{Portuguese National Mapping Burnt Areas (NMBA 2016)}, freely available from the website of the Institute for the Conservation of Nature and Forests (ICNF).
+This is a long spatio-temporal dataset (from 1975) resulting from the processing of satellite images acquired once a year at the end of the summer season.
+Row data consist of records of observed fire scars.
+The burned areas were estimated by using image classification techniques, then compared with ground data to resolve the discrepancies.
+Polygons have been converted into point shapefile, where each point represent the centroid of the burned areas, while the size of the burned areas and the starting date of the fires events are given as attributes.
+In this work, for consistency reasons, we consider only fires occurred between 1990 and 2013 and with a burned area above 5 hectares.
+\autoref{Histo_FF}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=0.7\textheight]{images/Histo_FF} 
+
+}
+
+\caption{Total annual number of forest fire events, expressed in thousands of square metres \label{Histo_FF}}\label{fig:jpg}
+\end{figure}
+
+\hypertarget{load-the-libraries}{%
+\subsection{Load the libraries}\label{load-the-libraries}}
+
+First you have to load the following libraries:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{splancs}: for display and analysis of spatial point pattern data
+\item
+  \textbf{GWmodel}: techniques from a particular branch of spatial statistics, termed geographically-weighted (GW) models
+\item
+  \textbf{sf}: support for simple features, a standardized way to encode spatial vector data
+\item
+  \textbf{ggplot2}: a system for `declaratively' creating graphics
+\item
+  \textbf{sp}: classes and methods for spatial data
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(splancs)}
+\FunctionTok{library}\NormalTok{(GWmodel)}
+\FunctionTok{library}\NormalTok{(sf)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(sp)}
+
+\NormalTok{(}\FunctionTok{.packages}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "ggplot2"    "sf"         "GWmodel"    "Rcpp"       "robustbase"
+##  [6] "splancs"    "sp"         "stats"      "graphics"   "grDevices" 
+## [11] "utils"      "datasets"   "methods"    "base"
+\end{verbatim}
+
+\hypertarget{import-the-portuguese-forest-fire-dataset}{%
+\subsection{Import the Portuguese forest fire dataset}\label{import-the-portuguese-forest-fire-dataset}}
+
+In this section you will load the geodata representing the dataset of forest fires occurred in the continental Portuguese area in the period 1990-2013.
+You will also load the boundaries of the study area.
+You will start by exploring the datasets using mainly visual tools (plotting and histogram).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Import Portugal boundary }
+\NormalTok{Portugal }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\StringTok{"data/Lab01/Area\_Portugal.shp"}\NormalTok{)}
+
+\CommentTok{\# Import the Portuguese forest fires dataset for the entire Portuguese area.}
+\NormalTok{FFPorto}\OtherTok{\textless{}{-}}\FunctionTok{st\_read}\NormalTok{(}\StringTok{"data/Lab01/FF\_Portugal.shp"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+You can explore the dataset by using different tools for \textbf{exploratory data analyses}.
+You will start by visualizing the databases.
+In the GIS environment, this correspond to the attribute table of a vector punctual feature.
+
+Than you can \textbf{plot the histogram} of events distribution based on the variable \emph{``Area\_ha''} (the size in hectares of the burned area).
+Since this is a power low distribution, for a better understanding it's recommended to transform the data using a logarithmic scale.
+Using Log10 you can easily evaluate the frequency distribution of the burned areas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Show the attribute table (first 10 rows) }
+\NormalTok{FFPorto }
+
+\CommentTok{\# Open the attribute table in a new tab }
+\FunctionTok{View}\NormalTok{(FFPorto) }
+
+\CommentTok{\# Summary statistics of all of the attributes associated with this dataset}
+\FunctionTok{summary}\NormalTok{(FFPorto}\SpecialCharTok{$}\NormalTok{Area\_ha)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Display the histogram of burned area distribution}
+\FunctionTok{hist}\NormalTok{(FFPorto}\SpecialCharTok{$}\NormalTok{Area\_ha)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{02-GWSS_files/figure-latex/histo_FF-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{log10}\NormalTok{(FFPorto}\SpecialCharTok{$}\NormalTok{Area\_ha))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{02-GWSS_files/figure-latex/histo_FF-2.pdf}
+
+\hypertarget{forest-fires-spatial-distribution}{%
+\subsection{Forest fires spatial distribution}\label{forest-fires-spatial-distribution}}
+
+For a better understanding of the phenomenon, you can group the events according to the size of the burned area.
+Based on the frequency distribution of the burned areas, the following three classes can be defined:
+
+\begin{itemize}
+\item
+  \textbf{Small fires}: less than 15 ha
+\item
+  \textbf{Medium fires}: between 15 ha and 100 ha
+\item
+  \textbf{Large fires}: bigger than 100 ha
+\end{itemize}
+
+Plotting the forest fires events using different colors, based on the size of the burned areas, can simplify the understanding of their \textbf{pattern distribution}, knowing that fires of different size have normally different drivers.
+
+\includegraphics{02-GWSS_files/figure-latex/plot-all-fires-1.pdf}
+
+\hypertarget{compute-the-geographically-whited-statistics}{%
+\section{Compute the geographically whited statistics}\label{compute-the-geographically-whited-statistics}}
+
+From the exploratory data analysis performed above, it seems that a simple plotting of the forest fires events based on their spatial distribution, even if classified based on their size, can not really help to understand their behaviors.
+This is because we face to a huge number of events and the variable that we are using to characterize them (i.e., the size of the burned area) is very heterogeneous.
+To this aim, we can compute basic and robust \textbf{GWSS} and plot the data accordingly.
+
+GWSS includes \emph{geographically weighted means}, \emph{standard deviations} and the \emph{skweness}.
+As you can see from the R Documentation (command: \textcolor{red}{help(gwss)}, same data manipulations are necessary to transform the forest fires dataset in a compatible data frame format.
+
+\textbf{GWSS parameters}:
+
+\begin{itemize}
+\item
+  We summarize the data based on the size of the burned area (\emph{vars}).
+\item
+  We use here an adaptive kernel where the bandwidth (\emph{bw}) corresponds to the number (100 in this case) of nearest neighbors (i.e.~adaptive distance).
+\item
+  We keep the default values for the other parameters.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Transform inputs data into a spatial points data frame}
+\NormalTok{FFdf}\OtherTok{\textless{}{-}}\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{X=}\NormalTok{FFPorto}\SpecialCharTok{$}\NormalTok{X, }\AttributeTok{Y=}\NormalTok{FFPorto}\SpecialCharTok{$}\NormalTok{Y, }\AttributeTok{Area=}\NormalTok{FFPorto}\SpecialCharTok{$}\NormalTok{Area\_ha)}
+\NormalTok{FFspdf}\OtherTok{\textless{}{-}}\FunctionTok{SpatialPointsDataFrame}\NormalTok{(FFdf[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], FFdf)}
+\FunctionTok{str}\NormalTok{(FFspdf)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Run gwss: this operation can take several minutes...be patient!}
+\CommentTok{\# While waiting, you can look at gwss R Documentation}
+\FunctionTok{help}\NormalTok{(gwss)}
+
+\NormalTok{FFgwss }\OtherTok{\textless{}{-}} \FunctionTok{gwss}\NormalTok{(FFspdf,}\AttributeTok{vars=}\NormalTok{(}\StringTok{"Area"}\NormalTok{),}\AttributeTok{adaptive=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{bw=}\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# RUN IT ONLY IF YOU FAIL TO RUN THE CODE ABOVE}
+
+\DocumentationTok{\#\#  If it\textquotesingle{}s too slow, you can stop the job }
+\DocumentationTok{\#\# and load the result directly}
+
+\CommentTok{\#load ("FFgwss")}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{look-at-the-results}{%
+\subsection{Look at the results}\label{look-at-the-results}}
+
+The resulting object (\textbf{FFgwss}) has a number of components.
+The most important one is the spatial data frame containing the results of local summary statistics for each data point location, stored in \emph{FFgwss\$SDF} (that is a spatial DataFrame).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# display the first 6 rows}
+\FunctionTok{head}\NormalTok{(FFgwss}\SpecialCharTok{$}\NormalTok{SDF) }
+
+\CommentTok{\# Inspect the resulting object: }
+\NormalTok{FFgwss}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{gwss-maps}{%
+\subsection{GWSS maps}\label{gwss-maps}}
+
+To produce a map of the local geographically weighted summary statistic of your choice, firstly we need to enter a small R function definition.
+This is just a short R program to draw a map: you can think of it as a command that tells R how to draw a map (see \protect\hyperlink{geographically-weighted-summary-statistics}{Geographically Weighted Summary Statistics} (\url{https://rpubs.com/chrisbrunsdon/99667}) for more details).
+The advantage of defining a function is that the entire map can now be drawn using a single command for each variable, rather than having to repeat those steps each time.
+To define the intervals for the classification we used Jenks natural breaks classification method (textcolor\{red\}\{style=``fisher''\}).
+
+Finally the function is called by entering:
+
+\begin{verbatim}
+quick.map(gwss.object,variable.name,legend.title,main.map.title)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(RColorBrewer) }\CommentTok{\#a useful tool for designing map color palettes.}
+\FunctionTok{library}\NormalTok{(classInt) }\CommentTok{\#to define class intervals}
+
+\CommentTok{\# The function definition to draw the map:}
+
+\NormalTok{quick.map }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(spdf,var,legend.title,main.title) \{}
+\NormalTok{  x }\OtherTok{\textless{}{-}}\NormalTok{ spdf}\SpecialCharTok{@}\NormalTok{data[,var]}
+\NormalTok{  int }\OtherTok{\textless{}{-}} \FunctionTok{classIntervals}\NormalTok{(x, }\AttributeTok{n=}\DecValTok{5}\NormalTok{, }\AttributeTok{style=}\StringTok{"fisher"}\NormalTok{)}
+\NormalTok{  cut.vals}\OtherTok{\textless{}{-}}\NormalTok{int}\SpecialCharTok{$}\NormalTok{brks}
+\NormalTok{  x.cut }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(x,cut.vals)}
+\NormalTok{  cut.levels }\OtherTok{\textless{}{-}} \FunctionTok{levels}\NormalTok{(x.cut)}
+\NormalTok{  cut.band }\OtherTok{\textless{}{-}} \FunctionTok{match}\NormalTok{(x.cut,cut.levels)}
+\NormalTok{  colors }\OtherTok{\textless{}{-}} \FunctionTok{rev}\NormalTok{(}\FunctionTok{brewer.pal}\NormalTok{(}\FunctionTok{length}\NormalTok{(cut.levels), }\StringTok{"RdYlGn"}\NormalTok{))}
+  \FunctionTok{par}\NormalTok{(}\AttributeTok{mar=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+  \FunctionTok{plot}\NormalTok{(Portugal}\SpecialCharTok{$}\NormalTok{geometry,}\AttributeTok{col=}\StringTok{\textquotesingle{}lightgrey\textquotesingle{}}\NormalTok{)}
+  \FunctionTok{title}\NormalTok{(main.title)}
+  \FunctionTok{plot}\NormalTok{(spdf,}\AttributeTok{add=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{col=}\NormalTok{colors[cut.band],}\AttributeTok{pch=}\DecValTok{16}\NormalTok{, }\AttributeTok{cex=}\FloatTok{0.5}\NormalTok{)}
+  \FunctionTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{,cut.levels,}\AttributeTok{col=}\NormalTok{colors,}\AttributeTok{pch=}\DecValTok{16}\NormalTok{,}\AttributeTok{bty=}\StringTok{"n"}\NormalTok{,}\AttributeTok{title=}\NormalTok{legend.title)}
+\NormalTok{  \}}
+
+\CommentTok{\# Call the function to display the maps of the Local Mean (LM), Local Standard Deviation(LSD), and Local Skweness (LSKe)}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\FunctionTok{quick.map}\NormalTok{(FFgwss}\SpecialCharTok{$}\NormalTok{SDF, }\StringTok{"Area\_LM"}\NormalTok{, }\StringTok{"Area (ha)"}\NormalTok{, }\StringTok{"GWL Means"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in classIntervals(x, n = 5, style = "fisher"): N is large, and some
+## styles will run very slowly; sampling imposed
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{quick.map}\NormalTok{(FFgwss}\SpecialCharTok{$}\NormalTok{SDF, }\StringTok{"Area\_LSD"}\NormalTok{, }\StringTok{"Area (ha)"}\NormalTok{, }\StringTok{"GWL Standard Deviation"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in classIntervals(x, n = 5, style = "fisher"): N is large, and some
+## styles will run very slowly; sampling imposed
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{quick.map}\NormalTok{(FFgwss}\SpecialCharTok{$}\NormalTok{SDF, }\StringTok{"Area\_LSKe"}\NormalTok{, }\StringTok{"Area (ha)"}\NormalTok{, }\StringTok{"GWL Skewness"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in classIntervals(x, n = 5, style = "fisher"): N is large, and some
+## styles will run very slowly; sampling imposed
+\end{verbatim}
+
+\includegraphics{02-GWSS_files/figure-latex/gwss-maps-1.pdf}
+
+\hypertarget{conclusions-and-further-analyses}{%
+\section{Conclusions and further analyses}\label{conclusions-and-further-analyses}}
+
+This practical computer lab allowed you to familiarize with GWSS, by the proposed application about geographically weighted summary statistics.
+This method allowed us to explore how the average burned area vary locally through Continental Portugal in the period 1990-2013.
+
+The global Geographically Weighted (GW) means informs you about the local average value of the burned area, based of the neighboring events occurred in a given period.
+Similarly, you may compute a GW standard deviation to see the extent to which the size of the burned area spread around this mean.
+Finally you can compute the GW skewness to measure the symmetry of distribution: a positively skewed distribution means that there is a higher number of data points having low values, with mean value lower that the median; and the contrary for a negatively skewed distribution.
+
+To be sure that everything is perfectly clear for you, we propose you to \textbf{answer the following questions} and to discuss your answers with the other participants to the course or directly with the teacher.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  What is the pattern distribution of the GW-means for burned area in Portugal during the investigated periods?
+\item
+  Does the GW-standard deviation follows the same pattern?
+  How can you interpret the two pattern in terms of burned area and their characterization?
+\item
+  GW-skewness has positive values everywhere: what does it means?
+  What do these values suggest to be the distribution of the burned areas, in terms of their size, around the local means?
+\item
+  Which can be other applications of GWSS for geo-environmental data?
+  In other words, can you imagine other geo-environmental dataset that can be analysed using GWSS?
+\item
+  You can finally play with the code and try to run it using a different numbers of nearest neighbors (bw=x) and comparing the results.
+
+  \textbf{NB:} You have to rename the original pdf to avoid overwriting it.
+  In addition, if a pdf with the same name saved in the same destination folder is open, you will receive an error message, so close it before Knitting.
+\end{enumerate}
+
+\hypertarget{kernel-density-estimator}{%
+\chapter{Kernel Density Estimator}\label{kernel-density-estimator}}
+
+\hypertarget{introduction-1}{%
+\section{Introduction}\label{introduction-1}}
+
+The configuration of forest fires across space and time presents a complex pattern which significantly affects the forest environment and adjacent human developments.
+Statistical techniques designed for spatio-temporal random points can be utilized to identify a structure, recognize hot-spots and vulnerable areas, and address policy makers to prevention and forecasting measures.
+
+In this practical computer lab we consider the same case study as in the ``Geographically Weighted Summary Statistics'' lab.
+The main objective is to reveal if space and time act independently or whether neighboring events are also closer in time, interacting to generate spatio-temporal clusters.
+The attribute that we will consider to achieve this goal is the starting date of fires events.
+To account for the different geographical distribution of fires in Portugal, evets occurred in the Norther and Southern area will be modeled separately.
+
+For more details about the input dataset, please refer to the GWSS lab documentation.
+
+\hypertarget{method}{%
+\section{Method}\label{method}}
+
+To detect spatio-temporal clusters of forest fires, we will use the following statistical methods:
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\item
+  The \textbf{Ripley's K- function}, to test the space--time interaction and the spatial attraction/in dependency between fires of different size.
+\item
+  The \textbf{kernel density estimator}, allowing elaborating smoothed density surfaces representing fires over-densities.
+\end{enumerate}
+
+We provide below a short description for both these methods.
+More details can be found in \citet{tonini_evolution_2017}.
+
+\hypertarget{ripleys-k-function}{%
+\subsection{Ripley's K-function}\label{ripleys-k-function}}
+
+The Ripley's K-function allows inferring about the spatial randomness of mapped punctual events.
+It is largely applied in environmental studies to analyse the pattern distribution of a spatial point process.
+The original spatial univariate K-function \(K(s)\) is defined as the ratio between the expected number \(E\) of point events falling at a certain distance \(r\) from an arbitrary event and the intensity \(\lambda\) of the spatial point process, this last corresponding to the average number of points per unit area.
+
+Under complete spatial randomness, which assumes the independence among the events, \(K(s)\) is equal to the area of the circle around the target event for each distance's value.
+It follows that events are spatially clustered within the range of distances at which \(K(s)\) assumes vales higher than this area, while they are spatially dispersed for lower values.
+The temporal K-function \(K(t)\) is defined in the same way as for the spatial case, with the time-based intensity and the time length replacing the spatial parameters.
+
+The \textbf{spatio-temporal K-function,} \(K(s,t)\) can be considered as a bivariate function where space and time represent the two variables of the equation.
+It is defined as the number of further events occurring within a distance \(r\) and time \(t\) from an arbitrary event.
+
+\hypertarget{spatio-temporal-interaction}{%
+\subsubsection{Spatio-temporal interaction}\label{spatio-temporal-interaction}}
+
+If there is no space--time interaction, \(K(s,t)\) is equal to the product of the purely spatial and purely temporal K-function.
+Inversely, if space and time interact generating clusters, the difference between these two values is positive {[}\(D(s,t)=K(s,t)-K(s)*K(t)\){]}.
+
+Thus, we can use the perspective 3D-plot of the function \(D(s,t)\) to obtain a first diagnostic of space--time clustering: positive values indicate an interaction between these two variables at a well-detectable spatio-temporal scale.
+
+\hypertarget{kernel-density-estimator-1}{%
+\subsection{Kernel density estimator}\label{kernel-density-estimator-1}}
+
+The Kernel Density Estimator (KDE) is a non-parametric descriptor tool widely applied in GIS-science to elaborate smoothed density surfaces from spatial variables.
+A kernel function \(K\) allows weighing up the contribution of each event, based on the relative distance of neighbouring to the target.
+The parameter \(h\), called bandwidth, controls the smoothness of the estimated kernel density.
+Finally, the kernel density function \(f_h(x)\) is estimated by summing all the kernel functions \(K\) computed at each point location \(x\) and dividing the result by the total number of events (\(n\)): \[f_h(x) = \frac{1}{nh}\sum_{i=j}^{n}K(\frac{x-x_i}{h})\]
+
+The time extension of the kernel density estimator (\citet{nakaya_visualising_2010}) allows to compute the \textbf{three-dimensional kernel density estimator} which includes the spatio-temporal dimensions.
+
+In the present case study we apply a quadratic weighting kernel function, which is an approximation to the Gaussian kernel.
+Regarding the bandwidth's value, we prose to consider the results of the spatio-temporal K-function as an indicator.
+Indeed, the distance values showing a maximum cluster behavior over the displayed perspective \(D(s,t)\) plot can be attributed to the \(h\)-value, minimizing the problem of under- or over-smoothing due to an arbitrary choice of the bandwidth.
+
+\hypertarget{load-the-libraries-1}{%
+\section{Load the libraries}\label{load-the-libraries-1}}
+
+Fist you have to load the following libraries:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{splancs}: for display and analysis of spatial point pattern data.
+\item
+  \textbf{sf}: Support for simple features, a standardized way to encode spatial vector data
+\item
+  \textbf{ggplot2}: A system for `declaratively' creating graphics
+\item
+  \textbf{sp}: Classes and methods for spatial data
+\item
+  \textbf{spatstat}: comprehensive open-source toolbox for analyzing Spatial Point Patterns
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(splancs)}
+\FunctionTok{library}\NormalTok{(spatstat)}
+\FunctionTok{library}\NormalTok{(sf)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(sp)}
+
+\NormalTok{(}\FunctionTok{.packages}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "ggplot2"          "sf"               "spatstat"         "spatstat.linnet" 
+##  [5] "spatstat.model"   "rpart"            "spatstat.explore" "nlme"            
+##  [9] "spatstat.random"  "spatstat.geom"    "spatstat.data"    "splancs"         
+## [13] "sp"               "stats"            "graphics"         "grDevices"       
+## [17] "utils"            "datasets"         "methods"          "base"
+\end{verbatim}
+
+\hypertarget{import-the-portuguese-forest-fire-dataset-1}{%
+\section{Import the Portuguese forest fire dataset}\label{import-the-portuguese-forest-fire-dataset-1}}
+
+In this section you will load the geodata representing the dataset of the Forest Fires (\textbf{FF}) occurred in the continental Portuguese area in the period 1990-2013.
+You will also load the boundaries of the study area.
+You will start by exploring the datasets using mainly visual tools (plotting and histogram).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Import Portugal boundary }
+\NormalTok{Portugal }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\StringTok{"data/Lab02/Portugal.shp"}\NormalTok{) }\CommentTok{\# entire area}
+
+\NormalTok{PortN}\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\StringTok{"data/Lab02/Porto\_North.shp"}\NormalTok{) }\CommentTok{\# northern area }
+\NormalTok{PortS}\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\StringTok{"data/Lab02/Porto\_South.shp"}\NormalTok{) }\CommentTok{\# southern}
+
+\CommentTok{\# Import the forest fires dataset}
+
+\NormalTok{FF}\OtherTok{\textless{}{-}}\FunctionTok{st\_read}\NormalTok{(}\StringTok{"data/Lab02/ForestFires.shp"}\NormalTok{) }\CommentTok{\# entire area}
+\NormalTok{FFN}\OtherTok{\textless{}{-}}\FunctionTok{st\_read}\NormalTok{(}\StringTok{"data/Lab02/FF\_North.shp"}\NormalTok{) }\CommentTok{\#entire area}
+\NormalTok{FFS}\OtherTok{\textless{}{-}}\FunctionTok{st\_read}\NormalTok{(}\StringTok{"data/Lab02/FF\_South.shp"}\NormalTok{) }\CommentTok{\# Northern area}
+
+\CommentTok{\# Import the shapefile of the Tagus river}
+\NormalTok{river}\OtherTok{\textless{}{-}}\FunctionTok{st\_read}\NormalTok{(}\StringTok{"data/Lab02/Rio\_Tajo.shp"}\NormalTok{)}
+
+\FunctionTok{summary}\NormalTok{(FF}\SpecialCharTok{$}\NormalTok{Area\_ha)}\CommentTok{\# summary statistics}
+\FunctionTok{hist}\NormalTok{(FF}\SpecialCharTok{$}\NormalTok{Area\_ha)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{03-KDE_files/figure-latex/import-data-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{log10}\NormalTok{(FF}\SpecialCharTok{$}\NormalTok{Area\_ha)) }\CommentTok{\# see the lab GWSS for more details }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{03-KDE_files/figure-latex/import-data-2.pdf}
+
+For a better understanding of the phenomenon, we can group the events according to the size of the burnt area and to their incidence in the northern and in the southern part of continental Portugal.
+
+\hypertarget{ff-subsets-based-on-the-burned-areas-size}{%
+\subsection{FF-subsets based on the burned areas' size}\label{ff-subsets-based-on-the-burned-areas-size}}
+
+Remember that fires of different size can have been induced by different drivers.
+Thus, in the following, we will investigate all the global cluster behavior of forest fires in Portugal considering the three subset separately.
+As you have seen in the lab GWSS, based on the frequency distribution of the burned areas, the following three classes can be defined:
+
+* Small fires: less than 15 ha
+
+* Medium fires: between 15 ha and 100 ha
+
+* Large fires: bigger than 100 ha
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SF}\OtherTok{=}\NormalTok{(}\FunctionTok{subset}\NormalTok{(FF, Area\_ha }\SpecialCharTok{\textless{}=}\DecValTok{15}\NormalTok{)) }\CommentTok{\#create a sub{-}set including only small fires. }
+
+\FunctionTok{summary}\NormalTok{(SF)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Year         Area_ha             X                Y         
+##  Min.   :1990   Min.   : 5.000   Min.   : 82761   Min.   :  7772  
+##  1st Qu.:1997   1st Qu.: 6.624   1st Qu.:182972   1st Qu.:403849  
+##  Median :2001   Median : 8.569   Median :213159   Median :472892  
+##  Mean   :2002   Mean   : 9.041   Mean   :219789   Mean   :440692  
+##  3rd Qu.:2008   3rd Qu.:11.219   3rd Qu.:259054   3rd Qu.:518384  
+##  Max.   :2013   Max.   :15.000   Max.   :361492   Max.   :573192  
+##           geometry    
+##  POINT        :10902  
+##  epsg:NA      :    0  
+##  +proj=tmer...:    0  
+##                       
+##                       
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This is to save the plot }
+\NormalTok{pSF }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{ ()}\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{Portugal)}\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{SF, }\AttributeTok{size=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{col=}\StringTok{"yellow"}\NormalTok{)}\SpecialCharTok{+}
+ \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Small fires"}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{coord\_sf}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MF}\OtherTok{=}\NormalTok{(}\FunctionTok{subset}\NormalTok{(FF, Area\_ha }\SpecialCharTok{\textgreater{}}\DecValTok{15} \SpecialCharTok{\&}\NormalTok{ Area\_ha }\SpecialCharTok{\textless{}=}\DecValTok{100}\NormalTok{)) }\CommentTok{\#create a sub{-}set including only medium fires. }
+
+\FunctionTok{summary}\NormalTok{(MF)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Year         Area_ha            X                Y         
+##  Min.   :1990   Min.   :15.00   Min.   : 82127   Min.   :  7084  
+##  1st Qu.:1997   1st Qu.:21.18   1st Qu.:186031   1st Qu.:403864  
+##  Median :2001   Median :30.89   Median :219459   Median :468503  
+##  Mean   :2002   Mean   :38.55   Mean   :223915   Mean   :439442  
+##  3rd Qu.:2007   3rd Qu.:51.06   3rd Qu.:264349   3rd Qu.:518248  
+##  Max.   :2013   Max.   :99.98   Max.   :359535   Max.   :572488  
+##           geometry    
+##  POINT        :12070  
+##  epsg:NA      :    0  
+##  +proj=tmer...:    0  
+##                       
+##                       
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This is to save the plot }
+\NormalTok{pMF }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{ ()}\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{Portugal)}\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{MF, }\AttributeTok{size=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{col=}\StringTok{"orange"}\NormalTok{)}\SpecialCharTok{+}
+ \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Midium fires"}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{coord\_sf}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LF}\OtherTok{=}\NormalTok{(}\FunctionTok{subset}\NormalTok{(FF, Area\_ha }\SpecialCharTok{\textgreater{}}\DecValTok{100}\NormalTok{)) }\CommentTok{\#create a sub{-}set including only large fires.}
+
+\FunctionTok{summary}\NormalTok{ (LF)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Year         Area_ha              X                Y         
+##  Min.   :1990   Min.   :  100.0   Min.   : 83472   Min.   :  8840  
+##  1st Qu.:1996   1st Qu.:  139.6   1st Qu.:193831   1st Qu.:383164  
+##  Median :2002   Median :  220.7   Median :228709   Median :445272  
+##  Mean   :2001   Mean   :  548.3   Mean   :229278   Mean   :423441  
+##  3rd Qu.:2006   3rd Qu.:  447.9   3rd Qu.:266146   3rd Qu.:500321  
+##  Max.   :2013   Max.   :66070.6   Max.   :357933   Max.   :571984  
+##           geometry   
+##  POINT        :4301  
+##  epsg:NA      :   0  
+##  +proj=tmer...:   0  
+##                      
+##                      
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This is to save the plot }
+\NormalTok{pLF }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{ ()}\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{Portugal)}\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{LF, }\AttributeTok{size=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}\SpecialCharTok{+}
+ \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Large fires"}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{coord\_sf}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Arrange the three spatial maps side by side}
+
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}patchwork\textquotesingle{}}\NormalTok{, }\AttributeTok{repos =} \StringTok{"http://cran.us.r{-}project.org"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## The downloaded binary packages are in
+##  /var/folders/hf/q_2qq0tn1dngf4r3nzfhj3xh0000gn/T//RtmpmGfGvg/downloaded_packages
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(patchwork) }\CommentTok{\# Allow to  combine separate ggplots into the same graphic}
+
+\NormalTok{pSF}\SpecialCharTok{+}\NormalTok{pMF}\SpecialCharTok{+}\NormalTok{pLF}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{03-KDE_files/figure-latex/plot-FFsubsets-1.pdf}
+
+\hypertarget{ff-subsets-based-on-their-geographical-distribution}{%
+\subsection{FF-subsets based on their geographical distribution}\label{ff-subsets-based-on-their-geographical-distribution}}
+
+In continental Portugal, the \textbf{northern half} of the country (above the Tagus River) is characterized by the predominance of forest and semi-natural areas, and by the development of the main cities with their sub-urban ares intermingled with wild land, which the Northern area highly prone to forest fires.
+On the other hand, the \textbf{southern half} of the country is dominated by agricultural areas with mixed and broad-leaved forest concentrated near the south-west coast, which makes this are less affected by forest fires.
+For this reason we will consider these two areas separately.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot the map with all the objects}
+\FunctionTok{ggplot}\NormalTok{ ()}\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{Portugal)}\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{river, }\AttributeTok{col=}\StringTok{"blue"}\NormalTok{, }\AttributeTok{size=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{FFN, }\AttributeTok{size=}\FloatTok{0.3}\NormalTok{, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{FFS, }\AttributeTok{size=}\FloatTok{0.3}\NormalTok{, }\AttributeTok{col=}\StringTok{"orange"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Forest foirest in the northern and souther area"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust=}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+ \FunctionTok{coord\_sf}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{03-KDE_files/figure-latex/import-NS-FF-1.pdf}
+
+\hypertarget{the-space-time-k-function}{%
+\section{The space-time K-function}\label{the-space-time-k-function}}
+
+\hypertarget{extract-time-and-pts-object}{%
+\subsection{Extract Time and PTS object}\label{extract-time-and-pts-object}}
+
+The function \textbf{stkhat,} included in the library \emph{spancs}, allows to compute the space-time K-function.
+As you can see from the R Documentation (command: \emph{help(stkhat)}), same data manipulations are necessary to transform the input data in a compatible data frame format.
+
+Namely the user needs to specify:
+
+\begin{itemize}
+\item
+  \emph{pts}: the input forest fires dataset, with the coordinates to geolocalize each event.
+\item
+  \emph{times}: a vector of times, defined by the starting date of ignition.
+\item
+  \emph{poly}: a polygon of class matrix enclosing the input dataset (\emph{pts)}
+\item
+  \emph{s} and \emph{tm}: a vector of spatial (\emph{s}) and a vector of temporal (\emph{tm}) distances for the analysis.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Extract "pts" (divided by 1000 to compute in Km)}
+\NormalTok{FFN\_pts}\OtherTok{\textless{}{-}}\FunctionTok{as.points}\NormalTok{(FFN}\SpecialCharTok{$}\NormalTok{X}\SpecialCharTok{/}\DecValTok{1000}\NormalTok{,FFN}\SpecialCharTok{$}\NormalTok{Y}\SpecialCharTok{/}\DecValTok{1000}\NormalTok{) }
+\NormalTok{FFN\_times}\OtherTok{\textless{}{-}}\NormalTok{FFN}\SpecialCharTok{$}\NormalTok{Year }\CommentTok{\# extract "times"}
+
+\CommentTok{\# Extract the coordinates (in Km):}
+\NormalTok{PTN\_xy}\OtherTok{\textless{}{-}}\FunctionTok{st\_coordinates}\NormalTok{(PortN}\SpecialCharTok{$}\NormalTok{geometry}\SpecialCharTok{/}\DecValTok{1000}\NormalTok{) }
+
+\CommentTok{\# Define the matrix with the set of bounding points ("poly") enclosing the input dataset:}
+\NormalTok{FFN\_poly}\OtherTok{\textless{}{-}}\NormalTok{PTN\_xy[, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)] }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{compute-the-space-time-k-function}{%
+\subsection{Compute the space-time K-function}\label{compute-the-space-time-k-function}}
+
+Compute the space-time K-function for forest fires in the northern area.
+Since the computation can take a long time (about 20 mints), we propose you to load directly the output R object provided (\emph{STK\_North\_10y}).
+The general code is also provided, but preceded by the hashtag, so it is not treated as a command: you have to remove \# if you wish to evaluate the code.
+
+\begin{itemize}
+\item
+  We consider here a \emph{subset} of forest fires event occurred in the period 2001-2010.
+\item
+  The parameters \emph{s} and \emph{t} are defined here as follows: (\emph{s}) each kilometer distance up to ten kilometers; (\emph{tm}) each year up to five years.
+\end{itemize}
+
+\textbf{NB}: If you wish to run the code, remove \# to make it work
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Open stkhat documentation}
+\FunctionTok{help}\NormalTok{(stkhat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readr)}
+
+\NormalTok{STK\_North\_10y }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"data/Lab02/STK\_North\_10y.RData"}\NormalTok{)}
+
+\FunctionTok{str}\NormalTok{(STK\_North\_10y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## List of 5
+##  $ s  : num [1:11] 0 1 2 3 4 5 6 7 8 9 ...
+##  $ t  : num [1:6] 0 1 2 3 4 5
+##  $ ks : num [1:11] 1.61e-04 9.03 2.98e+01 6.18e+01 1.05e+02 ...
+##  $ kt : num [1:6] 0.814 2.29 3.596 4.827 6.085 ...
+##  $ kst: num [1:11, 1:6] 1.45e-03 1.06e+01 3.75e+01 7.47e+01 1.22e+02 ...
+\end{verbatim}
+
+\hypertarget{assess-the-space-time-clustering-behavior}{%
+\subsection{Assess the space-time clustering behavior}\label{assess-the-space-time-clustering-behavior}}
+
+In the following section you will explore and plot the values of the three components produced as outputs of the function \emph{stkhat}: the spatial K-function (ks), the temporal K-function (kt); the space-time K-function (kst).
+
+Finally you will plot the perspective 3D-plot of \(D(s,t)\) to evaluate the space--time clustering behavior of forest fires in the present case study.
+The multifaceted shape of this function, along the spatial and the temporal dimension, can help to identify peaks of clustering.
+Finally, the corresponding values can be attributed to the bandwidth of the kernel density estimators allowing to elaborate smoothed density maps in the last step of this lab.
+
+\hypertarget{plot-the-stkhat-outputs}{%
+\subsubsection{\texorpdfstring{Plot the \emph{stkhat} outputs}{Plot the stkhat outputs}}\label{plot-the-stkhat-outputs}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Plot of the purely spatial and the purely temporal K function.}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot of the purely spatial K function}
+\FunctionTok{plot}\NormalTok{(STK\_North\_10y}\SpecialCharTok{$}\NormalTok{s, STK\_North\_10y}\SpecialCharTok{$}\NormalTok{ks, }\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"distance"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Estimated Ks"}\NormalTok{, }\AttributeTok{main=}\StringTok{"Spatial K function"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(STK\_North\_10y}\SpecialCharTok{$}\NormalTok{s, pi}\SpecialCharTok{*}\NormalTok{STK\_North\_10y}\SpecialCharTok{$}\NormalTok{s}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{03-KDE_files/figure-latex/plot-stk-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot of the purely temporal K{-}function}
+\FunctionTok{plot}\NormalTok{(STK\_North\_10y}\SpecialCharTok{$}\NormalTok{t, STK\_North\_10y}\SpecialCharTok{$}\NormalTok{kt, }\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"time"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Estimated Kt"}\NormalTok{, }\AttributeTok{main=}\StringTok{"Temporal K function"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(STK\_North\_10y}\SpecialCharTok{$}\NormalTok{t, }\DecValTok{2}\SpecialCharTok{*}\NormalTok{STK\_North\_10y}\SpecialCharTok{$}\NormalTok{t, }\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{03-KDE_files/figure-latex/plot-stk-2.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Plot the space-time D-plot}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define the function: D(s,t)=K(s,t){-}[K(s)*K(t)]}
+
+\NormalTok{Dplot }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{ (stkhat, }\AttributeTok{Dzero =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{main=}\ConstantTok{TRUE}\NormalTok{)  \{}
+
+\NormalTok{  oprod }\OtherTok{\textless{}{-}} \FunctionTok{outer}\NormalTok{(stkhat}\SpecialCharTok{$}\NormalTok{ks, stkhat}\SpecialCharTok{$}\NormalTok{kt)}
+\NormalTok{    st.D }\OtherTok{\textless{}{-}}\NormalTok{ stkhat}\SpecialCharTok{$}\NormalTok{kst }\SpecialCharTok{{-}}\NormalTok{ oprod}
+        \FunctionTok{persp}\NormalTok{(stkhat}\SpecialCharTok{$}\NormalTok{s, stkhat}\SpecialCharTok{$}\NormalTok{t, st.D, }\AttributeTok{xlab =} \StringTok{"Distance (Km)"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Time (years)"}\NormalTok{,}
+            \AttributeTok{zlab =} \StringTok{"D(s,t)"}\NormalTok{, }\AttributeTok{expand =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{ticktype =} \StringTok{"detailed"}\NormalTok{,}
+            \AttributeTok{theta =} \SpecialCharTok{{-}}\DecValTok{45}\NormalTok{, }\AttributeTok{shade =} \FloatTok{0.75}\NormalTok{, }\AttributeTok{cex =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{ltheta=}\DecValTok{120}\NormalTok{, }\AttributeTok{col=}\StringTok{"cyan1"}\NormalTok{, }\AttributeTok{font.lab=}\DecValTok{2}\NormalTok{)}
+\NormalTok{           \}}
+
+\FunctionTok{Dplot}\NormalTok{(STK\_North\_10y)}
+\FunctionTok{title}\NormalTok{(}\StringTok{"Dplot Nothern Fires"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{03-KDE_files/figure-latex/Dplot-1.pdf}
+
+\hypertarget{run-the-space-time-kernel-density-estimator}{%
+\subsubsection{Run the space-time kernel density estimator}\label{run-the-space-time-kernel-density-estimator}}
+
+The multifaceted shape the D-Plot identify peaks of clustering a time value of 3 year.
+In spece, events are clustered and every distance, so in this case we use the maximum values (10 km).
+these two values are attributed to the bandwidth of the kernel density estimators allowing to elaborate smoothed density maps.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Open the help to analyse the parameter of this kernel function: }
+\FunctionTok{help}\NormalTok{(kernel3d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Run the function}
+\NormalTok{KDE\_FFN}\OtherTok{\textless{}{-}}\FunctionTok{kernel3d}\NormalTok{(FFN\_pts, FFN\_times, }\FunctionTok{seq}\NormalTok{(}\DecValTok{80}\NormalTok{, }\DecValTok{362}\NormalTok{, }\DecValTok{1}\NormalTok{), }\FunctionTok{seq}\NormalTok{(}\DecValTok{180}\NormalTok{, }\DecValTok{580}\NormalTok{, }\DecValTok{1}\NormalTok{), }\FunctionTok{seq}\NormalTok{(}\DecValTok{1990}\NormalTok{,}\DecValTok{2013}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DecValTok{10}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(KDE\_FFN}\SpecialCharTok{$}\NormalTok{v)}
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{log10}\NormalTok{(KDE\_FFN}\SpecialCharTok{$}\NormalTok{v))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{03-KDE_files/figure-latex/hist-KDE-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{min}\NormalTok{(KDE\_FFN}\SpecialCharTok{$}\NormalTok{v[KDE\_FFN}\SpecialCharTok{$}\NormalTok{v}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{]) }\CommentTok{\#check the lower non{-}zero value }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.893333e-12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create quantile clssification }
+\NormalTok{Q}\OtherTok{\textless{}{-}}\FunctionTok{quantile}\NormalTok{(KDE\_FFN}\SpecialCharTok{$}\NormalTok{v, }\FunctionTok{seq}\NormalTok{(}\FloatTok{0.5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\FloatTok{0.05}\NormalTok{))}
+\NormalTok{Q}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          50%          55%          60%          65%          70%          75% 
+## 0.0002194741 0.0097073381 0.0263666531 0.0478856382 0.0748979448 0.1093260662 
+##          80%          85%          90%          95%         100% 
+## 0.1560709189 0.2210177893 0.3232627322 0.5162620818 2.1627084390
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a blue/red palette}
+\NormalTok{pal}\OtherTok{\textless{}{-}}\FunctionTok{colorRampPalette}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"grey"}\NormalTok{,}\StringTok{"blue"}\NormalTok{,}\StringTok{"green"}\NormalTok{, }\StringTok{"yellow"}\NormalTok{,}\StringTok{"orange"}\NormalTok{, }\StringTok{"red"}\NormalTok{ ))}
+\NormalTok{colsR}\OtherTok{\textless{}{-}}\FunctionTok{pal}\NormalTok{(}\FunctionTok{length}\NormalTok{(Q)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+
+\CommentTok{\# Display classes}
+\FunctionTok{pie}\NormalTok{(Q, }\AttributeTok{clockwise=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{labels=}\FunctionTok{round}\NormalTok{(Q, }\AttributeTok{digits=}\DecValTok{2}\NormalTok{), }\AttributeTok{border=}\StringTok{"white"}\NormalTok{, }\AttributeTok{col=}\NormalTok{colsR)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{03-KDE_files/figure-latex/plot-KDE-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot KDE maps for selected years}
+\NormalTok{oldpar}\OtherTok{\textless{}{-}}\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{), }\AttributeTok{mar=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{24}\NormalTok{)\{}
+\NormalTok{ (}\FunctionTok{image}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{80}\NormalTok{, }\DecValTok{362}\NormalTok{, }\DecValTok{1}\NormalTok{), }\FunctionTok{seq}\NormalTok{(}\DecValTok{180}\NormalTok{, }\DecValTok{580}\NormalTok{, }\DecValTok{1}\NormalTok{), KDE\_FFN}\SpecialCharTok{$}\NormalTok{v[,,i], }\AttributeTok{asp=}\DecValTok{1}\NormalTok{, }\AttributeTok{xlab=}\StringTok{""}\NormalTok{, }\AttributeTok{ylab=}\StringTok{""}\NormalTok{, }\AttributeTok{main=}\DecValTok{1989}\SpecialCharTok{+}\NormalTok{i, }\AttributeTok{breaks=}\NormalTok{Q, }\AttributeTok{col=}\NormalTok{colsR))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{03-KDE_files/figure-latex/plot-KDE-2.pdf}
+
+\hypertarget{conclusions-and-further-analyses-1}{%
+\section{Conclusions and further analyses}\label{conclusions-and-further-analyses-1}}
+
+This practical computer lab allowed you to familiarize with the assement of the global cluster behavior of hazardous events, achieved by using the Ripley's k-function.
+In addition, we learned how smoothed density maps can be elaborated from punctual events, namely using the kernel density estimator.
+Both spatial and the temporal dimension have been considered in this case.
+
+This method allowed us to explore density distribution of forest fires events through Continental Portugal in the period 1990-2013.
+In the northern half of the country, hot spots are present almost on each investigated years, with a higher concentration in the northern areas.
+
+To be sure that everything is perfectly clear for you, we propose you to do this lab again, by using this time another subset chosen among the forest fires in the Southern area, the small, medium or the large forest fires dataset.
+
+For whatever dataset you are going to use, try to answer to the following questions.
+The reading of the paper \citet{tonini_evolution_2017}, which inspired this lab, can help you in in this task.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  At which spatial and temporal distance you can observe a peak of clustering?
+\item
+  Describe which is spatio-temporal density distribution of forest fires events through the study area.
+\end{enumerate}
+
+\hypertarget{density-based-clustering-algorithm}{%
+\chapter{Density-based Clustering Algorithm}\label{density-based-clustering-algorithm}}
+
+\hypertarget{introduction-2}{%
+\section{Introduction}\label{introduction-2}}
+
+Terrestrial laser scanning (TLS) has been one of the most successful methods for 3D data collection in the last few years.
+Sequential acquisition can be used to detect and quantify surface changes.
+The three main challenges arising from TLS data collection are: 1) the large number of points acquired is computationally intense and datasets have to be filtered depending on the aim of the investigation; 2) data collection methods suffer from perspective effects, which can lead to either zones of occlusion (shadow effect) or spatially-variable point densities; 3) 3D point clouds are normally interpolated to digital elevation models either as regular grids or triangulated irregular networks.
+Thus, for change detection proposes (i.e.~determination of topographic change, including erosion and deposition), it is appropriate to develop methods based upon the direct analysis of the point clouds using semi-automatic approaches allowing to detect and extract individual features.
+
+In this practical computer lab we introduce a semi-automated method developed for isolating and identifying features of topographic change (i.e., apparent changes caused by surface displacements and indicating erosion or deposition) directly from point cloud data using a Density-Based Spatial Clustering of Applications with Noise (DBSCAN).
+This methodology was developed by \citet{micheletti_geomorphological_2017} for a very active rock glacier front located in the Swiss Alps: the Tsarmine rock glacier.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth,height=0.7\textheight]{images/Tsarmine2} 
+
+}
+
+\caption{The Tsarmine rock glacier, Hérens Valley, in the Western Swiss Alps. Source: Micheletti et al, 2016 \label{Tsarmine}}\label{fig:jpg}
+\end{figure}
+
+\hypertarget{the-overall-methodology-1}{%
+\section{The overall methodology}\label{the-overall-methodology-1}}
+
+\textbf{Stepwise analysis:}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Point clouds were generated using a TLS on a number of dates.
+\item
+  Point clouds were co-registered using stable zones within the surveyed area.
+\item
+  Using a threshold value, only the points where there may have been some topographical change were selected.
+\item
+  The final dataset was treated with DBSCAN, aiming at grouping cluster-points into single features and filtering out noise points, found in low-density regions.
+\end{enumerate}
+
+The present lab deals with steps 2 and 3: feature detection using DBSCAN.
+The detected features are finally labeled as clusters and visualized in a 3D map.
+
+Material loss or gain can be analysed in a GIS environment according to the elevation assignment of the change and the volume of change computed for each cluster by a triangulation process (not performed in this lab).
+
+\hypertarget{dbscan-3-d-density-based-clustering-algorithm}{%
+\subsection{DBSCAN: 3-D density based clustering algorithm}\label{dbscan-3-d-density-based-clustering-algorithm}}
+
+DBSCAN allows identification of spatial clusters of arbitrary shape on the base of the local density of points.
+Points that are close together are grouped into the same cluster, while isolated points are labelled as noise.
+
+Two parameters are required to perform this classification: the minimum number of points necessary to form a cluster (\(MinPts\)), and the neighborhood size epsilon (\(eps\)).
+The algorithm explores each point in the dataset, counting the number of the neighboring points falling within a circle (for the 2D model) or a sphere (for the 3D model) of radius equal to \(eps\) (\autoref{dbscan}a).
+If this number is equal to or greater than \(MinPts\), points are labelled as belonging to the same cluster (\autoref{dbscan}b).
+If this number is lower than \(MinPts\), points are classified as noise.
+The central point of each cluster is called core-point.
+Since some points can be density-reachable by more than one core-point, they can belong to more than one cluster.
+In this case clusters are blended together to form a unique cluster feature of arbitrary shape (\autoref{dbscan}c).
+
+\begin{figure}
+
+{\centering \includegraphics[width=3.4in]{images/parameters} 
+
+}
+
+\caption{Parameters in DBSCAN to form a cluster \label{dbscan}}\label{fig:fig2}
+\end{figure}
+
+\hypertarget{field-campaign}{%
+\subsection{Field campaign}\label{field-campaign}}
+
+An ultra-long range LiDAR RIEGL VZ-6000 scanner was employed to acquire sequential 3D datasets of the rock glacier front.
+TLS scans were performed on different dates over two consecutive summers: a first survey was carried out on the 23th of September 2014, and the last one on the 22th of September 2015.
+
+The instrument is equipped with on-board inclination sensors: this allows to use the inclination data to obtain (locally) georeferenced datasets where the Z dimension represents the elevation above the X-Y plane.
+After co-registration, a mask was used to restrict point clouds to the area of interest: the front of the rock glacier and the corridor below.
+
+DBSCAN requires as input a 3-dimensional dataset, which in our case consists on the points clouds (X,Y,Z) plus the displacement distance.
+For the two co-registered datasets (2014 and 2015), we set the first as the target and the more recent as the reference.
+For each point in the target cloud the corresponding nearest point in the reference cloud was identified and the distance between them evaluated using the software Cloud Compare.
+Co-registration errors, estimated as noise and not real material loss/gain signals, has to be removed from the analysis.
+Here, we noted from field observations that the size of displaced boulders is typically \textgreater{} 0.30 m and we use this as a change criteria to remove the noise.
+
+\hypertarget{dbscan-feature-detection-from-points-clouds}{%
+\section{DBSCAN: feature detection from points clouds}\label{dbscan-feature-detection-from-points-clouds}}
+
+\hypertarget{load-the-libraries-2}{%
+\subsection{Load the libraries}\label{load-the-libraries-2}}
+
+Fist you have to load the following libraries: - \textbf{dbscan}: A fast implementation of several density-based algorithms of the DBSCAN family.
+- \textbf{rgl}: Provides medium to high level functions for 3D interactive graphics - \textbf{plot3Drgl}: Plot 3D graphs in rgl window.
+- \textbf{classInt}: Selected methods to choose class intervals for mapping puposes.\\
+- \textbf{RColorBrewer}: Provides color schemes for mapping.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"dbscan"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"rgl"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"plot3Drgl"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"classInt"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{"RColorBrewer"}\NormalTok{)}
+
+\NormalTok{(}\FunctionTok{.packages}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "RColorBrewer" "classInt"     "plot3Drgl"    "plot3D"       "rgl"         
+##  [6] "dbscan"       "stats"        "graphics"     "grDevices"    "utils"       
+## [11] "datasets"     "methods"      "base"
+\end{verbatim}
+
+\hypertarget{import-and-visualise-the-point-clouds-dataset}{%
+\subsection{Import and visualise the point clouds dataset}\label{import-and-visualise-the-point-clouds-dataset}}
+
+We provide the dataset corresponding to one-year displacement distance, masked over the the rock glacier front.
+The noise-points are removed using a threshold of 30 cm.
+Finally we will plot the 3D-points cloud filtered dataset using the displacement distance as attribute to display the map.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Import point cloud dataset (ptc)}
+\CommentTok{\# 1 year displacement TLS campaigns; data masked over the active front only.}
+\NormalTok{ptc }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\StringTok{"data/Lab03/TsarmineRG\_230914\_frontonly\_XYZ\_dist\_ref\_220915.txt"}\NormalTok{, }\AttributeTok{header=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+
+\CommentTok{\# Add names to columns: X,Y, Z coordinates and the displacement distance "d".}
+\FunctionTok{colnames}\NormalTok{(ptc)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"Y"}\NormalTok{,}\StringTok{"X"}\NormalTok{,}\StringTok{"Z"}\NormalTok{,}\StringTok{"d"}\NormalTok{) }\CommentTok{\# rename columns}
+
+\CommentTok{\# Inspect the dataset:}
+\FunctionTok{str}\NormalTok{(ptc)}
+\FunctionTok{summary}\NormalTok{(ptc}\SpecialCharTok{$}\NormalTok{d)}
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{log10}\NormalTok{(ptc}\SpecialCharTok{$}\NormalTok{d))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{04-DBSCAN_files/figure-latex/import-data-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a subset: removing noise{-}points (d\textgreater{}30cm).}
+\NormalTok{ptc30 }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(ptc, d}\SpecialCharTok{\textgreater{}=}\FloatTok{0.3}\NormalTok{)}
+
+\CommentTok{\# Inspect the subset:}
+\FunctionTok{str}\NormalTok{(ptc30)}
+\FunctionTok{summary}\NormalTok{(ptc30}\SpecialCharTok{$}\NormalTok{d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot{-}3D: display 3D plot (X,Y,Z) with class intervals based on the distance d.}
+
+\CommentTok{\# Create a class interval (int) based on natural breaks:}
+\NormalTok{int }\OtherTok{\textless{}{-}} \FunctionTok{classIntervals}\NormalTok{(ptc30}\SpecialCharTok{$}\NormalTok{d, }\AttributeTok{n=}\DecValTok{5}\NormalTok{, }\AttributeTok{style=}\StringTok{"fisher"}\NormalTok{) }
+\NormalTok{  cut.vals}\OtherTok{\textless{}{-}}\NormalTok{int}\SpecialCharTok{$}\NormalTok{brks}
+\NormalTok{  d.cut }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(ptc30}\SpecialCharTok{$}\NormalTok{d,cut.vals)}
+\NormalTok{  cut.levels }\OtherTok{\textless{}{-}} \FunctionTok{levels}\NormalTok{(d.cut)}
+\NormalTok{  cut.band }\OtherTok{\textless{}{-}} \FunctionTok{match}\NormalTok{(d.cut,cut.levels)}
+\NormalTok{  cls }\OtherTok{\textless{}{-}} \FunctionTok{rev}\NormalTok{(}\FunctionTok{brewer.pal}\NormalTok{(}\FunctionTok{length}\NormalTok{(cut.levels), }\StringTok{"RdYlGn"}\NormalTok{))}
+  
+\CommentTok{\# Display the 3D{-}plot:}
+\FunctionTok{scatter3D}\NormalTok{(ptc30}\SpecialCharTok{$}\NormalTok{X, ptc30}\SpecialCharTok{$}\NormalTok{Y, ptc30}\SpecialCharTok{$}\NormalTok{Z, }\AttributeTok{colvar =}\NormalTok{ptc30}\SpecialCharTok{$}\NormalTok{d, }\AttributeTok{breaks=}\NormalTok{cut.vals, }\AttributeTok{cex=}\FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{04-DBSCAN_files/figure-latex/points-clouds-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotrgl}\NormalTok{() }\CommentTok{\#animated 3D{-}plot}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{run-dbscan}{%
+\subsection{Run DBSCAN}\label{run-dbscan}}
+
+The two parameters \(eps\) and \(MinPts\) greatly affect the output cluster detection leading the the identification of a large number of small clusters (for small values) or a small number of large features of arbitrary shape (for large values).
+Once fixed the \(MinPts\) parameter, a suitable value for the \(eps\) neighborhood size can be estimated using a \textbf{k-nearest neighbors (k-NN) distance graph}, imposing k as equal to \(MinPts\) and plotting the distance to the nearest neighbors.
+The optimal \(eps\)-value should coincide with the stronger curvature of the curve.
+
+In the following, the minimum number of points allowing to form a cluster is fixed first, and then the plot of the k-nearest neighbor (k-NN) distance is used to find a suitable value for the \(eps\) neighborhood size.
+We can use this function to find the NN-distance (for a given k-value) corresponding to the stronger curvature.
+This values gives the best neighborhood size \(eps\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot the k{-}NN distance graph (with k=10)}
+\FunctionTok{kNNdistplot}\NormalTok{(ptc30[,}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{], }\AttributeTok{k =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{04-DBSCAN_files/figure-latex/k-NN-graph-1.pdf}
+
+Once the best \(MinPts\) adnd \(eps\) parameter have been selected, the DBSCAN function can be run.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Eps=1m (\textasciitilde{}3xsigma) ; MinPts=10}
+\NormalTok{cl30}\OtherTok{\textless{}{-}}\FunctionTok{dbscan}\NormalTok{(ptc30, }\DecValTok{1}\NormalTok{, }\AttributeTok{minPts=}\DecValTok{10}\NormalTok{)}
+
+\CommentTok{\# Inspect the results:}
+\FunctionTok{str}\NormalTok{(cl30)}
+\FunctionTok{summary}\NormalTok{(cl30}\SpecialCharTok{$}\NormalTok{cluster)}
+\FunctionTok{sum}\NormalTok{(cl30}\SpecialCharTok{$}\NormalTok{cluster}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)}
+
+\CommentTok{\# Plot only the detected clusters.}
+
+\CommentTok{\# Join the data:}
+\NormalTok{cl30}\OtherTok{\textless{}{-}}\FunctionTok{cbind}\NormalTok{(ptc30, }\AttributeTok{cluster=}\NormalTok{cl30}\SpecialCharTok{$}\NormalTok{cluster)}
+\CommentTok{\# Save as data frame and remove the noise (label==0)}
+\NormalTok{cl30\_df}\OtherTok{\textless{}{-}}\FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{subset}\NormalTok{(cl30, cl30}\SpecialCharTok{$}\NormalTok{cluster}\SpecialCharTok{\textgreater{}=}\DecValTok{1}\NormalTok{))}
+\CommentTok{\# Simple plot:}
+\FunctionTok{plot}\NormalTok{(cl30\_df}\SpecialCharTok{$}\NormalTok{X, cl30\_df}\SpecialCharTok{$}\NormalTok{Y, }\AttributeTok{col=}\NormalTok{cl30\_df}\SpecialCharTok{$}\NormalTok{cluster, }\AttributeTok{pch=}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{04-DBSCAN_files/figure-latex/dbscan-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Animated 3D{-}plot:}
+\FunctionTok{plot3d}\NormalTok{(cl30\_df, }\AttributeTok{col=}\NormalTok{cl30\_df}\SpecialCharTok{$}\NormalTok{cluster, }\AttributeTok{pch=}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Finally you can export the result as a .txt file and import in a GIS system for further analyses, such as to determine the volumes of loss or gain of material.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.table}\NormalTok{(cl30\_df, }\AttributeTok{file=}\StringTok{"cls30\_1\_10.txt"}\NormalTok{, }\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{conclusions-and-further-analyses-2}{%
+\section{Conclusions and further analyses}\label{conclusions-and-further-analyses-2}}
+
+The proposed method permitted detection of features of changes on a rock glacier front located in the Swiss Alps.
+Single cluster features of erosion and deposition/front movements were extracted directly from point clouds, detected by DBSCAN without the necessity of interpolate the 3-D original data.
+
+To be sure that everything is perfectly clear for you, we propose you to do this lab again, by changing the values of \emph{MinPts} and \emph{eps} and discuss the compare the resulting extracted features.
+
+\hypertarget{self-organizing-map}{%
+\chapter{Self-organizing Map}\label{self-organizing-map}}
+
+\hypertarget{introduction-3}{%
+\section{Introduction}\label{introduction-3}}
+
+The increasing availability of multivariate datatets stimulates researches to develop new techniques that differ from those utilized in earlier scientific paradigms.
+In the field of social and economic science, geo-demographic segmentation defines a technique used to classify a population based on input data describing administrative units and people living there \citep[see][]{spielman_social_2008}.
+Small areas can thus be classified into discrete categories using demographic input data, by means of data reduction techniques (such as the \emph{Principal component analysis}).
+The main limitation of these approaches is the problem of communicating the multidimensional complexity characterizing the different output classes.
+
+\textbf{Machine learning} techniques can help in this context, as they are designed to extract useful formation and insight from the interaction of the variables describing the complex structure of a given phenomenon.
+In the present computing lab we introduce an unsupervised learning procedure based on \emph{Self-Organizing Map (SOM)} \citep[see][]{kohonen_self-organized_1982}, allowing detecting clusters and characterizing the pattern of population dynamic in Switzerland in the recent period.
+This lab is inspired by the work of \citet{marj_tonini_unsupervised_2023}.
+
+\hypertarget{material-and-method}{%
+\section{Material and method}\label{material-and-method}}
+
+\hypertarget{the-geo-demographic-context}{%
+\subsection{The geo-demographic context}\label{the-geo-demographic-context}}
+
+Switzerland has the highest life expectancy in the world.
+It counts about 8,5 million inhabitants (official census data 2020), twice as much as at the beginning of the 20th century, mainly because of the high level of immigration.
+The number of foreigners that currently reside in the country corresponds to about one quarter of the total population.
+Most of the population (85\%) lives in cities.
+Population aging increased over the course of the 20th century, with one in five person of retirement age today.
+In the present study, we developed a machine learning based approach to understand and describe the population patterns in different geographic areas.
+
+\hypertarget{som}{%
+\subsection{SOM}\label{som}}
+
+We use \textbf{SOM}, an \emph{unsupervised competitive learning neural network} allowing representing a high-dimensional feature space (defined by the multivariate input dataset), as two-dimensional discretized pattern (the SOM grid of neurons).
+In SOM the proximity of the units in the output grid reflects the similarity of the corresponding input observations, which guarantees the preservation of the topological structure of the input data.
+
+Compared to other approaches, SOM is very efficient for data visualization.
+Indeed it provides additional outputs such as the heatmaps, representing the distribution of each input feature across the SOM grid, extremely useful to visually explore the relationship between the input variables.
+
+\hypertarget{swiss-census-data}{%
+\subsection{Swiss census data}\label{swiss-census-data}}
+
+Input data come from the national population census, provided by the \href{https://www.bfs.admin.ch/bfs/en/home.html}{Swiss Federal Statistical Office}, and including information on the socio-economic status of the population and surveyed land use and land cover.
+This information has been aggregated to the municipality level for the purpose of the present investigation.
+Census data 2020 have been considered to analyse the current pattern, while the former census surveys can be considered to assess transitions and evaluate population dynamics.
+
+\hypertarget{variables-inspection}{%
+\section{Variables inspection}\label{variables-inspection}}
+
+\hypertarget{import-the-data}{%
+\subsection{Import the data}\label{import-the-data}}
+
+Fist, you have to import the Swiss census dataset for the year 2020, referred to the municipality administrative units.
+As you can see from the description of the selected variables \autoref{Variables}, some of them can be discarded from the analysis.
+So, in the following step, we extract a subset of the most meaningful variables for the purpose of the present study.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{include\_graphics}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"images/Variables1.jpg"}\NormalTok{, }\StringTok{"images/Variables2.jpg"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=1\linewidth,height=1\textheight]{images/Variables1} \caption{Variables description \label{Variables}}\label{fig:variables-1}
+\end{figure}
+\begin{figure}
+\includegraphics[width=1\linewidth,height=1\textheight]{images/Variables2} \caption{Variables description \label{Variables}}\label{fig:variables-2}
+\end{figure}
+
+\hypertarget{inspect-the-data}{%
+\subsection{Inspect the data}\label{inspect-the-data}}
+
+Plotting the histogram of the variables distribution allows to detect outliers, see if they have comparable range of values, and evaluate if a data transformation is necessary.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot variables\textquotesingle{} frequency distribution}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{3}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(subset2020)) \{      }
+    \FunctionTok{hist}\NormalTok{((subset2020[ , i]),  }\AttributeTok{main=}\FunctionTok{colnames}\NormalTok{(subset2020[i]))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-transformation}{%
+\subsection{Data transformation}\label{data-transformation}}
+
+Data transformation seeks the make the variables range comparable.
+This process ensure the data entries to look similar across all fields and records, making information easier to find, group and analyze.
+
+With \textbf{Min-Max Scaling}, the data values are scaled in a range between 0 and 1.
+As a consequence, the effect of outliers suppresses to a certain extent.
+Moreover, it helps us to have a smaller value of the standard deviation of the data scaled.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Custom function to implement min max scaling}
+\NormalTok{minMax }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  (x }\SpecialCharTok{{-}} \FunctionTok{min}\NormalTok{(x)) }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{max}\NormalTok{(x) }\SpecialCharTok{{-}} \FunctionTok{min}\NormalTok{(x))}
+\NormalTok{\}}
+
+\CommentTok{\# Apply max{-}min to the data}
+\NormalTok{dfnorm2020}\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{lapply}\NormalTok{((subset2020[ , }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)]), minMax))}
+\FunctionTok{summary}\NormalTok{(dfnorm2020)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot the histograms of the transformed data }
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(dfnorm2020)) \{      }
+    \FunctionTok{hist}\NormalTok{((dfnorm2020[ , i]),  }\AttributeTok{main=}\FunctionTok{colnames}\NormalTok{(dfnorm2020[i]))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{running-som}{%
+\section{Running SOM}\label{running-som}}
+
+\hypertarget{load-the-libraries-3}{%
+\subsection{Load the libraries}\label{load-the-libraries-3}}
+
+Fist you have to load the following libraries:
+
+\begin{itemize}
+\item
+  \textbf{kohonen}: Supervised and Unsupervised Self-Organizing Maps (SOM)
+\item
+  \textbf{aweSOM:} offers a set of tools to explore and analyze datasets with SOM
+\item
+  \textbf{ggplot2}: create Elegant Data Visualizations Using the Grammar of Graphics
+\item
+  \textbf{colorpatch}: rendering methods (ggplot extensions)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(kohonen)}
+\FunctionTok{library}\NormalTok{(aweSOM)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(colorpatch)}
+\NormalTok{(}\FunctionTok{.packages}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{compute-som}{%
+\subsection{Compute SOM}\label{compute-som}}
+
+The main idea with \textbf{SOM} is to map the input high-dimensional feature space in a lower-dimensional output space organized on a grid made up of regular units (i.e.~the neurons).
+At the end of the process, each observation from the input space (\(X_{k,i}\)) will be associated (i.e., mapped) to a unit in the SOM grid.
+Depending on the size of the grid, one unit can include several input observations.
+
+The first step consists in defining the size and geometry of the SOM grid.
+In this case we define a rectangular grid of 18 by 13 units, allowing to allocate, on average, about 15 input-items per units, and whose geometry reproduces the shape of the study area.
+(\textbf{NB}: several parameters and configurations of the SOM grid can be implemented and compared, seeking to minimize the \emph{Quantization Error, QE})
+
+Finally, you can run the SOM model.
+Note that \emph{rlen} indicates the number of times the complete data set will be presented to the network, while for the other parameters we will keep the default values.
+
+The overall computation include the following steps:
+
+\textbf{1) The data frame has to be transformed to a matrix}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mxM2020}\OtherTok{\textless{}{-}}\FunctionTok{as.matrix}\NormalTok{(dfnorm2020) }\CommentTok{\# max{-}min}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{2) Create the SOM-grid}
+
+Before running SOM, you have to create the grid of output units.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Gird size 18x13 units}
+\NormalTok{som\_grid }\OtherTok{\textless{}{-}} \FunctionTok{somgrid}\NormalTok{(}\AttributeTok{xdim =} \DecValTok{18}\NormalTok{, }\AttributeTok{ydim=}\DecValTok{13}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{3) Run-SOM}
+
+The general R function \textcolor{red}{set.seed()} is used for creating simulations of random objects that can be reproduced.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Use max{-}min data transformation}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{) }
+
+\CommentTok{\# Run SOM}
+\NormalTok{SOM2020M}\OtherTok{\textless{}{-}} \FunctionTok{som}\NormalTok{(mxM2020,}
+               \AttributeTok{grid=}\NormalTok{som\_grid, }
+               \AttributeTok{rlen=}\DecValTok{1000}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(SOM2020M)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## SOM of size 18x13 with a rectangular topology.
+## Training data included.
+\end{verbatim}
+
+\textbf{4) SOM-model evaluation}
+
+Finally, you can optimize the size of the grid by inspecting several quality measure and changing the parameters accordingly.
+In particular we will explore the following:
+
+\begin{itemize}
+\item
+  \emph{Changes}: shows the mean distance to the closest codebook vector during the training.
+\item
+  \emph{Quantization error}: average squared distance between the data points and the map's codebook to which they are mapped.
+  Lower is better.
+\item
+  \emph{Percentage of explained variance}: similar to other clustering methods, the share of total variance that is explained by the clustering (equal to 1 minus the ratio of quantization error to total variance).
+  Higher is better.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Evaluate rlen}
+\FunctionTok{plot}\NormalTok{(SOM2020M, }\AttributeTok{type=}\StringTok{"changes"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{05-SOM_files/figure-latex/SOM-quality-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Evaluate the results}
+\NormalTok{QEM}\OtherTok{\textless{}{-}}\FunctionTok{somQuality}\NormalTok{(SOM2020M, dfnorm2020) }
+
+\DocumentationTok{\#\# Quality measures:}
+\NormalTok{QEM}\SpecialCharTok{$}\NormalTok{err.quant }\CommentTok{\# Quantization error}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.04534672
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{QEM}\SpecialCharTok{$}\NormalTok{err.varratio }\CommentTok{\# \% explained variance}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 82.06
+\end{verbatim}
+
+\hypertarget{soms-main-outputs}{%
+\section{SOM's main outputs}\label{soms-main-outputs}}
+
+The main graphical outputs of SOM are the node counts, the neighborhood distances, and the heatmaps.
+
+\begin{itemize}
+\item
+  \textbf{Node counts map} informs about the number of input vectors falling inside each output unit.
+\item
+  \textbf{Neighbourhood distance plot} shows the distance between each unit and its neighborhoods.
+\item
+  \textbf{Heatmaps} show the distribution of each input variable, associated to each input vectors, across the SOM grid.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a color palette}
+\NormalTok{coolBlueHotRed }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n, }\AttributeTok{alpha =} \DecValTok{1}\NormalTok{) \{}\FunctionTok{rainbow}\NormalTok{(n, }\AttributeTok{end=}\DecValTok{4}\SpecialCharTok{/}\DecValTok{6}\NormalTok{, }\AttributeTok{alpha=}\NormalTok{alpha)[n}\SpecialCharTok{:}\DecValTok{1}\NormalTok{]\}}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+
+\CommentTok{\# Plot node counts map}
+\FunctionTok{plot}\NormalTok{(SOM2020M, }\AttributeTok{type=}\StringTok{"count"}\NormalTok{, }\AttributeTok{main=}\StringTok{"Node Counts"}\NormalTok{, }\AttributeTok{palette.name=}\NormalTok{coolBlueHotRed)}
+
+\CommentTok{\# Plot SOM neighbourhood distance}
+\FunctionTok{plot}\NormalTok{(SOM2020M, }\AttributeTok{type=}\StringTok{"dist.neighbours"}\NormalTok{, }\AttributeTok{main =} \StringTok{"SOM neighbour distances"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{05-SOM_files/figure-latex/outputs-SOM-maxmin-1.pdf}
+
+Visualized side by side, heatmaps provide a useful tool to explore the correlation between the input variables \autoref{Heatmaps}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot heatmaps for selected variables}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{18}\NormalTok{) }
+\NormalTok{  \{}
+\FunctionTok{plot}\NormalTok{(SOM2020M, }\AttributeTok{type =} \StringTok{"property"}\NormalTok{, }\AttributeTok{property =} \FunctionTok{getCodes}\NormalTok{(SOM2020M)[,i],}
+     \AttributeTok{main=}\FunctionTok{colnames}\NormalTok{(}\FunctionTok{getCodes}\NormalTok{(SOM2020M))[i], }\AttributeTok{palette.name=}\NormalTok{coolBlueHotRed)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{include\_graphics}\NormalTok{(}\StringTok{"images/Heatmaps.jpg"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=0.7\textheight]{images/Heatmaps} 
+
+}
+
+\caption{Heatmaps \label{Heatmaps}}\label{fig:jpg1}
+\end{figure}
+
+\hypertarget{hierarchical-clustering}{%
+\section{Hierarchical clustering}\label{hierarchical-clustering}}
+
+Hierarchical clustering can finally be performed to isolate groups of input vectors characterized by a similar distribution of the input variables.
+This second step takes the SOM-units (i.e., the CodeBook vectors) as input and group them into the desired number of clusters (we choose 7 in this case).
+This allows to characterize main typologies of geo-demographic groups.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Apply hierarchical clustering:}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CB2020M }\OtherTok{\textless{}{-}} \FunctionTok{getCodes}\NormalTok{(SOM2020M) }\CommentTok{\# Extract codebook vectors}
+
+\NormalTok{cls2020M }\OtherTok{\textless{}{-}} \FunctionTok{cutree}\NormalTok{(}\FunctionTok{hclust}\NormalTok{(}\FunctionTok{dist}\NormalTok{(CB2020M)), }\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Display the SOM-grid with different colors for each cluster:}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Colour palette definition, will use later too.}
+\CommentTok{\# If you change the number of hierarchical clustering, remember change the number of color.}
+
+\NormalTok{map\_palette }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"steelblue3"}\NormalTok{,}\StringTok{"darkgoldenrod4"}\NormalTok{,}\StringTok{"darkolivegreen"}\NormalTok{, }\StringTok{"springgreen3"}\NormalTok{, }\StringTok{"darkorange"}\NormalTok{, }\StringTok{"firebrick"}\NormalTok{, }\StringTok{"darkolivegreen1"}\NormalTok{ )}
+
+\FunctionTok{plot}\NormalTok{(SOM2020M, }\AttributeTok{type=}\StringTok{"mapping"}\NormalTok{, }\AttributeTok{pchs=}\StringTok{""}\NormalTok{, }\AttributeTok{bgcol =}\NormalTok{ map\_palette[cls2020M], }\AttributeTok{main =} \StringTok{"Clusters"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{05-SOM_files/figure-latex/clustermap_maxmin-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Assign the cluster number (based on hierarchical clustering) to each unit:}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{clasgn }\OtherTok{\textless{}{-}}\NormalTok{ cls2020M[SOM2020M}\SpecialCharTok{$}\NormalTok{unit.classif]}
+\NormalTok{dfnorm2020}\SpecialCharTok{$}\NormalTok{hc}\OtherTok{\textless{}{-}}\NormalTok{clasgn}
+\NormalTok{clsnorm}\OtherTok{\textless{}{-}}\FunctionTok{cbind}\NormalTok{(dfnorm2020, subset2020}\SpecialCharTok{$}\NormalTok{BFS\_nummer)}
+
+\CommentTok{\# Export the table with clusters }
+\FunctionTok{write.table}\NormalTok{(clsnorm, }\AttributeTok{file=}\StringTok{"hcM\_7cls.csv"}\NormalTok{, }\AttributeTok{sep=}\StringTok{","}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Map the resulting clusters to the geographical space}
+\end{itemize}
+
+You can import the final table with the values of the population census variable in a GIS and join the values to the administrative limits at municipality levels in Switzerland.
+This allows you to elaborate a map as in \autoref{Clusters_7}.
+
+\textbf{NB}. You need only two columns: the code identifying each municipality (``BFS\_nummer'') and the cluster number (hc).
+Open the table including the resulting clusters with a dedicated program (like Excel) to reorganize the header, as a new column for unique identifier has been created automatically (you can name it ``ID''), and headers has to be shifted of one place on the right.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=0.7\textheight]{images/Clusters_7} 
+
+}
+
+\caption{Spatial pattern distribution of Swiss poputaion census \label{Clusters_7}}\label{fig:jpg2}
+\end{figure}
+
+If you want to try the primary and automatic process in Rstudio, you can conduct the below codes and see the map.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(st)}
+\FunctionTok{library}\NormalTok{(sf)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(ggspatial)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load the shapefile data}
+\NormalTok{CH\_outline }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\StringTok{"data/Lab04/Municiplities.shp"}\NormalTok{)}
+
+\CommentTok{\# Quick check the shapefile data}
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ CH\_outline, }\AttributeTok{size =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"cyan1"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Swiss municiplities"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{coord\_sf}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Rename the column}
+\FunctionTok{colnames}\NormalTok{(clsnorm)[}\DecValTok{20}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"BFS\_NUMMER"}
+
+\CommentTok{\# Merge the dataframe and shapefile together by the column with the same name}
+\NormalTok{z }\OtherTok{=} \FunctionTok{merge}\NormalTok{(CH\_outline, clsnorm, }\AttributeTok{by =} \StringTok{"BFS\_NUMMER"}\NormalTok{)}
+
+\CommentTok{\# Rename the column with clustering results}
+\NormalTok{z}\SpecialCharTok{$}\NormalTok{cluster }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(z}\SpecialCharTok{$}\NormalTok{hc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Mapping the clusters via ggplot like QGIS/ArcGIS Pro/Arcmap, similar package \textquotesingle{}tmap\textquotesingle{}}
+\NormalTok{CH\_cluster }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ z) }\SpecialCharTok{+} \CommentTok{\# Original data}
+    \FunctionTok{geom\_sf}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill =} \FunctionTok{as.factor}\NormalTok{(cluster))) }\SpecialCharTok{+} \CommentTok{\# Mapping the clusters}
+    \FunctionTok{annotation\_scale}\NormalTok{(}\AttributeTok{location =} \StringTok{"bl"}\NormalTok{, }\AttributeTok{width\_hint =} \FloatTok{0.3}\NormalTok{,}
+                     \AttributeTok{pad\_x =} \FunctionTok{unit}\NormalTok{(}\FloatTok{0.2}\NormalTok{, }\StringTok{"cm"}\NormalTok{), }\AttributeTok{pad\_y =} \FunctionTok{unit}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\StringTok{"cm"}\NormalTok{)) }\SpecialCharTok{+} \CommentTok{\# Mapping scales, which are calculated by project coordinates}
+    \FunctionTok{annotation\_north\_arrow}\NormalTok{(}\AttributeTok{location =} \StringTok{"tr"}\NormalTok{, }\AttributeTok{which\_north =} \StringTok{"true"}\NormalTok{, }
+          \AttributeTok{pad\_x =} \FunctionTok{unit}\NormalTok{(}\FloatTok{0.0}\NormalTok{, }\StringTok{"cm"}\NormalTok{), }\AttributeTok{pad\_y =} \FunctionTok{unit}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\StringTok{"cm"}\NormalTok{),}
+          \AttributeTok{style =}\NormalTok{ north\_arrow\_fancy\_orienteering) }\SpecialCharTok{+} \CommentTok{\# Mapping north arrow}
+    \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ map\_palette) }\SpecialCharTok{+} \CommentTok{\# Set up the our color palette}
+    \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} \CommentTok{\# Background color, if use, it means without color}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Spatial pattern distribution of Swiss poputaion census"}\NormalTok{) }\SpecialCharTok{+} \CommentTok{\# Insert title of the map}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{name =} \StringTok{"Clusters"}\NormalTok{, }
+                        \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"1: Unproductive"}\NormalTok{, }\StringTok{"2: Forest/Peri{-}urban"}\NormalTok{, }\StringTok{"3: Peri{-}urban/Rural"}\NormalTok{,}
+                                 \StringTok{"4: Rural"}\NormalTok{,}\StringTok{"5: Suburban"}\NormalTok{,}\StringTok{"6: Urban centre"}\NormalTok{,}\StringTok{"7: Peri{-}urban fringe"}\NormalTok{)) }\CommentTok{\# Legend labels}
+    \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill=}\FunctionTok{guide\_legend}\NormalTok{(}\AttributeTok{title=}\StringTok{"Clusters"}\NormalTok{)) }\CommentTok{\# Legend name}
+
+\CommentTok{\# Save the map as jpg}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"CH\_cluster.jpg"}\NormalTok{)}
+    
+\NormalTok{CH\_cluster}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{05-SOM_files/figure-latex/mapping the clusters-1.pdf}
+
+\hypertarget{clusters-characterization}{%
+\subsection{Clusters characterization}\label{clusters-characterization}}
+
+To interpret the final main clusters in therms of their geo-demographic characteristics, you can evaluate the distribution of each variable within the clusters by using \textbf{box plots} (also known as \emph{whisker plot}).
+
+Box-plot is a standardized way to display a dataset based on the five-number summary statistics: the minimum, the maximum, the sample median, and the first and third quartiles (i.e., the median of the lower half (25\%) and the median of the upper half (75\%) of the dataset).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Creates an empty list object that will be filled by the loop}
+\NormalTok{cls20M }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{() }
+
+\CommentTok{\# Split the single clusters}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{7}\NormalTok{) \{}
+\NormalTok{  cls20M[[i]]}\OtherTok{\textless{}{-}}\FunctionTok{subset}\NormalTok{(clsnorm, clsnorm}\SpecialCharTok{$}\NormalTok{hc}\SpecialCharTok{==}\NormalTok{i) }
+\NormalTok{\}}
+
+\NormalTok{clsvar20M }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(cls20M, }\StringTok{"["}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{18}\NormalTok{)) }
+
+\CommentTok{\# Box{-}plots for the single clusters}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{7}\NormalTok{) \{}\FunctionTok{boxplot}\NormalTok{ ((clsvar20M[[i]]), }\AttributeTok{main=}\FunctionTok{paste}\NormalTok{(}\StringTok{"Cluster"}\NormalTok{, i), }\AttributeTok{mar=}\FunctionTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{cex.axis=}\FloatTok{0.5}\NormalTok{,  }\AttributeTok{las=}\DecValTok{2}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+To better investigate the values assumed by each class of variables withing the different clusters, you can group them by category.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Box plot by categories: "Physical space"}
+
+\NormalTok{clsvar20M }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(cls20M, }\StringTok{"["}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)) }
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{), }\AttributeTok{mar=}\FunctionTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{cex.axis=}\FloatTok{0.7}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{7}\NormalTok{) \{}\FunctionTok{boxplot}\NormalTok{ ((clsvar20M[[i]]), }\AttributeTok{main=}\FunctionTok{paste}\NormalTok{(}\StringTok{"Cluster"}\NormalTok{, i),  }\AttributeTok{las=}\DecValTok{2}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{05-SOM_files/figure-latex/boxplot-clsM-PhisicalSpace-1.pdf}
+\caption{\label{fig:boxplot-clsM-PhisicalSpace}Physical space}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Box plot by categories: "Demographics"}
+
+\NormalTok{clsvar20M }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(cls20M, }\StringTok{"["}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\DecValTok{6}\SpecialCharTok{:}\DecValTok{13}\NormalTok{)) }
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{), }\AttributeTok{mar=}\FunctionTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{cex.axis=}\FloatTok{0.7}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{7}\NormalTok{) \{}\FunctionTok{boxplot}\NormalTok{ ((clsvar20M[[i]]), }\AttributeTok{main=}\FunctionTok{paste}\NormalTok{(}\StringTok{"Cluster"}\NormalTok{, i),  }\AttributeTok{las=}\DecValTok{2}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{05-SOM_files/figure-latex/boxplot-clsM-Deographic-1.pdf}
+\caption{\label{fig:boxplot-clsM-Deographic}Demographics}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Box plot by categories: "Socio{-}economics"}
+
+\NormalTok{clsvar20M }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(cls20M, }\StringTok{"["}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\DecValTok{14}\SpecialCharTok{:}\DecValTok{18}\NormalTok{)) }
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{), }\AttributeTok{mar=}\FunctionTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{cex.axis=}\FloatTok{0.7}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{7}\NormalTok{) \{}\FunctionTok{boxplot}\NormalTok{ ((clsvar20M[[i]]), }\AttributeTok{main=}\FunctionTok{paste}\NormalTok{(}\StringTok{"Cluster"}\NormalTok{, i),  }\AttributeTok{las=}\DecValTok{2}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{05-SOM_files/figure-latex/boxplot-clsM-SocioEconomic-1.pdf}
+\caption{\label{fig:boxplot-clsM-SocioEconomic}Socio-economics}
+\end{figure}
+
+\hypertarget{conclusions}{%
+\section{Conclusions}\label{conclusions}}
+
+Results of the present study reveal the main patterns of the population in Switzerland based on the surveyed land-use, socio-economic, and demographic indicators.
+To characterize the final main clusters, the distribution of each variable within them have been assessed by using \textbf{box plots}.
+We could thus identify main clusters including the most developed and active cities with higher income, the peri-urban areas mostly devoted to the agricultural activity, or the areas with higher levels of migration.
+
+\textbf{SOM heatmaps} allow to display the pattern distribution of each input variable over the SOM-grid and how values change in space.
+Visualized side by side, heatmaps show a picture of the different areas and their characteristics.
+In this way it is possible to explore the level of complementarity that links one or more variables among them.
+
+In conclusion, in the present study we proposed a performant data-driven approach based on unsupervised learning allowing to extract useful information from a huge volume of multivariate population census data.
+This approach led to represent and interpret the main patterns characterizing the dynamic of population in Switzerland in the recent period.
+
+\hypertarget{further-analyses}{%
+\section{Further analyses}\label{further-analyses}}
+
+To be sure that everything is perfectly clear for you, we propose you to \textbf{answer the following questions} and to discuss your answers with the other participants to the course or directly with the teacher.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  Change the size of the gridmap and check if you get better results for SOM. \textbf{N.B.} Better results are achieved when the quantisation error decreases, the explained variance increases, and there are no empty observations revealed by the Node Counts map.
+\end{enumerate}
+
+2.1) Focusing on Cluster 6: which variable characterize it the most?
+Based on these variables, which class of land use can be associated to this cluster?
+2.2) And in the case of Cluster 4?
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{2}
+\item
+  Describe the distribution of the clusters in the geographical space.
+  In more details, describe to which kind of land use the different clusters can be referred and specify why.
+\item
+  From the visual inspection of the heatmaps, describe the correlation you can observe between the following variables: a) ``p\_transport'' and ``p\_infrastructure''; b) ``p\_agriculture'' and ``p\_improductible''.
+\end{enumerate}
+
+\hypertarget{random-forest}{%
+\chapter{Random Forest}\label{random-forest}}
+
+\hypertarget{introduction-4}{%
+\section{Introduction}\label{introduction-4}}
+
+In this application, we explore the capabilities of a stochastic approach based on a machine learning (ML) algorithm to elaborate landslides susceptibility mapping in Canton Vaud, Switzerland.
+Generally speaking, ML includes a class of algorithms for the analysis, modelling, and visualization of environmental data and it performs particularly well to model environmental hazards, which naturally have a complex and non-linear behavior.
+Here we use Random Forest, an ensemble ML algorithm based on decision trees.
+
+The research framework that inspired this computational lab refers to a pioneering study in susceptibility mapping for wildfire eventy by \citet{tonini_machine_2020} and further developed for the assessment of variable importance by \citet{trucchia_machine-learning_2022}.
+
+\hypertarget{the-main-objective}{%
+\subsection{The main objective}\label{the-main-objective}}
+
+Landslides are one of the major hazard occurring around the world.
+In Switzerland, landslides cause damages to infrastructures and sometimes threaten human lives.
+Shallow landslides are triggered by intense rainfalls.
+Such slope movements are generally very rapid and hardly predictable.
+Different quantitative approaches have been developed to assess the most susceptible areas.
+
+This project applies a data-driven methodology based on Random Forest (RF) (\citet{breiman_random_2001}) to elaborate the landslides susceptibility map of canton of Vaud, in Switzerland.
+RF is applied to a set of independent variables (i.e., the predictors) and dependent variables (the inventoried landslides and an equal number of locations for absences).
+The overall methodology is described in the following graphic (\autoref{Methodology}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=0.8\textheight]{images/Methodology} 
+
+}
+
+\caption{Basic elements of the generic methodology \label{Methodology}}\label{fig:gen-met}
+\end{figure}
+
+\hypertarget{load-the-libraries-4}{%
+\subsection{Load the libraries}\label{load-the-libraries-4}}
+
+To perform the analysis, you have first to install the following libraries:
+
+\begin{itemize}
+\item
+  \textbf{library(raster)}: The raster package provides classes and functions to manipulate geographic (spatial) data in `raster' format.
+\item
+  \textbf{library(readr)}: The goal of `readr' is to provide a fast and friendly way to read rectangular data (like `csv', `tsv', and `fwf').
+\item
+  \textbf{library(randomForest)}: Classification and regression based on a forest of trees using random inputs, based on \href{https://link.springer.com/article/10.1023/A:1010933404324}{Breiman (2001)}.
+\item
+  \textbf{library(dplyr)}: It is the next iteration of plyr, focused on tools for working with data frames (hence the d in the name).
+\item
+  \textbf{library(pROC)}: Allowing to compute, analyze ROC curves, and
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{library(plotROC)} to display ROC curve
+  \end{itemize}
+\item
+  \textbf{(ggplot2)}: Is a system for declaratively creating graphics.
+\item
+  \textbf{library(sf)}: Support for simple features, a standardized way to encode spatial vector data.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(raster) }
+\FunctionTok{library}\NormalTok{(readr) }
+\FunctionTok{library}\NormalTok{(randomForest)}
+\FunctionTok{library}\NormalTok{(dplyr) }
+\FunctionTok{library}\NormalTok{(pROC) }
+\FunctionTok{library}\NormalTok{(plotROC) }
+\FunctionTok{library}\NormalTok{(ggplot2)  }
+\FunctionTok{library}\NormalTok{(sf) }
+\FunctionTok{library}\NormalTok{(classInt)}
+
+\NormalTok{(}\FunctionTok{.packages}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "classInt"     "sf"           "plotROC"      "ggplot2"      "pROC"        
+##  [6] "dplyr"        "randomForest" "readr"        "raster"       "sp"          
+## [11] "stats"        "graphics"     "grDevices"    "utils"        "datasets"    
+## [16] "methods"      "base"
+\end{verbatim}
+
+\textbf{List of the libraries}
+
+\hypertarget{import-the-data-1}{%
+\section{Import the data}\label{import-the-data-1}}
+
+Import the \textbf{landslides punctual dataset} presences and pseudo-absences (LS\_pa) and \emph{predictors} (in raster format).
+This help the exploratory data analyses steps and to understand the input data structure.
+
+\hypertarget{landslides-dataset}{%
+\subsection{Landslides dataset}\label{landslides-dataset}}
+
+The \textbf{landslide inventory} has been provided by the environmental office of the canton of Vaud.
+Only \emph{shallow landslides} are used for susceptibility modelling.
+One pixel per landslide-area (namely the one located at the highest elevation) has been extracted.
+Since the landslide scarp is located in the upper part of the polygon, it makes sense to consider the highest pixel to characterize each single event.
+
+Our model includes the implementation of the landslide \textbf{pseudo-absences}, which are the areas where the hazardous events did not took place (i.e.~landslide location is known and the mapped footprint areas are available, but the non-landslide areas have to be defined).
+Indeed, to assure a good generalization of the model and to avoid the overestimation of the absence, pseudo-absences need to be generated in all the cases where they are not explicitly expressed.
+In this case study, an equal number of point as for presences has been randomly generated in the study area, except within landslides polygons, lakes and glaciers (that is what is called ``validity domain'', where events could potentially occur).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Import the landslides dataset (dependent variable)}
+\NormalTok{LS\_pa }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/Lab05/LS\_pa.csv"}\NormalTok{) }
+
+\CommentTok{\# Convert the numeric values (0/1) as factor }
+\DocumentationTok{\#\#(i.e. categorical value)}
+\NormalTok{LS\_pa}\SpecialCharTok{$}\NormalTok{LS}\OtherTok{\textless{}{-}}\FunctionTok{as.factor}\NormalTok{(LS\_pa}\SpecialCharTok{$}\NormalTok{LS)}
+
+\CommentTok{\# Display the structure (str) and result summaries (summary)}
+\FunctionTok{str}\NormalTok{(LS\_pa)}
+\FunctionTok{summary}\NormalTok{(LS\_pa)}
+\CommentTok{\# Plot the events}
+\FunctionTok{plot}\NormalTok{(LS\_pa}\SpecialCharTok{$}\NormalTok{X,LS\_pa}\SpecialCharTok{$}\NormalTok{Y, }\AttributeTok{col=}\NormalTok{LS\_pa}\SpecialCharTok{$}\NormalTok{LS, }\AttributeTok{pch=}\DecValTok{20}\NormalTok{, }\AttributeTok{cex=}\FloatTok{0.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/import-data-1.pdf}
+
+\hypertarget{predictor-variables}{%
+\subsection{Predictor variables}\label{predictor-variables}}
+
+Selecting predictor variables is a key stage on susceptibility ans risk modelling when using a data-driven approach.
+There is no consensus about the number of variables and which variables should be used for landslides assesment.
+In the present exercise we will use the following:
+
+\begin{itemize}
+\item
+  \textbf{DEM (digital elevation model)}: provided by the Swiss Federal Office of Topography.
+  The elevation is not a direct conditioning factor for landslide; however, it can reflect differences in vegetation characteristics and soil.
+\item
+  \textbf{Slope}: is one of the most explicating factor in landslide susceptibility modelling.
+  It is computing as:
+\end{itemize}
+
+\[Slope = arctan(\sqrt{(dz/dx)^2 + (dz/dy)^2)} * (\pi/2)\]
+
+\begin{itemize}
+\item
+  \textbf{Curvature}: curvature is widely used in landslide susceptibility modelling.
+  It allows assessing the water flow acceleration and sediment transport process (\emph{profile curvature}) and the water flow propensity to converge and diverge (\emph{plan curvature}).
+  They were derived from DEM using the curvature tool in ArcGIS.
+\item
+  \textbf{TWI (topographical water index)}: topography plays a key role in the spatial distribution of soil hydrological conditions.
+  Defining \(\alpha\) as the upslope contributing area describing the propensity of a cell to receive water, and \(\beta\) as the slope angle, TWI (compute by the formula below), reflects the propensity of a cell to evacuate water:
+\end{itemize}
+
+\[TWI=ln(\alpha/tan(\beta))\]
+
+\begin{itemize}
+\item
+  \textbf{Distance to roads}: roads build in mountainous areas often cut the slope, weakening the cohesion of the soil.
+  Moreover, roads surfaces are highly impermeable.
+  This raster has been elaborated using the euclidean distance tool in ArcGIS, from the swissTLMRegio map where roads are represented by lines.
+\item
+  \textbf{Land Cover}: developed by the Swiss administration and based on aerial photographs and control points.
+  It includes 27 categories distributed in the following 6 domains: human modified surfaces, herbaceous vegetation, shrubs vegetation, tree vegetation, surfaces without vegetation, water surfaces (glaciers included).
+\item
+  \textbf{Geology}: The use of the lithology increase the performance of the susceptibility landslide models.
+  We use here the map elaborated by the Canton Vaud, defining the geotypes and reclassified in 10 classes in order to differentiate sedimentary rocks.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Import raster (independent variables) 25 meter resolution}
+
+\NormalTok{landCover}\OtherTok{\textless{}{-}}\FunctionTok{as.factor}\NormalTok{(}\FunctionTok{raster}\NormalTok{(}\StringTok{"data/Lab05/landCover.tif"}\NormalTok{))}
+\NormalTok{geology}\OtherTok{\textless{}{-}}\FunctionTok{as.factor}\NormalTok{(}\FunctionTok{raster}\NormalTok{(}\StringTok{"data/Lab05/geology.tif"}\NormalTok{))}
+\NormalTok{planCurv}\OtherTok{\textless{}{-}}\FunctionTok{raster}\NormalTok{(}\StringTok{"data/Lab05/plan\_curvature.tif"}\NormalTok{)}\SpecialCharTok{/}\DecValTok{100} \CommentTok{\# this because ArcGIS multiply }
+\NormalTok{profCurv}\OtherTok{\textless{}{-}}\FunctionTok{raster}\NormalTok{(}\StringTok{"data/Lab05/profil\_curvature.tif"}\NormalTok{)}\SpecialCharTok{/}\DecValTok{100} \CommentTok{\# ....curvature values by 100}
+\NormalTok{TWI}\OtherTok{\textless{}{-}}\FunctionTok{raster}\NormalTok{(}\StringTok{"data/Lab05/TWI.tif"}\NormalTok{)}
+\NormalTok{Slope}\OtherTok{\textless{}{-}}\FunctionTok{raster}\NormalTok{(}\StringTok{"data/Lab05/Slope.tif"}\NormalTok{)}
+\NormalTok{dem}\OtherTok{\textless{}{-}}\FunctionTok{raster}\NormalTok{(}\StringTok{"data/Lab05/DEM.tif"}\NormalTok{)}
+\NormalTok{dist}\OtherTok{\textless{}{-}}\FunctionTok{raster}\NormalTok{(}\StringTok{"data/Lab05/dist\_roads.tif"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Than the predictor variables (features) have to be aggregated.
+We use here the function \textbf{stack} to create a collection of RasterLayer objects with the same spatial extent and resolution.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#create a Raster stack}
+\NormalTok{features}\OtherTok{\textless{}{-}}\FunctionTok{stack}\NormalTok{(dist, dem, TWI, planCurv, profCurv, Slope, geology, landCover)}
+
+\CommentTok{\# Renames the variables}
+\FunctionTok{names}\NormalTok{(features)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"distRoad"}\NormalTok{, }\StringTok{"DEM"}\NormalTok{, }\StringTok{"TWI"}\NormalTok{, }\StringTok{"planCurv"}\NormalTok{, }\StringTok{"profCurv"}\NormalTok{, }
+                   \StringTok{"Slope"}\NormalTok{, }\StringTok{"Geology"}\NormalTok{, }\StringTok{"LandCover"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(features)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/stack-feature-1.pdf}
+
+\hypertarget{the-use-of-categorical-variables-in-machine-learning}{%
+\subsubsection{The use of categorical variables in Machine Learning}\label{the-use-of-categorical-variables-in-machine-learning}}
+
+The majority of ML algorithms (e.g., support vector machines, artificial neural network, deep learning) makes predictions on the base of the proximity between the values of the predictors, computed in terms of euclidean distance.
+This means that these algorithms can not handle directly categorical values (i.e., qualitative descriptors).
+Thus, in most of the cases, categorical variables need to be transformed into a numerical format.
+One of the advantage of using Random Forest (as implemented in R) is that it can handle directly categorical variables, since the algorithm operate by constructing a multitude of decision trees at training time and the best split is chosen just by counting the proportion of each class observation.
+
+To understand the characteristics of the categorical variables, you can plot the tow rasters \textbf{Land Cover} and \textbf{Geology} by using their original classes.
+To visualize the data, you can use R as a GIS, but you need to perform few data manipulations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a random color palette }
+\FunctionTok{library}\NormalTok{(RColorBrewer)}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{50}
+\NormalTok{qual\_col\_pals }\OtherTok{=}\NormalTok{ brewer.pal.info[brewer.pal.info}\SpecialCharTok{$}\NormalTok{category }\SpecialCharTok{==} \StringTok{\textquotesingle{}qual\textquotesingle{}}\NormalTok{,]}
+\NormalTok{col\_vector }\OtherTok{=} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{mapply}\NormalTok{(brewer.pal, qual\_col\_pals}\SpecialCharTok{$}\NormalTok{maxcolors, }
+                           \FunctionTok{rownames}\NormalTok{(qual\_col\_pals)))}
+
+\CommentTok{\# Load libraries for levelplot function, }
+\CommentTok{\# allowing to plot raster based of categorical data.}
+\FunctionTok{library}\NormalTok{(lattice)}
+\FunctionTok{library}\NormalTok{(rasterVis)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Raster geology}: extract the attribute table and plot the map based on the geological classes.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ensure that the raster attributes are read as type "factor"}
+\NormalTok{geology }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{raster}\NormalTok{(}\StringTok{"data/Lab05/geology.tif"}\NormalTok{))}
+
+\CommentTok{\# Add a geological class column to the Raster Attribute Table}
+\NormalTok{rat }\OtherTok{\textless{}{-}} \FunctionTok{levels}\NormalTok{(geology)[[}\DecValTok{1}\NormalTok{]] }
+\NormalTok{rat}\SpecialCharTok{$}\NormalTok{Geology\_classes }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"glacial deposits"}\NormalTok{, }\StringTok{"carbonates"}\NormalTok{, }\StringTok{"marly{-}limestone"}\NormalTok{,}
+                         \StringTok{"alluvial deposits"}\NormalTok{, }\StringTok{"artificial materials"}\NormalTok{, }
+                         \StringTok{"slope deposits"}\NormalTok{, }\StringTok{"detrital rocks"}\NormalTok{, }\StringTok{"metamorphic rocks"}\NormalTok{,}
+                         \StringTok{"evaporitic rocks"}\NormalTok{,}\StringTok{"magmatic rocks"}\NormalTok{)}
+\FunctionTok{levels}\NormalTok{(geology) }\OtherTok{\textless{}{-}}\NormalTok{ rat}
+\FunctionTok{levels}\NormalTok{(geology)}
+
+\CommentTok{\# Plot the raster based on the geological classes }
+\FunctionTok{levelplot}\NormalTok{(geology, }\AttributeTok{col.regions=}\NormalTok{col\_vector)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/geology-map-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Raster land cover}: extract the attribute table and plot the map based on the land cover classes.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{landCover }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{raster}\NormalTok{(}\StringTok{"data/Lab05/landCover.tif"}\NormalTok{))}
+\NormalTok{ratLC }\OtherTok{\textless{}{-}} \FunctionTok{levels}\NormalTok{(landCover)[[}\DecValTok{1}\NormalTok{]]  }
+
+\NormalTok{ratLC}\SpecialCharTok{$}\NormalTok{LandCover\_classes }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"impermeable man{-}made"}\NormalTok{,}\StringTok{"permeable man{-}made"}\NormalTok{,}
+                             \StringTok{"herbaceous vegetation"}\NormalTok{,}\StringTok{"shrub vegetation"}\NormalTok{,}
+                             \StringTok{"forest"}\NormalTok{,}\StringTok{"no vegetation"}\NormalTok{,}\StringTok{"glacier and water body"}\NormalTok{)}
+\FunctionTok{levels}\NormalTok{(landCover) }\OtherTok{\textless{}{-}}\NormalTok{ ratLC}
+\FunctionTok{levels}\NormalTok{(landCover)}
+
+\CommentTok{\# Plot the raster based on the land cover classes }
+\FunctionTok{levelplot}\NormalTok{(landCover, }\AttributeTok{col.regions=}\NormalTok{col\_vector)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/landCover-map-1.pdf}
+
+\hypertarget{create-the-input-dataset}{%
+\section{Create the input dataset}\label{create-the-input-dataset}}
+
+In this step, you will extract the values of the predictors at each location in the landslides (presences and absences) dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Shuffle the rows}
+\NormalTok{LS\_sh }\OtherTok{\textless{}{-}}\NormalTok{ LS\_pa [}\FunctionTok{sample}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(LS\_pa), }\FunctionTok{nrow}\NormalTok{(LS\_pa)), ]}
+
+\CommentTok{\# Convert to spatial point dataframe}
+\NormalTok{LS\_spdf}\OtherTok{\textless{}{-}}\FunctionTok{SpatialPointsDataFrame}\NormalTok{(LS\_sh[,}\FunctionTok{c}\NormalTok{(}\StringTok{"X"}\NormalTok{, }\StringTok{"Y"}\NormalTok{)], LS\_sh, }\AttributeTok{proj4string=}\FunctionTok{crs}\NormalTok{(features))}
+
+\NormalTok{LS\_input }\OtherTok{\textless{}{-}} \FunctionTok{extract}\NormalTok{(features, LS\_spdf, }\AttributeTok{df=}\ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Add independent variable (LS) as additional column to the dataframe}
+\NormalTok{LS\_input}\SpecialCharTok{$}\NormalTok{LS }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(LS\_spdf}\SpecialCharTok{$}\NormalTok{LS)}
+
+\CommentTok{\# Convert Land cover and Geology classes as factor}
+\NormalTok{LS\_input}\SpecialCharTok{$}\NormalTok{LandCover }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(LS\_input}\SpecialCharTok{$}\NormalTok{LandCover)}
+\NormalTok{LS\_input}\SpecialCharTok{$}\NormalTok{Geology }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(LS\_input}\SpecialCharTok{$}\NormalTok{Geology)}
+
+\CommentTok{\# Remove extra column (ID)}
+\NormalTok{LS\_input }\OtherTok{\textless{}{-}}\NormalTok{ LS\_input[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(LS\_input)]}
+\NormalTok{LS\_input }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(LS\_input)}
+
+\CommentTok{\# Explore the newly created input dataset.}
+\FunctionTok{head}\NormalTok{(LS\_input)}
+\FunctionTok{str}\NormalTok{(LS\_input)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{split-the-input-dataset-into-training-80-and-testing-20}{%
+\subsection{Split the input dataset into training (80\%) and testing (20\%)}\label{split-the-input-dataset-into-training-80-and-testing-20}}
+
+A well-established procedure in ML is to split the input dataset into training, validation, and testing.
+
+\begin{itemize}
+\item
+  The \textbf{training dataset} is needed to calibrate the parameters of the model, which will be used to get predictions on new data.
+\item
+  The purpose of the \textbf{validation dataset} is to optimize the hyperparameter of the model (\emph{training phase}).
+  \textbf{NB}: in Random Forest this subset is represented by the Out-Of-Bag (\textbf{OOB})!
+\item
+  To provide an unbiased evaluation of the final model and to assess its performance, results are then predicted over unused observations (\emph{prediction phase}), defined as the \textbf{testing dataset}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Split the input dataset into training (80\%) and testing (20\%)}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{ (LS\_input)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{n\_train }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\FloatTok{0.80} \SpecialCharTok{*}\NormalTok{ n) }
+\NormalTok{train\_indices }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, n\_train)}
+
+\CommentTok{\# Create indices}
+\NormalTok{LS\_input\_train }\OtherTok{\textless{}{-}}\NormalTok{ LS\_input[train\_indices, ]  }
+\NormalTok{LS\_input\_test }\OtherTok{\textless{}{-}}\NormalTok{ LS\_input[}\SpecialCharTok{{-}}\NormalTok{train\_indices, ]}
+
+\CommentTok{\# Count the number of elements in the two subset: training and testing}
+\FunctionTok{count}\NormalTok{(LS\_input\_train)}
+\FunctionTok{count}\NormalTok{(LS\_input\_test)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{run-random-forest}{%
+\section{Run Random Forest}\label{run-random-forest}}
+
+Computationally, a subset of the training dataset is generated by bootstrapping (i.e.~random sampling with replacement).
+For each subset a decision tree is grown and, at each split, the algorithm randomly selects a number of variables (\emph{mtry}) and it computes the Gini index to identify the best one.
+The process stops when each node contains less than a fixed number of data points.
+The fundamental hyperparameters that needs to be defined in RF are \emph{mtry} and the total number of trees (\emph{ntrees}).
+
+The prediction error on the training dataset is finally assessed by evaluating predictions on those observations that were not used in the subset, defined as ``out-of-bag'' (\textbf{OOB}).
+This values is used the optimize the values of the hyperparameters, by a trial and error process (that is, trying to minimize the OOB estimate of error rate).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Set the seed of R‘s random number generator, }
+\DocumentationTok{\#\# this is useful for creating simulations that can be reproduced.}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{) }
+
+\CommentTok{\# Run RF model}
+\NormalTok{RF\_LS}\OtherTok{\textless{}{-}}\FunctionTok{randomForest}\NormalTok{(}\AttributeTok{y=}\NormalTok{LS\_input\_train}\SpecialCharTok{$}\NormalTok{LS, }\AttributeTok{x=}\NormalTok{LS\_input\_train[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{],}\AttributeTok{data=}\NormalTok{LS\_input\_train,}
+                    \AttributeTok{ntree=}\DecValTok{200}\NormalTok{, }\AttributeTok{mtry=}\DecValTok{3}\NormalTok{,}\AttributeTok{importance=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{do.trace=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rf-main-outputs}{%
+\subsection{RF main outputs}\label{rf-main-outputs}}
+
+Printing the results of RF allows you to gain insight into the outputs of the implemented model, namelly the following: - a summary of the model hyperparameters - the OOB estimate of error rate - the confusion matrix; in this case a 2x2 matrix used for evaluating the performance of the classification model (1-presence vs 0-absence).
+
+The plotting the of the error rate is useful to estimate the decreasing values on the OOB and on the predictions (presence (1) / absence (0)) over increasing number of treees.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(RF\_LS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+##  randomForest(x = LS_input_train[1:8], y = LS_input_train$LS,      ntree = 200, mtry = 3, importance = TRUE, do.trace = TRUE,      data = LS_input_train) 
+##                Type of random forest: classification
+##                      Number of trees: 200
+## No. of variables tried at each split: 3
+## 
+##         OOB estimate of  error rate: 16.39%
+## Confusion matrix:
+##      0    1 class.error
+## 0 1651  403   0.1962025
+## 1  277 1817   0.1322827
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(RF\_LS)}
+\FunctionTok{legend}\NormalTok{(}\AttributeTok{x=}\StringTok{"topright"}\NormalTok{, }\AttributeTok{legend=}\FunctionTok{c}\NormalTok{(}\StringTok{"perd 0"}\NormalTok{, }\StringTok{"pred 1"}\NormalTok{, }\StringTok{"OOB error"}\NormalTok{), }
+ \AttributeTok{col=}\FunctionTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\StringTok{"green"}\NormalTok{, }\StringTok{"black"}\NormalTok{), }\AttributeTok{lty=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{cex=}\FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/RF-outputs-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Show the predicted probability values}
+\NormalTok{RF.predict }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(RF\_LS,}\AttributeTok{type=}\StringTok{"prob"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(RF.predict) }\CommentTok{\# 0==abstece ; 1== presence}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              0          1
+## 2464 0.8055556 0.19444444
+## 2512 0.3188406 0.68115942
+## 2228 1.0000000 0.00000000
+## 526  0.2571429 0.74285714
+## 4294 0.9846154 0.01538462
+## 2987 0.3866667 0.61333333
+\end{verbatim}
+
+\hypertarget{model-evaluation}{%
+\subsection{Model evaluation}\label{model-evaluation}}
+
+The prediction capability of the implemented RF model can be evaluated by predicting the results over previously unseen data, that is the testing dataset.
+The \emph{Area Under the ``Receiver Operating Characteristic (ROC)'' Curve} (\textbf{AUC}) represents the evaluation score used here as indicator of the goodness of the model in classifying areas more susceptible to landslides.
+ROC curve is a graphical technique based on the plot of the percentage of correct classification (the true positives rate) against the false positives rate (occurring when an outcome is incorrectly predicted as belonging to the class ``1'' when it actually belongs to the class ``0''), evaluates for many thresholds.
+The AUC value lies between 0.5, denoting a bad classifier, and 1, denoting an excellent classifier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Make predictions on the testing dataset}
+\NormalTok{RFpred\_test }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(}\AttributeTok{object =}\NormalTok{ RF\_LS, }\AttributeTok{newdata =}\NormalTok{ LS\_input\_test, }\AttributeTok{type=}\StringTok{"prob"}\NormalTok{)}
+ 
+\NormalTok{roc }\OtherTok{\textless{}{-}} \FunctionTok{roc}\NormalTok{(LS\_input\_test}\SpecialCharTok{$}\NormalTok{LS,RFpred\_test[,}\DecValTok{2}\NormalTok{])}
+\FunctionTok{plot}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{roc}\SpecialCharTok{$}\NormalTok{specificities,roc}\SpecialCharTok{$}\NormalTok{sensitivities, }\AttributeTok{type =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{, }\AttributeTok{col =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"False positive rate"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"True positive rate"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/RF-val-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{roc }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{susceptibility-map}{%
+\section{Susceptibility map}\label{susceptibility-map}}
+
+You have now all the elements to elaborate the final landslide susceptibility map.
+This will be achieved by making predictions (of presence only) based on the values of the predictors, which are stored into the RasterStack named *features*, created above.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Index=2 indicate the prediction of presence (1) }
+\NormalTok{Scp\_pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(features, RF\_LS,}\AttributeTok{type=}\StringTok{"prob"}\NormalTok{, }\AttributeTok{index=}\DecValTok{2}\NormalTok{)}
+
+\CommentTok{\# Summary statistics}
+\FunctionTok{summary}\NormalTok{(Scp\_pred)}
+\FunctionTok{hist}\NormalTok{(Scp\_pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/Scp-map-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Export ratster}
+\FunctionTok{writeRaster}\NormalTok{(Scp\_pred,}\StringTok{"Scp\_map25.tif"}\NormalTok{, }\AttributeTok{overwrite=}\ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Plot the output susceptibility map}
+\FunctionTok{library}\NormalTok{(}\StringTok{"RColorBrewer"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(Scp\_pred, }\AttributeTok{xlab =} \StringTok{"East [m]"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"North [m]"}\NormalTok{, }
+     \AttributeTok{main =} \StringTok{"Landslides susceptibility map"}\NormalTok{, }
+     \AttributeTok{col =} \FunctionTok{terrain.colors}\NormalTok{(}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/Scp-map-2.pdf}
+
+\hypertarget{class-intervals-for-decision-maker}{%
+\subsection{Class intervals for decision maker}\label{class-intervals-for-decision-maker}}
+
+What can you say by looking at the map?
+Actually a risk heat map is a data visualization tool for communicating the level for a specific risk to occur.
+These maps helps authorities to identify and prioritize the risks associated with a given hazard.
+
+Normally an authority (i.e., a decision maker) prioritize its efforts based on the available resources it has.
+So, it can be more useful to detect the areas with the highest probability of burning based given intervals (i.e., breaks).
+The authority can thus concentrate its resources for preventive actions on a given percentage (such as 5\%, 10\%, or 20\%) of the area with the highest probability of burning, instead of concentrate on the areas with a ``stochastic'' output probability value of 0.8 (for example).
+
+\begin{itemize}
+\tightlist
+\item
+  Breaks chosen based on the \textbf{summary statics}: these values corresponds to 0-25\%-50\%-75\%-100\% of the p-value distribution.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{brk}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.03}\NormalTok{, }\FloatTok{0.14}\NormalTok{, }\FloatTok{0.4}\NormalTok{, }\DecValTok{1}\NormalTok{) }
+
+\FunctionTok{plot}\NormalTok{(Scp\_pred, }\AttributeTok{xlab =} \StringTok{"East [m]"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"North [m]"}\NormalTok{, }
+     \AttributeTok{main =} \StringTok{"Landslides susceptibility map"}\NormalTok{, }
+     \AttributeTok{col =} \FunctionTok{rev}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"brown"}\NormalTok{, }\StringTok{"orange"}\NormalTok{, }\StringTok{"yellow"}\NormalTok{, }\StringTok{"grey"}\NormalTok{)), }\AttributeTok{breaks=}\NormalTok{brk)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/quantile-map-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Breaks chosen based on well-estabished \textbf{percentile classes}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Output predicted values are transformed to a vector}
+\NormalTok{pred.vect }\OtherTok{\textless{}{-}} \FunctionTok{as.vector}\NormalTok{(Scp\_pred}\SpecialCharTok{@}\NormalTok{data}\SpecialCharTok{@}\NormalTok{values)}
+
+\CommentTok{\# The function "quantile" is used to fix classes}
+\NormalTok{qtl.pred }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(pred.vect,}\AttributeTok{probs=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.75}\NormalTok{,}\FloatTok{0.85}\NormalTok{,}\FloatTok{0.95}\NormalTok{), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\# and then extract the corresponding values}
+\NormalTok{qtl.int}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.03}\NormalTok{,}\FloatTok{0.14}\NormalTok{,}\FloatTok{0.42}\NormalTok{,}\FloatTok{0.6}\NormalTok{,}\FloatTok{0.82}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(Scp\_pred, }\AttributeTok{xlab =} \StringTok{"East [m]"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"North [m]"}\NormalTok{, }
+     \AttributeTok{main =} \StringTok{"Landslides susceptibility map"}\NormalTok{, }
+     \AttributeTok{col =} \FunctionTok{rev}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"brown"}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"orange"}\NormalTok{,}\StringTok{"yellow"}\NormalTok{, }\StringTok{"green"}\NormalTok{, }\StringTok{"grey"}\NormalTok{)), }\AttributeTok{breaks=}\NormalTok{qtl.int)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/percentile-map-1.pdf}
+
+\hypertarget{variable-importance-plot}{%
+\section{Variable importance plot}\label{variable-importance-plot}}
+
+Although machine learning algorithms are often considered as a black box, RF provides two metrics allowing to assess the importance of each variables in the model: the mean decrease in accuracy (MDA), and the mean decrease in Gini index.
+The higher values indicate the most important variables.
+In addition, it is possible to plot a sample tree (selected randomly) to analyse its structure.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"party"}\NormalTok{)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{ctree}\NormalTok{(LS}\SpecialCharTok{\textasciitilde{}}\NormalTok{., }\AttributeTok{data=}\NormalTok{LS\_input\_train)}
+\FunctionTok{plot}\NormalTok{(x, }\AttributeTok{type=}\StringTok{"simple"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Display the plot with the relative importance of each variable}
+\FunctionTok{importance}\NormalTok{(RF\_LS)}
+\FunctionTok{varImpPlot}\NormalTok{(RF\_LS)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/var-imp-1.pdf}
+
+\hypertarget{partial-dependence-plot}{%
+\subsection{Partial dependence plot}\label{partial-dependence-plot}}
+
+In addition, the partial dependent plot allows to estimate, for each single variable, the relative probability of prediction success over different ranges of values.
+It gives a graphical depiction of the marginal effect of each variable on the class probability over different ranges of continuous or discrete values.
+Positive values are associated with the probability of occurrence of the phenomena (i.e., landslides presence), while negative vales indicate its absence.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Slope}
+\FunctionTok{partialPlot}\NormalTok{(RF\_LS, LS\_input\_train, }\AttributeTok{x.var =}\NormalTok{ Slope, }\AttributeTok{rug =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{which.class =}\NormalTok{ RF\_LS}\SpecialCharTok{$}\NormalTok{classes[}\DecValTok{2}\NormalTok{],}
+            \AttributeTok{xlab=} \StringTok{"Slope [Â°]"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Partial dependence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/par-plot-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Elevation}
+\FunctionTok{partialPlot}\NormalTok{(RF\_LS, LS\_input\_train, }\AttributeTok{x.var =}\NormalTok{ DEM, }\AttributeTok{rug =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{which.class =}\NormalTok{ RF\_LS}\SpecialCharTok{$}\NormalTok{classes[}\DecValTok{2}\NormalTok{],}
+            \AttributeTok{xlab=} \StringTok{"Elevation [m]"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{,}\AttributeTok{ylab =} \StringTok{"Partial dependence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/par-plot-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Profile curvature}
+\FunctionTok{partialPlot}\NormalTok{(RF\_LS, LS\_input\_train, }\AttributeTok{x.var =}\NormalTok{ profCurv, }\AttributeTok{rug =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{which.class =}\NormalTok{ RF\_LS}\SpecialCharTok{$}\NormalTok{classes[}\DecValTok{2}\NormalTok{],}
+            \AttributeTok{xlab=} \StringTok{"Profile curvature [1/m]"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Partial dependence"}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.04}\NormalTok{,}\FloatTok{0.04}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/par-plot-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plan Curvature}
+\FunctionTok{partialPlot}\NormalTok{(RF\_LS, LS\_input\_train, }\AttributeTok{x.var =}\NormalTok{ planCurv, }\AttributeTok{rug =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{which.class =}\NormalTok{ RF\_LS}\SpecialCharTok{$}\NormalTok{classes[}\DecValTok{2}\NormalTok{],}
+            \AttributeTok{xlab=} \StringTok{"Plan curvature [1/m]"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Partial dependence"}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.04}\NormalTok{,}\FloatTok{0.04}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/par-plot-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Distance to roard}
+\FunctionTok{partialPlot}\NormalTok{(RF\_LS, LS\_input\_train, }\AttributeTok{x.var =}\NormalTok{ distRoad, }\AttributeTok{rug =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{which.class =}\NormalTok{ RF\_LS}\SpecialCharTok{$}\NormalTok{classes[}\DecValTok{2}\NormalTok{],}
+            \AttributeTok{xlab=} \StringTok{"Distance to road [m]"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Partial dependence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/par-plot-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Topographic wetness index}
+\FunctionTok{partialPlot}\NormalTok{(RF\_LS, LS\_input\_train, }\AttributeTok{x.var =}\NormalTok{ TWI, }\AttributeTok{rug =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{which.class =}\NormalTok{ RF\_LS}\SpecialCharTok{$}\NormalTok{classes[}\DecValTok{2}\NormalTok{],}
+            \AttributeTok{xlab=} \StringTok{"TWI [{-}]"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Partial dependence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/par-plot-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Geology}
+\FunctionTok{partialPlot}\NormalTok{(RF\_LS, LS\_input\_train, }\AttributeTok{x.var =}\NormalTok{ Geology, }\AttributeTok{rug =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{which.class =}\NormalTok{ RF\_LS}\SpecialCharTok{$}\NormalTok{classes[}\DecValTok{2}\NormalTok{],}
+            \AttributeTok{xlab=} \StringTok{"Geology"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Partial dependence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/par-plot-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Land Cover}
+\FunctionTok{partialPlot}\NormalTok{(RF\_LS, LS\_input\_train, }\AttributeTok{x.var =}\NormalTok{ LandCover, }\AttributeTok{rug =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{which.class =}\NormalTok{ RF\_LS}\SpecialCharTok{$}\NormalTok{classes[}\DecValTok{2}\NormalTok{],}
+            \AttributeTok{xlab=} \StringTok{"Land Cover"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Partial dependence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-RF_files/figure-latex/par-plot-8.pdf}
+
+\hypertarget{conclusions-and-further-analyses-3}{%
+\section{Conclusions and further analyses}\label{conclusions-and-further-analyses-3}}
+
+This exercise allowed you to familiarize with Random Forest, by the proposed application about landslides susceptibility mapping and variables importance assessment.
+
+To be sure that everything is perfectly clear for you, we propose you to \textbf{answer the following questions} and to discuss your answers with the other participants to the course or directly with the teacher.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Why is it important to implement the pseudo-absence, other that the presences (i.e., the observations) in a data-driven modelization?
+\item
+  What is the difference between a numerical and a categorical variable?
+  Give some examples of both types.
+\item
+  Which is the values of the OOB estimate error rate of your model?
+  Which parameters you can change to try to reduce it?
+  Be brave and do it (i.e., change the values for \emph{ntree} and \emph{mtry,} than analyse which values for the AUC you obtain and which model perform better.
+\item
+  Which are the three most important variables of your model (based on the MDA)?
+\item
+  What is the slope value (or range of values) that gives the highest probability of landslides occurrence?
+  And for the geology, which are the most important classes?
+\item
+  In a model seeking to estimate the vulnerability to wildfire, which is the dependent variable and which can be the independent variables?
+  The reading of the paper @tonini\_evolution\_2017, which inspired this lab, can help you in in this task.
+\end{enumerate}
+
+  \bibliography{book.bib}
+
+\end{document}

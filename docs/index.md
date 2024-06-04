@@ -1,7 +1,7 @@
 ---
 title: "Advanced Geospatial Data Analysis in R: Environmental Applications"
 author: "Marj Tonini, Haokun Liu"
-date: "2024-04-22"
+date: "2024-06-04"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -55,6 +55,8 @@ Explored algorithms include:
 -   *Ripley's K-function, Kernel Density Estimator, DBSCAN* for cluster detection and mapping;
 -   *Self-Organizing Maps* as an example of unsupervised machine learning approach to data clustering and visualization;
 -   *Random Forest* as an example of a supervised machine learning algorithm, applied here for classification.
+
+To perfom the compution labs presented in the next chapters you can dowload data from here: [AGDA Book Gihub] (https://github.com/EugeneGIS/AGDAbook)
 
 ## Author Information {.unnumbered}
 
