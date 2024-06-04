@@ -1,6 +1,8 @@
 Welcome! 
 
-This is a temporary draft of a Advanced Geospatial Data Analysis Book based on R Markdown and **bookdown** ([https://eugenegis.github.io/AGDAbook/](https://eugenegis.github.io/AGDAbook/)). 
+This is a temporary draft of "Advanced Geospatial Data Analysis", an M.Sc. course at UNIL.
+
+The book is based on R Markdown and **bookdown** ([https://eugenegis.github.io/AGDAbook/](https://eugenegis.github.io/AGDAbook/)). 
 
 Additional resources:
 
