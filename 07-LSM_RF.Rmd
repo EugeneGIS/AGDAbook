@@ -1,5 +1,3 @@
-bibliography: RF.bib
-
 ---
 title: "Towards Geo-Data Science"
 author: "Dr. Marj Tonini^[IDYST, University of Lausanne, marj.tonini@unil.ch]"
