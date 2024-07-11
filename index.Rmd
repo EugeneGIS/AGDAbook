@@ -64,7 +64,7 @@ Marj Tonini is a spatial data scientist with a strong interest on geospatial mod
 
 Her research focuses on the development of innovative approaches allowing to enable efficient learning from complex environmental datasets. She seeks to set up a methodological framework to understand the spatio-temporal dynamic of environmental processes and to assess the influence of predictor variables. Her current research targets are on land use/land cover change analyses and on the elaboration of predictive scenario and susceptibility / risk assessment for natural hazard.
 
-Haokun Liu is a Ph.D. student at the Group of Cities and dynamics of networks (CITADYNE Group), University of Lausanne. Meanwhile, he is also a student assistant at Swiss Geocomputing Center (SGC). Benefiting from the strict and effective training in China and Switzerland, his research interests and experience include, but are not limited to: 1) Urban analytics, 2) Health geography, 3) Spatial data science. With the goal of bridging the gap between theories and practical applications, he am focusing on the intersections among urban health, complex perspective, activity space, and the Spatial-social-semantic framework.
+Haokun Liu is a Ph.D. student at the Group of Cities and dynamics of networks (CITADYNE Group), University of Lausanne. Meanwhile, he is also a student assistant at Swiss Geocomputing Center (SGC). Benefiting from the strict and effective training in China and Switzerland, his research interests and experience include, but are not limited to: 1) Urban analytics, 2) Health geography, 3) Spatial data science. 
 
 ## Prerequisites {.unnumbered}
 
