@@ -1,33 +1,42 @@
-# Introduction to R 
+---
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
 
-## R Language
+# 1) Introduction to R
+
+## 1.1) R Language
 
 R is a complete programming language and software environment for statistical computing and graphical representation.
-As part of the GNU Project (free software, mass collaboration project), the source code is free available.
+As part of the GNU Project - free software, mass collaboration project (<https://www.gnu.org/software/software.en.html>) , the source code is free available.
 Its functionalities can be expanded by importing packages.
+
 For more details on R see <https://www.r-project.org/>.
 
-### R Packages
+### 1.1.1) R Packages
 
-A package is a file generally composed of R scripts (e.g., functions).
-On all operation systems the function "install.packages()" can be used to download and install a package automatically.
-Otherwise, a package already installed in R can be loaded in a session by using the command \textcolor{red}{library(package_name)}.
-In R, the directories where the packages are stored are called "libraries". The terms "package" and "library" are sometimes used synonymously.
-For example, to check the list of the installed packeges, the function \textcolor{red}{library()} can be used.
-When you open an **R Markdown** document (.Rmd) the program propose you automatically to install the libraries listed there.
+A package is a collection of R functions, data and compiled code.
+The location where the packages are stored is called the *library*.
+If there is a particular functionality that you require, you can download the package from the appropriate site and it will be stored in your library.
 
-### Some tips
+In all operation systems the function `install.packages()` can be used to download and install a package automatically.
+Otherwise, a package already installed in R can be loaded in a session by using the command `library(package_name)`.
+
+When you open an R Markdown document (*.Rmd*) the program propose you automatically to install the libraries listed there.
+
+### 1.1.2) Some tips
 
 -   R is case sensitive!
 -   Previously used command can be recalled in the console by using the *up arrow* on the keyboard.
 -   The working directory by default is "*C:/user/.../Documents*".
-    -   It can be found using the command \textcolor{red}{getwd()}
-    -   It can be changed using the command line \textcolor{red}{setwd("C:/Your/own/path")}
--   In **R Markdown**: the working directory when evaluating R code chunks is the directory of the input document by default.
-    -   To access to a specific file in a sub-folder use ". /subfolder/file.ext"
-    -   To access to a specific file in a up-folder use ". . /upfolder/file.ext"
+    -   It can be found using the command `getwd()`
+    -   It can be changed using the command line `setwd("C:/Your/own/path")`
+-   In R Markdown the working directory when evaluating R code chunks is the directory of the input document by default.
+    -   To access to a specific file in a sub-folder use "`. /subfolder/file.ext`"
+    -   To access to a specific file in a up-folder use "`. . /upfolder/file.ext`"
 
-### R Commands (online resources)
+### 1.1.3) R Commands (online resources)
 
 Many table resuming the main R commands can be found online.
 Here some useful links:
@@ -38,12 +47,12 @@ Here some useful links:
 
 -   [Basic Commands to Get Started with R](https://rpubs.com/ssammut/ResearchStats)
 
-## R Markdown
+## 1.2) R Markdown
 
 This is an R Markdown document :-)
 
 Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents.
-It is a simple and easy to use **plain text language** allowing to combine R code, results from data analysis (including plots and tables), and comments  into a single nicely formatted and *reproducible* document (like a report, publication, thesis chapter or web pages).
+It is a simple and easy to use **plain text language** allowing to combine R code, results from data analysis (including plots and tables), and comments into a single nicely formatted and *reproducible* document (like a report, publication, thesis chapter or web pages).
 
 Code lines are organized into code blocks, seeking to solve specified tasks, and referred to as **"code chunk"**.
 For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
@@ -52,9 +61,9 @@ All what you have to do during the computing labs is to read each explanatory pa
 Finally, to create a personal document (usually a PDF) from rmarkdown, you need to **Knit** the document.
 Knitting a document simply means taking all the text and code and creating a nicely formatted document.
 
-## Data type in computational analysis
+## 1.3) Data type in computational analysis
 
-### Variables
+### 1.3.1) Variables
 
 Variables are used to store values in a computer program.
 Values can be numbers (real and complex), words (string), matrices, and even tables.
@@ -72,9 +81,7 @@ The fundamental or atomic data in R Programming can be:
 knitr::include_graphics("images/Rvariablesdata.jpg")
 ```
 
-\newpage
-
-### Data structure in R
+### 1.3.2) Data structure in R
 
 R's base data structures can be organised by their dimensionality (1d, 2d, or nd) and whether they are homogeneous (all contents must be of the same type) or heterogeneous (the contents can be of different types).
 
@@ -138,7 +145,7 @@ m2[,3]
 m2[2,3]
 ```
 
-### Data Frame
+### 1.3.3) Data Frame
 
 A **data frame** allows to collect data of different type.
 All elements must have the same length.
@@ -147,12 +154,12 @@ A **list** is a more flexible structure since it can contain variables of differ
 Nevertheless, the preferred structure for statistical analyses and computation is the data frame.
 
 It is a good practice to explore the data frame before performing further computation on the data.
-This can be simply accomplished by using the commands \textcolor{red}{str} to explore the structure of the data and \textcolor{red}{summary} to display the summary statistics and quickly summarize the data.
-For numerical vectors the command \textcolor{red}{hist()} can be used to plot the basic histogram of the given values.
+This can be simply accomplished by using the commands `str()` to explore the structure of the data and *summary()* to display the summary statistics and quickly summarize the data.
+For numerical vectors the command `hist()` can be used to plot the basic histogram of the given values.
 
 ```{r define-vectors}
-# Create the vectors with the variables
 
+# Create the vectors with the variables
 cities <- c("Berlin", "New York", "Paris", "Tokyo")
 area <- c(892, 1214, 105, 2188)
 population <- c(3.4, 8.1, 2.1, 12.9)
@@ -160,6 +167,7 @@ continent <- c("Europe", "Norh America", "Europe", "Asia")
 ```
 
 ```{r data-frame}
+
 # Concatenate the vectors into a new data frame
 df1 <- data.frame(cities, area, population, continent)
 df1
@@ -169,7 +177,8 @@ df2 <- cbind (df1, "Language" = c ("German", "English", "Freanch", "Japanese"))
 df2
 ```
 
-```{r data-frame3}
+```{r data-exp}
+
 #Explore the data frame
 str(df2) # see the structure
 summary(df2) # compute basic statistics
