@@ -1,32 +1,38 @@
 ---
-title: "Advanced Geospatial Data Analysis in R: Environmental Applications"
-author: "Marj Tonini, Haokun Liu"
-date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
-documentclass: book
-bibliography: [book.bib, packages.bib]
-url: https://eugenegis.github.io/AGDAbook/
-cover-image: images/UNIL_logo.png
-description: |
-  This book will be used for the UNIL Master courses, and also open for the publich who are interested in. 
-biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
+title: "Preface"
+subtitle: 'Advanced Geospatial data Analysis: environmental applications'
+author: "Dr. Marj Tonini^[IDYST, University of Lausanne, marj.tonini@unil.ch]"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+output:
+  pdf_document: default
+  html_document: default
+  toc: true 
 editor_options: 
+  chunk_output_type: inline
   markdown: 
     wrap: sentence
+urlcolor: blue
+bibliography: book.bib
 ---
 
 # Preface {.unnumbered}
 
 Earth surface environmental processes exhibit distinctive characteristics, encompassing both spatial and temporal dimensions, along with various attributes and predictive variables.
-Furthermore, in the era of Data Science, the wealth of available data and the rapid development of analytical models have emerged as distinctive aspects in the realm of **Geospatial Data Analysis (GDA)**.
+Furthermore, in the era of Data Science, the wealth of available data and the rapid development of analytical models have emerged as distinctive aspects in the realm of **Advanced Geospatial Data Analysis (AGDA)**.
 Coupled with uncertainty and complexity issues, all this contribute to making this field of research highly challenging.
-The domain of GDA encompasses data exploration, manipulation, and modelling, from the acquisition phase up to the visualization and interpretation of the results.
+The domain of AGDA encompasses data exploration, manipulation, and modelling, from the acquisition phase up to the visualization and interpretation of the results.
 Mapping where events are located and how they relate to each other provides a better understanding of the process being studied.
 Finally, as an increasing volume of geo-environmental data becomes more and more accessible, the demand for experts in this domain is growing rapidly, both in public research institutions as well as in private companies.
 
-Defined for the first time by Naur as *"The science of dealing with data"*, the term **Data Science** evolved over time around the original concept of *"...converting data into information and knowledge"* (IASC, 1977).
-In the disciplines like Environmental and Earth Sciences, Physical Geography, Humanities and Social Sciences, the use of Data Science procedures is emerging only recently, proving to be extremely efficient to deal with the complexity of the investigated process and the heterogeneity of the underlying data sources.
+Later, in 1977, the International Association for Statistical Computing (IASC) elaborated on this foundation, describing Data Science as converting data into information and knowledge.
+The IASC emphasized the integration of traditional statistical methodologies with modern computational techniques and domain expertise to achieve this goal​ ([KDnuggets](https://www.kdnuggets.com/2020/11/data-science-history-overview.html))​.
+
+These definitions and the evolution of the term highlight the progressive expansion of Data Science from a narrow focus on data handling to a broader interdisciplinary approach that combines statistics, computer science, and domain-specific knowledge to extract meaningful insights from data.
+
+The term "**Data Science**" was defined for the first time by Peter Naur in 1974 as "*the science of dealing with data, once they have been established, while the relation of the data to what they represent is delegated to other fields and sciences*" [@naur_peter_concise_1974].
+In essence, this definition frames Data Science as the technical and methodological handling of data, while the initial creation or gathreing of data as well as interpretation of its meaning in the broader context is not the primary focus.
+
+Whil e in disciplines like Environmental and Earth Sciences, Physical Geography, Humanities and Social Sciences, the use of Data Science procedures is emerging only recently, proving to be extremely efficient to deal with the complexity of the investigated process and the heterogeneity of the underlying data sources.
 This leads to a cultural shift, moving scientists away from individual working within their own research domain.
 Indeed, disciplinary boundaries are more and more permeable, pushing scientists to be more open to collaborate among them and with decision makers on the investigation and understanding of real-world problems.
 Modern earth and environmental scientists need to interact with other disciplines, apparently far from their domain.
@@ -56,15 +62,21 @@ Explored algorithms include:
 -   *Self-Organizing Maps* as an example of unsupervised machine learning approach to data clustering and visualization;
 -   *Random Forest* as an example of a supervised machine learning algorithm, applied here for classification.
 
-To perfom the compution labs presented in the next chapters you can dowload data from here: [AGDA Book Gihub] (https://github.com/EugeneGIS/AGDAbook)
+To perfom the compution labs presented in the next chapters you can dowload data from here: [AGDA Book Gihub] (<https://github.com/EugeneGIS/AGDAbook>)
 
 ## Author Information {.unnumbered}
 
-Marj Tonini is a spatial data scientist with a strong interest on geospatial modelling for risk assessment, mainly related to wildfires and landslides. She gained her PhD in 2002 at Sant’Anna School of advanced studies (Pisa, Italy), defending a thesis on agro-environmental modelling. She started working at the University of Lausanne in 2004, as post-doc and, in 2008, she was appointed senior research manager at the Institute of Earth Surface Dynamics (current position).
+Marj Tonini is a spatial data scientist with a strong interest on geospatial modelling for risk assessment, mainly related to wildfires and landslides.
+She gained her PhD in 2002 at Sant’Anna School of advanced studies (Pisa, Italy), defending a thesis on agro-environmental modelling.
+She started working at the University of Lausanne in 2004, as post-doc and, in 2008, she was appointed senior research manager at the Institute of Earth Surface Dynamics (current position).
 
-Her research focuses on the development of innovative approaches allowing to enable efficient learning from complex environmental datasets. She seeks to set up a methodological framework to understand the spatio-temporal dynamic of environmental processes and to assess the influence of predictor variables. Her current research targets are on land use/land cover change analyses and on the elaboration of predictive scenario and susceptibility / risk assessment for natural hazard.
+Her research focuses on the development of innovative approaches allowing to enable efficient learning from complex environmental datasets.
+She seeks to set up a methodological framework to understand the spatio-temporal dynamic of environmental processes and to assess the influence of predictor variables.
+Her current research targets are on land use/land cover change analyses and on the elaboration of predictive scenario and susceptibility / risk assessment for natural hazard.
 
-Haokun Liu is a Ph.D. student at the Group of Cities and dynamics of networks (CITADYNE Group), University of Lausanne. Meanwhile, he is also a student assistant at Swiss Geocomputing Center (SGC). Benefiting from the strict and effective training in China and Switzerland, his research interests and experience include, but are not limited to: 1) Urban analytics, 2) Health geography, 3) Spatial data science. 
+Haokun Liu is a Ph.D. student at the Group of Cities and dynamics of networks (CITADYNE Group), University of Lausanne.
+Meanwhile, he is also a student assistant at Swiss Geocomputing Center (SGC).
+Benefiting from the strict and effective training in China and Switzerland, his research interests and experience include, but are not limited to: 1) Urban analytics, 2) Health geography, 3) Spatial data science.
 
 ## Prerequisites {.unnumbered}
 
