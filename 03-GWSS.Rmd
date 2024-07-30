@@ -8,7 +8,7 @@ editor_options:
     wrap: sentence
 ---
 
-# 2) Geographically Weighted Summary Statistics
+# Geographically Weighted Summary Statistics
 
 Geographically Weighted Summary Statistics (GWSS) represent an advanced analytical approach in geoscience, allowing researchers to explore spatial variations in data across a geographical landscape.
 Unlike traditional summary statistics that provide a single, overall summary measure (like mean, median, or standard deviation) for an entire dataset, GWSS techniques calculate these measures locally, reflecting the unique characteristics and variations at different spatial locations.
@@ -18,7 +18,7 @@ This method is particularly valuable in geoscience, where spatial heterogeneity 
 #knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo=FALSE, fig.align="center")
 ```
 
-## 2.1) GWSS for fire management
+## GWSS for fire management
 
 In fire risk assesmnt, it is essential to identify areas where fires occur most frequently and differentiate between small and large fires.
 This information is critical for understanding ignition factors and developing strategies to reduce forest fires, manage ignition sources, and identify high-risk areas.
@@ -31,7 +31,7 @@ This approach provides valuable insights for effective fire management and preve
 We compute here the GW local means, the GW local standard deviation and the GW localized skewness of burned areas in continental Portugal, registered in the period 1990-2013.
 This application is inspired by the work of [@tonini_evolution_2017]
 
-## 2.1.1) The overall methodology
+### The overall methodology
 
 **Summary statistics** include a number of measures that can be used to summarize a set of observations, the most important of which are measures of central tendency (arithmetic mean, median and mode) and measures of dispersion around the mean (variance and standard deviation).
 In addition, measures of skewness and kurtosis are descriptors of the shape of the probability distribution function, the former indicating the asymmetry and the latter the peakedness/tailedness of the curve.
@@ -46,7 +46,7 @@ The evaluation of geographically weighted summary statistics is obtained by comp
 KDE is estimated at each point, taking into account the influence of the points falling within an area, with increasing weight towards the center, corresponding to the point location.
 A surface summary statistic is thus obtained.
 
-## 2.1.2) Forest fires dataset
+### Forest fires dataset
 
 Forest fires inventories indicating the location, the starting date and other related variables, such as the cause of ignition and the size of the area burned, are broadly available with a different degree of accuracy in different countries.
 
@@ -63,9 +63,9 @@ In this work, for consistency reasons, we consider only fires occurred between 1
 knitr::include_graphics("images/Histo_FF.jpg")
 ```
 
-## 2.2) Computer lab: GWSS
+## Computer lab: GWSS
 
-### 2.2.1) Load the libraries
+### Load the libraries
 
 First you have to load the following libraries:
 
@@ -87,7 +87,7 @@ library(sp)
 
 ```
 
-### 2.2.2) Import the forest fire dataset
+### Import the forest fire dataset
 
 In this section you will load the geodata representing the dataset of forest fires occurred in the continental Portuguese area in the period 1990-2013.
 You will also load the boundaries of the study area.
@@ -96,10 +96,10 @@ You will start by exploring the datasets using mainly visual tools (plotting and
 ```{r import-data, results = FALSE}
 
 # Import Portugal boundary 
-Portugal <- st_read("data/Lab01/Area_Portugal.shp")
+Portugal <- st_read("data/GWSS/Area_Portugal.shp")
 
 # Import the Portuguese forest fires dataset for the entire Portuguese area.
-FFPorto<-st_read("data/Lab01/FF_Portugal.shp")
+FFPorto<-st_read("data/GWSS/FF_Portugal.shp")
 ```
 
 You can explore the dataset by using different tools for **exploratory data analyses**.
@@ -127,7 +127,7 @@ hist(FFPorto$Area_ha)
 hist(log10(FFPorto$Area_ha))
 ```
 
-### 2.2.3) Forest fires spatial distribution
+### Forest fires spatial distribution
 
 For a better understanding of the phenomenon, you can group the events according to the size of the burned area.
 Based on the frequency distribution of the burned areas, the following three classes can be defined:
@@ -154,7 +154,7 @@ ggplot() +
 
 ```
 
-### 2.2.4) Compute the geographically whited statistics
+### Compute the geographically whited statistics
 
 From the exploratory data analysis performed above, it seems that a simple plotting of the forest fires events based on their spatial distribution, even if classified based on their size, can not really help to understand their behaviors.
 This is because we face to a huge number of events and the variable that we are using to characterize them (i.e., the size of the burned area) is very heterogeneous.
@@ -186,7 +186,7 @@ help(gwss)
 FFgwss <- gwss(FFspdf,vars=("Area"),adaptive=TRUE, bw=100)
 ```
 
-### 2.2.5) Look at the results
+### Look at the results
 
 The resulting object (**FFgwss**) has a number of components.
 The most important one is the spatial data frame containing the results of local summary statistics for each data point location, stored in *FFgwss\$SDF* (that is a spatial DataFrame).
@@ -200,7 +200,7 @@ head(FFgwss$SDF)
 FFgwss
 ```
 
-#### GWSS maps
+### GWSS maps
 
 To produce a map of the local geographically weighted summary statistic of your choice, firstly we need to enter a small R function definition.
 This is just a short R program to draw a map: you can think of it as a command that tells R how to draw a map (see [Geographically Weighted Summary Statistics] (<https://rpubs.com/chrisbrunsdon/99667>) for more details).
@@ -238,7 +238,7 @@ quick.map(FFgwss$SDF, "Area_LSD", "Area (ha)", "GWL Standard Deviation")
 quick.map(FFgwss$SDF, "Area_LSKe", "Area (ha)", "GWL Skewness")
 ```
 
-## 3) Conclusions and further analyses
+## Conclusions and further analyses
 
 This practical computer lab allowed you to familiarize with GWSS, by the proposed application about geographically weighted summary statistics.
 This method allowed us to explore how the average burned area vary locally through Continental Portugal in the period 1990-2013.

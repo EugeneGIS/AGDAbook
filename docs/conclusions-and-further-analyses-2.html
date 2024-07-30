@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 12 6) Conclusions and further analyses | Towards Geo-Data Science</title>
+  <meta name="description" content="Chapter 12 6) Conclusions and further analyses | Towards Geo-Data Science" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 12 6) Conclusions and further analyses | Towards Geo-Data Science" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 6) Conclusions and further analyses | Towards Geo-Data Science" />
+  
+  
+  
+
+<meta name="author" content="Dr. Marj Tonini" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="susceptibility-map.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="images/AGDA_ImageCover.webp"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#author-information"><i class="fa fa-check"></i>Author Information</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> 1) Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-language"><i class="fa fa-check"></i><b>1.1</b> 1.1) R Language</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-packages"><i class="fa fa-check"></i><b>1.1.1</b> 1.1.1) R Packages</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#some-tips"><i class="fa fa-check"></i><b>1.1.2</b> 1.1.2) Some tips</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-commands-online-resources"><i class="fa fa-check"></i><b>1.1.3</b> 1.1.3) R Commands (online resources)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-markdown"><i class="fa fa-check"></i><b>1.2</b> 1.2) R Markdown</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-type-in-computational-analysis"><i class="fa fa-check"></i><b>1.3</b> 1.3) Data type in computational analysis</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#variables"><i class="fa fa-check"></i><b>1.3.1</b> 1.3.1) Variables</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-structure-in-r"><i class="fa fa-check"></i><b>1.3.2</b> 1.3.2) Data structure in R</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frame"><i class="fa fa-check"></i><b>1.3.3</b> 1.3.3) Data Frame</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> 1) Introduction</a></li>
+<li class="chapter" data-level="3" data-path="plotting-vector-dataset.html"><a href="plotting-vector-dataset.html"><i class="fa fa-check"></i><b>3</b> 2) Plotting vector dataset</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="plotting-vector-dataset.html"><a href="plotting-vector-dataset.html#load-libraries-and-vector-dataset"><i class="fa fa-check"></i><b>3.1</b> 2.1) Load libraries and vector dataset</a></li>
+<li class="chapter" data-level="3.2" data-path="plotting-vector-dataset.html"><a href="plotting-vector-dataset.html#plot-vector-features"><i class="fa fa-check"></i><b>3.2</b> 2.2) Plot vector features</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="plotting-raster-dataset.html"><a href="plotting-raster-dataset.html"><i class="fa fa-check"></i><b>4</b> 3) Plotting raster dataset</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="plotting-raster-dataset.html"><a href="plotting-raster-dataset.html#load-libraries-and-raster-dataset"><i class="fa fa-check"></i><b>4.1</b> 3.2) Load libraries and raster dataset</a></li>
+<li class="chapter" data-level="4.2" data-path="plotting-raster-dataset.html"><a href="plotting-raster-dataset.html#plot-raster-features"><i class="fa fa-check"></i><b>4.2</b> 3.2) Plot raster features</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="geodata-manipulation.html"><a href="geodata-manipulation.html"><i class="fa fa-check"></i><b>5</b> 4) Geodata manipulation</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="geodata-manipulation.html"><a href="geodata-manipulation.html#manipulate-tabular-datasets"><i class="fa fa-check"></i><b>5.1</b> 4.1) Manipulate tabular datasets</a></li>
+<li class="chapter" data-level="5.2" data-path="geodata-manipulation.html"><a href="geodata-manipulation.html#pipes-chaining-of-multiple-operations"><i class="fa fa-check"></i><b>5.2</b> 4.2) Pipes: chaining of multiple operations</a></li>
+<li class="chapter" data-level="5.3" data-path="geodata-manipulation.html"><a href="geodata-manipulation.html#join-table"><i class="fa fa-check"></i><b>5.3</b> 4.3) Join table</a></li>
+<li class="chapter" data-level="5.4" data-path="geodata-manipulation.html"><a href="geodata-manipulation.html#mapping-with-ggplot2"><i class="fa fa-check"></i><b>5.4</b> 4.4) Mapping with ggplot2</a></li>
+<li class="chapter" data-level="5.5" data-path="geodata-manipulation.html"><a href="geodata-manipulation.html#cropping-ratser"><i class="fa fa-check"></i><b>5.5</b> 4.5) Cropping ratser</a></li>
+<li class="chapter" data-level="5.6" data-path="geodata-manipulation.html"><a href="geodata-manipulation.html#display-categorigal-variables-for-a-raster"><i class="fa fa-check"></i><b>5.6</b> 4.6) Display categorigal variables for a raster</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html"><i class="fa fa-check"></i><b>6</b> 2) Geographically Weighted Summary Statistics</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#gwss-for-fire-management"><i class="fa fa-check"></i><b>6.1</b> 2.1) GWSS for fire management</a></li>
+<li class="chapter" data-level="6.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#the-overall-methodology"><i class="fa fa-check"></i><b>6.2</b> 2.1.1) The overall methodology</a></li>
+<li class="chapter" data-level="6.3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#forest-fires-dataset"><i class="fa fa-check"></i><b>6.3</b> 2.1.2) Forest fires dataset</a></li>
+<li class="chapter" data-level="6.4" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#computer-lab-gwss"><i class="fa fa-check"></i><b>6.4</b> 2.2) Computer lab: GWSS</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#load-the-libraries"><i class="fa fa-check"></i><b>6.4.1</b> 2.2.1) Load the libraries</a></li>
+<li class="chapter" data-level="6.4.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#import-the-forest-fire-dataset"><i class="fa fa-check"></i><b>6.4.2</b> 2.2.2) Import the forest fire dataset</a></li>
+<li class="chapter" data-level="6.4.3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#forest-fires-spatial-distribution"><i class="fa fa-check"></i><b>6.4.3</b> 2.2.3) Forest fires spatial distribution</a></li>
+<li class="chapter" data-level="6.4.4" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#compute-the-geographically-whited-statistics"><i class="fa fa-check"></i><b>6.4.4</b> 2.2.4) Compute the geographically whited statistics</a></li>
+<li class="chapter" data-level="6.4.5" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#look-at-the-results"><i class="fa fa-check"></i><b>6.4.5</b> 2.2.5) Look at the results</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#conclusions-and-further-analyses"><i class="fa fa-check"></i><b>6.5</b> 3) Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html"><i class="fa fa-check"></i><b>7</b> Kernel Density Estimator</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#introduction-1"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#method"><i class="fa fa-check"></i><b>7.2</b> Method</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ripleys-k-function"><i class="fa fa-check"></i><b>7.2.1</b> Ripley’s K-function</a></li>
+<li class="chapter" data-level="7.2.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#kernel-density-estimator-1"><i class="fa fa-check"></i><b>7.2.2</b> Kernel density estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#load-the-libraries-1"><i class="fa fa-check"></i><b>7.3</b> Load the libraries</a></li>
+<li class="chapter" data-level="7.4" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#import-the-portuguese-forest-fire-dataset"><i class="fa fa-check"></i><b>7.4</b> Import the Portuguese forest fire dataset</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ff-subsets-based-on-the-burned-areas-size"><i class="fa fa-check"></i><b>7.4.1</b> FF-subsets based on the burned areas’ size</a></li>
+<li class="chapter" data-level="7.4.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ff-subsets-based-on-their-geographical-distribution"><i class="fa fa-check"></i><b>7.4.2</b> FF-subsets based on their geographical distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#the-space-time-k-function"><i class="fa fa-check"></i><b>7.5</b> The space-time K-function</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#extract-time-and-pts-object"><i class="fa fa-check"></i><b>7.5.1</b> Extract Time and PTS object</a></li>
+<li class="chapter" data-level="7.5.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#compute-the-space-time-k-function"><i class="fa fa-check"></i><b>7.5.2</b> Compute the space-time K-function</a></li>
+<li class="chapter" data-level="7.5.3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#assess-the-space-time-clustering-behavior"><i class="fa fa-check"></i><b>7.5.3</b> Assess the space-time clustering behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#conclusions-and-further-analyses-1"><i class="fa fa-check"></i><b>7.6</b> Conclusions and further analyses</a></li>
+<li class="chapter" data-level="7.7" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#r-markdown-1"><i class="fa fa-check"></i><b>7.7</b> R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="introduction-2.html"><a href="introduction-2.html"><i class="fa fa-check"></i><b>8</b> 1) Introduction</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="introduction-2.html"><a href="introduction-2.html#the-main-objective"><i class="fa fa-check"></i><b>8.1</b> 1.1) The main objective</a></li>
+<li class="chapter" data-level="8.2" data-path="introduction-2.html"><a href="introduction-2.html#the-overall-methodology-1"><i class="fa fa-check"></i><b>8.2</b> 1.2) The overall methodology</a></li>
+<li class="chapter" data-level="8.3" data-path="introduction-2.html"><a href="introduction-2.html#load-libraries"><i class="fa fa-check"></i><b>8.3</b> 1.3) Load libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="import-and-process-geodata.html"><a href="import-and-process-geodata.html"><i class="fa fa-check"></i><b>9</b> 2) Import and process geodata</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="import-and-process-geodata.html"><a href="import-and-process-geodata.html#landslides-dataset"><i class="fa fa-check"></i><b>9.1</b> 2.1) Landslides dataset</a></li>
+<li class="chapter" data-level="9.2" data-path="import-and-process-geodata.html"><a href="import-and-process-geodata.html#predictor-variables"><i class="fa fa-check"></i><b>9.2</b> 2.2) Predictor variables</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="import-and-process-geodata.html"><a href="import-and-process-geodata.html#the-use-of-categorical-variables-in-machine-learning"><i class="fa fa-check"></i><b>9.2.1</b> 2.2.1) The use of categorical variables in Machine Learning</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="import-and-process-geodata.html"><a href="import-and-process-geodata.html#extract-velues"><i class="fa fa-check"></i><b>9.3</b> 2.3) Extract velues</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="import-and-process-geodata.html"><a href="import-and-process-geodata.html#split-the-input-dataset-into-training-80-and-testing-20"><i class="fa fa-check"></i><b>9.3.1</b> 2.3.1) Split the input dataset into training (80%) and testing (20%)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="run-random-forest.html"><a href="run-random-forest.html"><i class="fa fa-check"></i><b>10</b> 4) Run Random Forest</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="run-random-forest.html"><a href="run-random-forest.html#rf-main-outputs"><i class="fa fa-check"></i><b>10.1</b> 4.1) RF main outputs</a></li>
+<li class="chapter" data-level="10.2" data-path="run-random-forest.html"><a href="run-random-forest.html#model-evaluation"><i class="fa fa-check"></i><b>10.2</b> 4.2) Model evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="susceptibility-map.html"><a href="susceptibility-map.html"><i class="fa fa-check"></i><b>11</b> 5) Susceptibility map</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="susceptibility-map.html"><a href="susceptibility-map.html#class-intervals-for-decision-maker"><i class="fa fa-check"></i><b>11.1</b> 5.1) Class intervals for decision maker</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="conclusions-and-further-analyses-2.html"><a href="conclusions-and-further-analyses-2.html"><i class="fa fa-check"></i><b>12</b> 6) Conclusions and further analyses</a></li>
+<li class="chapter" data-level="13" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>13</b> References</a></li>
+<li class="chapter" data-level="14" data-path="interpretability-and-explainability-machine-learinig.html"><a href="interpretability-and-explainability-machine-learinig.html"><i class="fa fa-check"></i><b>14</b> 1) Interpretability and Explainability Machine Learinig</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="interpretability-and-explainability-machine-learinig.html"><a href="interpretability-and-explainability-machine-learinig.html#some-definitinions"><i class="fa fa-check"></i><b>14.1</b> 1.1) Some definitinions</a></li>
+<li class="chapter" data-level="14.2" data-path="interpretability-and-explainability-machine-learinig.html"><a href="interpretability-and-explainability-machine-learinig.html#aim-of-the-present-lab"><i class="fa fa-check"></i><b>14.2</b> 1.2) Aim of the present lab</a></li>
+<li class="chapter" data-level="14.3" data-path="interpretability-and-explainability-machine-learinig.html"><a href="interpretability-and-explainability-machine-learinig.html#re-load-lybraries-and-workspace"><i class="fa fa-check"></i><b>14.3</b> 1.3) Re-load lybraries and workspace</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="variable-importance-plot.html"><a href="variable-importance-plot.html"><i class="fa fa-check"></i><b>15</b> 2) Variable importance plot</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="variable-importance-plot.html"><a href="variable-importance-plot.html#partial-dependence-plot"><i class="fa fa-check"></i><b>15.1</b> 2.1) Partial dependence plot</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="local-random-forest.html"><a href="local-random-forest.html"><i class="fa fa-check"></i><b>16</b> 2) Local Random Forest</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="local-random-forest.html"><a href="local-random-forest.html#run-grf"><i class="fa fa-check"></i><b>16.1</b> 2.1) Run GRF</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="local-random-forest.html"><a href="local-random-forest.html#global-variable-importance-plot"><i class="fa fa-check"></i><b>16.1.1</b> 2.1.1) Global variable importance plot</a></li>
+<li class="chapter" data-level="16.1.2" data-path="local-random-forest.html"><a href="local-random-forest.html#local-variable-importance"><i class="fa fa-check"></i><b>16.1.2</b> 2.1.2) Local Variable importance</a></li>
+<li class="chapter" data-level="16.1.3" data-path="local-random-forest.html"><a href="local-random-forest.html#slope"><i class="fa fa-check"></i><b>16.1.3</b> - Slope</a></li>
+<li class="chapter" data-level="16.1.4" data-path="local-random-forest.html"><a href="local-random-forest.html#distance-to-roads"><i class="fa fa-check"></i><b>16.1.4</b> - Distance to roads</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="local-random-forest.html"><a href="local-random-forest.html#local-r-squared"><i class="fa fa-check"></i><b>16.2</b> 2.1.3) Local R squared</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="conclusions-and-further-analyses-3.html"><a href="conclusions-and-further-analyses-3.html"><i class="fa fa-check"></i><b>17</b> 6) Conclusions and further analyses</a></li>
+<li class="chapter" data-level="18" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i><b>18</b> References</a></li>
+<li class="chapter" data-level="19" data-path="self-organizing-map.html"><a href="self-organizing-map.html"><i class="fa fa-check"></i><b>19</b> Self-organizing Map</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#introduction-3"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#material-and-method"><i class="fa fa-check"></i><b>19.2</b> Material and method</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#the-geo-demographic-context"><i class="fa fa-check"></i><b>19.2.1</b> The geo-demographic context</a></li>
+<li class="chapter" data-level="19.2.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#som"><i class="fa fa-check"></i><b>19.2.2</b> SOM</a></li>
+<li class="chapter" data-level="19.2.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#swiss-census-data"><i class="fa fa-check"></i><b>19.2.3</b> Swiss census data</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#variables-inspection"><i class="fa fa-check"></i><b>19.3</b> Variables inspection</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#import-the-data"><i class="fa fa-check"></i><b>19.3.1</b> Import the data</a></li>
+<li class="chapter" data-level="19.3.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#inspect-the-data"><i class="fa fa-check"></i><b>19.3.2</b> Inspect the data</a></li>
+<li class="chapter" data-level="19.3.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#data-transformation"><i class="fa fa-check"></i><b>19.3.3</b> Data transformation</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="self-organizing-map.html"><a href="self-organizing-map.html#running-som"><i class="fa fa-check"></i><b>19.4</b> Running SOM</a>
+<ul>
+<li class="chapter" data-level="19.4.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#load-the-libraries-2"><i class="fa fa-check"></i><b>19.4.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="19.4.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#compute-som"><i class="fa fa-check"></i><b>19.4.2</b> Compute SOM</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="self-organizing-map.html"><a href="self-organizing-map.html#soms-main-outputs"><i class="fa fa-check"></i><b>19.5</b> SOM’s main outputs</a></li>
+<li class="chapter" data-level="19.6" data-path="self-organizing-map.html"><a href="self-organizing-map.html#hierarchical-clustering"><i class="fa fa-check"></i><b>19.6</b> Hierarchical clustering</a>
+<ul>
+<li class="chapter" data-level="19.6.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#clusters-characterization"><i class="fa fa-check"></i><b>19.6.1</b> Clusters characterization</a></li>
+</ul></li>
+<li class="chapter" data-level="19.7" data-path="self-organizing-map.html"><a href="self-organizing-map.html#conclusions"><i class="fa fa-check"></i><b>19.7</b> Conclusions</a></li>
+<li class="chapter" data-level="19.8" data-path="self-organizing-map.html"><a href="self-organizing-map.html#further-analyses"><i class="fa fa-check"></i><b>19.8</b> Further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html"><i class="fa fa-check"></i><b>20</b> Density-based Clustering Algorithm</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#introduction-4"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
+<li class="chapter" data-level="20.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#the-overall-methodology-2"><i class="fa fa-check"></i><b>20.2</b> The overall methodology</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#dbscan-3-d-density-based-clustering-algorithm"><i class="fa fa-check"></i><b>20.2.1</b> DBSCAN: 3-D density based clustering algorithm</a></li>
+<li class="chapter" data-level="20.2.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#field-campaign"><i class="fa fa-check"></i><b>20.2.2</b> Field campaign</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#dbscan-feature-detection-from-points-clouds"><i class="fa fa-check"></i><b>20.3</b> DBSCAN: feature detection from points clouds</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#load-the-libraries-3"><i class="fa fa-check"></i><b>20.3.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="20.3.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#import-and-visualise-the-point-clouds-dataset"><i class="fa fa-check"></i><b>20.3.2</b> Import and visualise the point clouds dataset</a></li>
+<li class="chapter" data-level="20.3.3" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#run-dbscan"><i class="fa fa-check"></i><b>20.3.3</b> Run DBSCAN</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#conclusions-and-further-analyses-4"><i class="fa fa-check"></i><b>20.4</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-2.html"><a href="references-2.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Towards Geo-Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="conclusions-and-further-analyses-2" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> 6) Conclusions and further analyses<a href="conclusions-and-further-analyses-2.html#conclusions-and-further-analyses-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This exercise allowed you to familiarize with Random Forest, by the proposed application about landslides susceptibility mapping and variables importance assessment.</p>
+<p>To be sure that everything is perfectly clear for you, we propose you to <strong>answer the following questions</strong> and to discuss your answers with the other participants to the course or directly with the teacher.</p>
+<ol style="list-style-type: decimal">
+<li><p>Why is it important to implement the pseudo-absence, other that the presences (i.e., the observations) in a data-driven modelization?</p></li>
+<li><p>What is the difference between a numerical and a categorical variable?
+Give some examples of both types.
+Why RF can handle directly native categorical variables?
+Is it the same for other algorithms (like logistic regression or neural network)?</p></li>
+<li><p>Which is the values of the OOB estimate error rate of your model?
+Which parameters you can change to try to reduce it?
+Be brave and do it (i.e., change the values for <em>ntree</em> and <em>mtry,</em> than analyse which values for the AUC you obtain and which model perform better.</p>
+<div style="page-break-after: always;"></div></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="susceptibility-map.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/EugeneGIS/AGDAbook/edit/master/05-RF_Cl.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["fake-book.pdf", "fake-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -65,12 +65,12 @@ knitr::include_graphics(c("images/Variables1.jpg", "images/Variables2.jpg"))
 
 ```{r import-data, include=FALSE}
 # Import the entire the dataset
-data2020 <- read.csv("data/Lab04/census2020.csv")
+data2020 <- read.csv("data/SOM/census2020.csv")
 summary(data2020)
 str(data2020)
 
 # Import the subset with few variable selected
-subset2020 <- read.csv("data/Lab04/subset2020.csv")
+subset2020 <- read.csv("data/SOM/subset2020.csv")
 str(subset2020) # the field X represents the unique identifier 
 ```
 
@@ -304,7 +304,7 @@ library(dplyr)
 
 ```{r load and preprocess dataset, results='hide', fig.show='hide'}
 # Load the shapefile data
-CH_outline <- st_read("data/Lab04/Municiplities.shp")
+CH_outline <- st_read("data/SOM/Municiplities.shp")
 
 # Quick check the shapefile data
 ggplot() + 

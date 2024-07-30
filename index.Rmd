@@ -1,7 +1,7 @@
 ---
 title: "Preface"
 subtitle: 'Advanced Geospatial data Analysis: environmental applications'
-author: "Dr. Marj Tonini^[IDYST, University of Lausanne, marj.tonini@unil.ch]"
+author: "Dr. Marj Tonini, Haokun Liu"
 date: "`r format(Sys.time(), '%d/%m/%Y')`"
 output:
   pdf_document: default

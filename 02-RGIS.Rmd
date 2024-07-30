@@ -1,21 +1,16 @@
 ---
-title: "Basic operation with geodata in R"
-subtitle: 'Advanced Geospatial data Analysis: environmental applications'
-author: "Dr. Marj Tonini^[IDYST, University of Lausanne, marj.tonini@unil.ch]"
-date: "`r format(Sys.time(), '%d/%m/%Y')`"
-output:
-  pdf_document: default
-  html_document: default
-  toc: true 
+bibliography: book.bib
+link-citations: true
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
 editor_options: 
-  chunk_output_type: inline
   markdown: 
     wrap: sentence
-urlcolor: blue
-bibliography: geodata.bib
 ---
 
-# 1) Introduction
+# Basic operation with geodata in R
+
+## Introduction
 
 Geodata, or geospatial data, refers to features associated with a specific location on the Earth's surface.
 This data can be in various forms and is often used in geographic information systems (GIS) for mapping and analysis.
@@ -37,7 +32,7 @@ These packages allow users to handle geodata directly in R computing environment
 
 In this chapter, we introduce the basic functions of these R packages and demonstrate how to use them to work with geodata in the pre-processing and post-processing phase of a pipeline in geomodeling.
 
-# 2) Plotting vector dataset
+## Plotting vector dataset
 
 The spatial component of geodata uses geometric primitives like point, line, and polygon to represent the single features.
 Each feature in a geodataset is associated with various attributes providing detailed quantitatives and qualitatives information.
@@ -49,7 +44,7 @@ The three basic geometric vector primitives have the following characteristics:
 -   **Lines**: defined by pairs of coordinates connected to each other, representing linear features such as roads or rivers network, pathways, railway, etc.
 -   **Polygons**: defined by a series of connected coordinates that enclose an area, representing features such as lakes, administrative units, vegetation patches, burned area, landslides footprint, etc.
 
-## 2.1) Load libraries and vector dataset
+### Load libraries and vector dataset
 
 The package **sf** (Pebesma 2022) has been designed to work with vector datasets as "simple features" in R.
 Each feature is represented by one row in the data frame, with attributes stored as columns and spatial information stored in a special geometry column.
@@ -81,11 +76,11 @@ By setting the argument "quiet = FALSE" suppresses the output from the console w
 
 ```{r load-shp}
 # Load dataset
-vaud <- st_read("./Lab002/Canton_de_Vaud.shp", quiet = FALSE)
+vaud <- st_read("data/RGIS/Canton_de_Vaud.shp", quiet = FALSE)
 
 ```
 
-## 2.2) Plot vector features
+### Plot vector features
 
 Basic maps are created in sf with the command ***plot()***.
 By default this creates a multi-panel plot: one plot for each variable included in the geodata (i.e., each column).
@@ -128,7 +123,7 @@ plot(vaud["Shape_Area"], reset = FALSE)
 plot(Lausanne, add = TRUE, col = "red")
 ```
 
-# 3) Plotting raster dataset
+## Plotting raster dataset
 
 Raster data are different from vector data in that they are referenced to a regular grid of rectangular (usually square) cells, called pixels.
 
@@ -166,7 +161,7 @@ Common raster formats used used for spatial analses include:
 
 These formats vary in terms of compression, metadata support, and suitability for different types of raster data, from simple images to complex scientific datasets.
 
-## 3.2) Load libraries and raster dataset
+### Load libraries and raster dataset
 
 The **terra** package provides a variety of specialized classes and functions for importing, processing, analyzing, and visualizing raster datasets (Hijmans 2022).
 It is intended to replace the **raster** package, which has similar data objects and the function syntax as **terra** package.
@@ -180,31 +175,21 @@ library(ggplot2)
 ```
 
 ```{r load-raster}
-
 # Load the libraries 
 library(terra)
 
 # Load the raster data
-Vaud_dem <- rast("./Lab002/DEM.tif")
+Vaud_dem <- rast("data/RGIS/DEM.tif")
 
 # Inspect the raster
 Vaud_dem
 ```
 
-## 3.2) Plot raster features
+### Plot raster features
 
 Raster objects can be imported using the function ***rast()*** and exported using **writeRaster()**, specifing the format argument.
 
 As a toy example, we will work with the raster \*.tif representing the digital elevation model (DEM) of Canton Vaud.
-
-```{r plot-raster}
-
-# Load the raster data
-Vaud_dem <- rast("./Lab002/DEM.tif")
-
-# Inspect the raster
-Vaud_dem
-```
 
 Similar to the **sf** package for ploting vector data, **terra** also provides plot() methods for its own classes.
 
@@ -213,12 +198,12 @@ Similar to the **sf** package for ploting vector data, **terra** also provides p
 plot(Vaud_dem, main="DEM")
 ```
 
-# 4) Geodata manipulation
+## Geodata manipulation
 
 In this section, we explore some basic manipulations with vector and raster geodata.
 This will be useful in the following chapters of this book.
 
-## 4.1) Manipulate tabular datasets
+### Manipulate tabular datasets
 
 In a vector dataset, the characteristics associated with geospatial features are stored in attribute tables.
 Each feature in the vector dataset is linked to a row in the table, with its characteristics organized into columns.
@@ -243,7 +228,7 @@ Common tasks include: selecting subsets of rows or columns from the attribute ta
 ```{r load-tab}
 
 # Load tabular dataset
-Swisscensus_2020 <- read.csv("./Lab002/census2020.csv")
+Swisscensus_2020 <- read.csv("data/RGIS/census2020.csv")
 
 # Inspect the element 
 str(Swisscensus_2020)
@@ -262,7 +247,7 @@ str(Swisscensus2020_LU)
 rename(Swisscensus2020_LU, Urban=p_infrastructure)
 ```
 
-## 4.2) Pipes: chaining of multiple operations
+### Pipes: chaining of multiple operations
 
 Pipes allow for the chaining of multiple operations in a sequence, which makes the code easier to understand and reduces the need for nested function calls.
 
@@ -281,7 +266,7 @@ LU_dens100 <-
 
 ```
 
-## 4.3) Join table
+### Join table
 
 A tabular dataset can be joined to the attribute table of a vector dataset by specifying the name of the columns in the two tables used for merging.To this end, we can use the **merge()** function included in **sp** package.
 
@@ -296,7 +281,7 @@ Vaud_census_2020 <- merge(x=vaud, y=Swisscensus_2020,
 plot(Vaud_census_2020["p_agriculture"])
 ```
 
-## 4.4) Mapping with ggplot2
+### Mapping with ggplot2
 
 Mapping in R can be efficiently achieved using the powerful visualization package, **ggplot2**, especially when combined with additional packages like *sf*.
 These tools enable users to create detailed and customized maps for spatial data analysis and visualization.
@@ -309,7 +294,7 @@ These aesthetics - *aes()* - control the appearance of the plot elements, such a
 ```{r mapping}
 
 # Install viridis color scale as a package 
-install.packages("viridis")
+install.packages("viridis", repos="http://cran.us.r-project.org")
 library(viridis)
 
 # Use ggplot2 for mapping
@@ -321,7 +306,7 @@ ggplot(Vaud_census_2020) +
        subtitle = "Canton vaud - census 2020")
 ```
 
-## 4.5) Cropping ratser
+### Cropping ratser
 
 Many geographic data projects require integrating data from various sources, including remote sensing images (rasters) and administrative boundaries (vectors).
 In these scenarios, raster cropping and masking are essential for standardizing the spatial extent of the input data.
@@ -364,7 +349,7 @@ plot(DEM_Lausanne, main = "DEM of Lausanne")
 plot(st_geometry(Lausanne), add = TRUE, border = "red", lwd = 2)
 ```
 
-## 4.6) Display categorigal variables for a raster 
+### Display categorigal variables for a raster 
 
 Categorical variables, also known as qualitative variables, are variables that represent distinct groups or categories. These variables are typically non-numeric and can be divided into a finite number of categories or levels. Categorical variables are often used to represent characteristics or attributes that do not have a natural ordering.
 
@@ -374,10 +359,12 @@ To understand the characteristics of the categorical variables, you can plot the
 
 ```{r landCover-map}
 
+library(RColorBrewer)
+
 # Convert the raster to a factor to represent categorical data
 
 # Load the raster data
-landCover <- rast("./Lab002/landCover.tif")
+landCover <- rast("data/RGIS/landCover.tif")
 
 # Inspect the raster
 landCover
@@ -386,7 +373,7 @@ landCover
 plot (landCover)
 
 # Convert the raster to a factor to represent categorical data
-landCover <- as.factor(rast("./Lab002/landCover.tif"))
+landCover <- as.factor(rast("data/RGIS/landCover.tif"))
 
 # Inspect the current levels (classes) of the raster
 current_levels <- levels(landCover)[[1]]

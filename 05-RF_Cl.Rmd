@@ -1,16 +1,10 @@
 ---
-title: "Towards Geo-Data Science"
-author: "Dr. Marj Tonini^[IDYST, University of Lausanne, marj.tonini@unil.ch]"
-date: "`r format(Sys.time(), '%d/%m/%Y')`"
-output:
-  pdf_document: default
-  html_document: default
-  toc: yes
-  word_document: default
-subtitle: 'Landslides susceptibility mapping using Random Forest'
-editor_options:
-  chunk_output_type: inline
-  markdown:
+bibliography: book.bib
+link-citations: true
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+editor_options: 
+  markdown: 
     wrap: sentence
 urlcolor: blue
 ---
@@ -23,22 +17,15 @@ knitr::opts_chunk$set( fig.align = "center",
 library(distill) #R Markdown' Format for Scientific and Technical Writing
 ```
 
-## R Markdown
+# Landslides susceptibility mapping using Random Forest
 
-This is an R Markdown document.
-Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents.
-For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-You are asked to carefully read each explanatory paragraph and than to run each individual R code chunk, one by one, and to interpret the results.
-Finally you can start again from the beginning of the exercise and change some parameters as indicated below.
-
-# 1) Introduction
+## Introduction
 
 In this application, we explore the capabilities of a stochastic approach based on a machine learning (ML) algorithm to elaborate landslides susceptibility mapping in Canton Vaud, Switzerland.
 Generally speaking, ML includes a class of algorithms for the analysis, modelling, and visualization of environmental data and it performs particularly well to model environmental hazards, which naturally have a complex and non-linear behavior.
 Here we use Random Forest, an ensemble ML algorithm based on decision trees.
 
-## 1.1) The main objective
+### The main objective
 
 Landslides are one of the major hazard occurring around the world.
 In Switzerland, landslides cause damages to infrastructures and sometimes threaten human lives.
@@ -50,15 +37,15 @@ This project applies a data-driven methodology based on Random Forest (RF) (@bre
 RF is applied to a set of independent variables (i.e., the predictors) and dependent variables (the inventoried landslides and an equal number of locations for absences).
 The overall methodology is described in the following graphic (\autoref{Methodology}).
 
-## 1.2) The overall methodology
+### The overall methodology
 
 The methodological overview is described in the following graphic: \autoref{Methodology}.
 
 ```{r gen-met, fig.cap="Basic elements of the generic methodology \\label{Methodology}", dpi=300, out.width="80%", out.height="80%", fig.align="center", echo = FALSE}
-knitr::include_graphics("Methodology.png")
+knitr::include_graphics("images/Methodology.png")
 ```
 
-## 1.3) Load libraries
+### Load libraries
 
 To perform the analysis, you have first to install the following libraries:
 
@@ -96,12 +83,12 @@ library(ggplot2) #Is a system for declaratively creating graphics,
 
 ```
 
-# 2) Import and process geodata
+## Import and process geodata
 
 Import *landslides punctual dataset* presences and absences (LS_pa) and *predictors* (in raster format).
 This help the exploratory data analyses step and to understand the input data structure.
 
-## 2.1) Landslides dataset
+### Landslides dataset
 
 The **landslide inventory** has been provided by the environmental office of the canton of Vaud.
 Only *shallow landslides* are used for susceptibility modelling.
@@ -117,12 +104,12 @@ In this case study, an equal number of point as for presences has been randomly 
 ```{r import-data, results = FALSE}
 
 # Import the boundary of Canton Vaud 
-Vaud<-vect("Vaud_CH.shp")
-Lake <- vect("Lakes_VD.shp")
+Vaud <- vect("data/RF/Vaud_CH.shp")
+Lake <- vect("data/RF/Lakes_VD.shp")
 
 
 # Import the landslides dataset (dependent variable)
-LS_pa <- read.csv("LS_pa.csv") 
+LS_pa <- read.csv("data/RF/LS_pa.csv") 
 
 # Convert the numeric values (0/1) as factor 
 ##(i.e. categorical value)
@@ -130,17 +117,17 @@ LS_pa$LS<-as.factor(LS_pa$LS)
 
 LS_vect<-vect(LS_pa, geom=c("X", "Y"),crs=crs(Vaud))
 
-
 # Display the structure (str) and result summaries (summary)
 str(LS_vect)
 summary(LS_vect)
+
 # Plot the events
 plot(Vaud)
 plot(Lake, col="lightblue", add=TRUE)
 plot(LS_vect, col=LS_pa$LS, pch=20, cex=0.5, add=TRUE)
 ```
 
-## 2.2) Predictor variables
+### Predictor variables
 
 Selecting predictive variables is a key stage of landslide susceptibility modelling when using a data-driven approach.
 There is no consensus about the number of variables and which variables should be used.
@@ -179,17 +166,18 @@ We use here the generic function **c** to combine the single raster into multipl
 
 ## Import raster (independent variables) 25 meter resolution
 
-landCover<-as.factor(rast("landCover.tif"))
-geology<-as.factor(rast("Geological_classes.tif"))
+landCover<-as.factor(rast("data/RF/landCover.tif"))
+geology<-as.factor(rast("data/RF/Geological_classes.tif"))
 
-planCurv<-rast("plan_curvature.tif")/100
-profCurv<-rast("profil_curvature.tif")/100
+planCurv<-rast("data/RF/plan_curvature.tif")/100
+profCurv<-rast("data/RF/profil_curvature.tif")/100
+
 # this because ArcGIS multiply curvature values by 100
 
-TWI<-rast("TWI.tif")
-Slope<-rast("Slope.tif")
-dem<-rast("DEM.tif")
-dist<-rast("dist_roads.tif")
+TWI <- rast("data/RF/TWI.tif")
+Slope <- rast("data/RF/Slope.tif")
+dem <- rast("data/RF/DEM.tif")
+dist <- rast("data/RF/dist_roads.tif")
 
 # Combine raster
 
@@ -205,7 +193,7 @@ plot(features)
 
 ```
 
-### 2.2.1) The use of categorical variables in Machine Learning
+### The use of categorical variables in Machine Learning
 
 The majority of ML algorithms (e.g., support vector machines, artificial neural network, deep learning) makes predictions on the base of the proximity between the values of the predictors, computed in terms of euclidean distance.
 This means that these algorithms can not handle directly categorical values (i.e., qualitative descriptors).
@@ -221,12 +209,12 @@ plot(landCover)
 ```
 
 ```{r cat_class, fig.cap="Categorical variables \\label{Cat_class}", dpi=300, out.width="80%", out.height="80%", fig.align="center", echo = FALSE}
-knitr::include_graphics("Cat_classes.png")
+knitr::include_graphics("data/RF/Cat_classes.png")
 ```
 
 \newpage
 
-## 2.3) Extract velues
+## Extract velues
 
 In this step, you will extract the values of the predictors at each location in the landslides (presences and absences) dataset.
 The final output represents the input dataset with dependent (LS = landslides) and independent (raster features) variables.
@@ -250,7 +238,7 @@ head(LS_input)
 str(LS_input)
 ```
 
-### 2.3.1) Split the input dataset into training (80%) and testing (20%)
+### Split the input dataset into training (80%) and testing (20%)
 
 A well-established procedure in ML is to split the input dataset into training, validation, and testing.
 
@@ -282,7 +270,7 @@ count(LS_train)
 count(LS_test)
 ```
 
-# 4) Run Random Forest
+## Run Random Forest
 
 Computationally, a subset of the training dataset is generated by bootstrapping (i.e. random sampling with replacement).
 For each subset a decision tree is grown and, at each split, the algorithm randomly selects a number of variables (*mtry*) and it computes the Gini index to identify the best one.
@@ -302,7 +290,7 @@ set.seed(123)
 RF_LS<-randomForest(y=LS_train$LS, x=LS_train[1:8],data=LS_train, ntree=500, mtry=3,importance=TRUE)
 ```
 
-## 4.1) RF main outputs
+### RF main outputs
 
 Printing the results of RF allows you to gain insight into the outputs of the implemented model, namely the following: - a summary of the model hyperparameters - the OOB estimate of error rate - the confusion matrix; in this case a 2x2 matrix used for evaluating the performance of the classification model (1-presence vs 0-absence).
 
@@ -323,7 +311,7 @@ legend(x="topright", legend=c("perd 0", "pred 1", "OOB error"),
  col=c("red", "green", "black"), lty=1:2, cex=0.8)
 ```
 
-## 4.2) Model evaluation
+### Model evaluation
 
 The prediction capability of the implemented RF model can be evaluated by predicting the results over previously unseen data, that is the testing dataset.
 The *Area Under the "Receiver Operating Characteristic (ROC)" Curve* (**AUC**) represents the evaluation score used here as indicator of the goodness of the model in classifying areas more susceptible to landslides.
@@ -350,7 +338,7 @@ roc_test
 roc_oob
 ```
 
-# 5) Susceptibility map
+## Susceptibility map
 
 You have now all the elements to elaborate the final landslide susceptibility map.
 This will be achieved by making predictions (of presence only) based on the values of the predictors, which are stored into multiple raster named \*features\*, created above.
@@ -384,7 +372,7 @@ writeRaster(scp_rast,"Susceptibility_LSmap.tif",overwrite=T)
 
 ```
 
-## 5.1) Class intervals for decision maker
+### Class intervals for decision maker
 
 What can you say by looking at the map?
 Actually a risk heat map is a data visualization tool for communicating the level for a specific risk to occur.
@@ -431,7 +419,7 @@ plot(scp_rast, xlab = "East [m]", ylab = "North [m]",
 
 ```
 
-# 6) Conclusions and further analyses
+## Conclusions and further analyses
 
 This exercise allowed you to familiarize with Random Forest, by the proposed application about landslides susceptibility mapping and variables importance assessment.
 
@@ -450,6 +438,6 @@ To be sure that everything is perfectly clear for you, we propose you to **answe
 
     \newpage
 
-# References
+## References
 
 The research framework that inspired this computational lab refers to a pioneering study in susceptibility mapping for wildfire events by [@tonini_machine_2020] and further developed for the assessment of variable importance by [@trucchia_machine-learning_2022].

@@ -1,31 +1,44 @@
-# Introduction to R 
+---
+bibliography: book.bib
+link-citations: true
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+# Introduction to R
 
 ## R Language
 
 R is a complete programming language and software environment for statistical computing and graphical representation.
-As part of the GNU Project (free software, mass collaboration project), the source code is free available.
+As part of the GNU Project - free software, mass collaboration project (<https://www.gnu.org/software/software.en.html>) , the source code is free available.
 Its functionalities can be expanded by importing packages.
+
 For more details on R see <https://www.r-project.org/>.
 
 ### R Packages
 
-A package is a file generally composed of R scripts (e.g., functions).
-On all operation systems the function "install.packages()" can be used to download and install a package automatically.
-Otherwise, a package already installed in R can be loaded in a session by using the command \textcolor{red}{library(package_name)}.
-In R, the directories where the packages are stored are called "libraries". The terms "package" and "library" are sometimes used synonymously.
-For example, to check the list of the installed packeges, the function \textcolor{red}{library()} can be used.
-When you open an **R Markdown** document (.Rmd) the program propose you automatically to install the libraries listed there.
+A package is a collection of R functions, data and compiled code.
+The location where the packages are stored is called the *library*.
+If there is a particular functionality that you require, you can download the package from the appropriate site and it will be stored in your library.
+
+In all operation systems the function `install.packages()` can be used to download and install a package automatically.
+Otherwise, a package already installed in R can be loaded in a session by using the command `library(package_name)`.
+
+When you open an R Markdown document (*.Rmd*) the program propose you automatically to install the libraries listed there.
 
 ### Some tips
 
 -   R is case sensitive!
 -   Previously used command can be recalled in the console by using the *up arrow* on the keyboard.
 -   The working directory by default is "*C:/user/.../Documents*".
-    -   It can be found using the command \textcolor{red}{getwd()}
-    -   It can be changed using the command line \textcolor{red}{setwd("C:/Your/own/path")}
--   In **R Markdown**: the working directory when evaluating R code chunks is the directory of the input document by default.
-    -   To access to a specific file in a sub-folder use ". /subfolder/file.ext"
-    -   To access to a specific file in a up-folder use ". . /upfolder/file.ext"
+    -   It can be found using the command `getwd()`
+    -   It can be changed using the command line `setwd("C:/Your/own/path")`
+-   In R Markdown the working directory when evaluating R code chunks is the directory of the input document by default.
+    -   To access to a specific file in a sub-folder use "`. /subfolder/file.ext`"
+    -   To access to a specific file in a up-folder use "`. . /upfolder/file.ext`"
 
 ### R Commands (online resources)
 
@@ -43,7 +56,7 @@ Here some useful links:
 This is an R Markdown document :-)
 
 Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents.
-It is a simple and easy to use **plain text language** allowing to combine R code, results from data analysis (including plots and tables), and comments  into a single nicely formatted and *reproducible* document (like a report, publication, thesis chapter or web pages).
+It is a simple and easy to use **plain text language** allowing to combine R code, results from data analysis (including plots and tables), and comments into a single nicely formatted and *reproducible* document (like a report, publication, thesis chapter or web pages).
 
 Code lines are organized into code blocks, seeking to solve specified tasks, and referred to as **"code chunk"**.
 For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
@@ -72,8 +85,6 @@ The fundamental or atomic data in R Programming can be:
 <p class="caption">(\#fig:img1)Data Types in R \label{data_Type}</p>
 </div>
 
-\newpage
-
 ### Data structure in R
 
 R's base data structures can be organised by their dimensionality (1d, 2d, or nd) and whether they are homogeneous (all contents must be of the same type) or heterogeneous (the contents can be of different types).
@@ -88,7 +99,7 @@ This gives rise to the four data structures most often used in data analysis:
 A **Vector** is a one-dimensional structure winch can contain object of one type only: numerical (integer and double), character, and logical.
 
 
-```r
+``` r
 # Investigate vector's types:
 
 v1 <- c(0.5, 0.7); v1; typeof(v1)
@@ -102,7 +113,7 @@ v1 <- c(0.5, 0.7); v1; typeof(v1)
 ## [1] "double"
 ```
 
-```r
+``` r
 v2 <-c(1:10); v2; typeof(v2)
 ```
 
@@ -114,7 +125,7 @@ v2 <-c(1:10); v2; typeof(v2)
 ## [1] "integer"
 ```
 
-```r
+``` r
 v3 <- c(TRUE, FALSE); v3; typeof(v3)
 ```
 
@@ -126,7 +137,7 @@ v3 <- c(TRUE, FALSE); v3; typeof(v3)
 ## [1] "logical"
 ```
 
-```r
+``` r
 v4 <- c("Swiss", "Itay", "France", "Germany"); v4; typeof(v4)
 ```
 
@@ -139,7 +150,7 @@ v4 <- c("Swiss", "Itay", "France", "Germany"); v4; typeof(v4)
 ```
 
 
-```r
+``` r
 #Create a sequence from 0 to 5 with a step of 0.5:
 
 v5 <- seq(1, 5, by=0.5); v5; typeof(v5)
@@ -153,7 +164,7 @@ v5 <- seq(1, 5, by=0.5); v5; typeof(v5)
 ## [1] "double"
 ```
 
-```r
+``` r
 length(v5)
 ```
 
@@ -161,7 +172,7 @@ length(v5)
 ## [1] 9
 ```
 
-```r
+``` r
 summary(v5)
 ```
 
@@ -171,7 +182,7 @@ summary(v5)
 ```
 
 
-```r
+``` r
 #Extract the third element of the vector
 v5[3]
 ```
@@ -180,7 +191,7 @@ v5[3]
 ## [1] 2
 ```
 
-```r
+``` r
 #Exclude the third element from the vector and save as new vector
 v5[-3]
 ```
@@ -189,7 +200,7 @@ v5[-3]
 ## [1] 1.0 1.5 2.5 3.0 3.5 4.0 4.5 5.0
 ```
 
-```r
+``` r
 w5<-v5[-3]; w5
 ```
 
@@ -201,7 +212,7 @@ A **Matrix** is a two-dimensional structure winch can contain object of one type
 The function \textcolor{red}{matrix()} can be used to construct matrices with specific dimensions.
 
 
-```r
+``` r
 # Matrix of elements equal to "zero" and dimension 2x5 
 m1<-matrix(0,2,5); m1  #(two rows by five columns)
 ```
@@ -212,7 +223,7 @@ m1<-matrix(0,2,5); m1  #(two rows by five columns)
 ## [2,]    0    0    0    0    0
 ```
 
-```r
+``` r
 # Matrix of integer elements (1 to 12, 3x4) 
 m2<-matrix(1:12, 3,4); m2 
 ```
@@ -224,7 +235,7 @@ m2<-matrix(1:12, 3,4); m2
 ## [3,]    3    6    9   12
 ```
 
-```r
+``` r
 # Extract the second row
 m2[2, ]
 ```
@@ -233,7 +244,7 @@ m2[2, ]
 ## [1]  2  5  8 11
 ```
 
-```r
+``` r
 # Extract the third column
 m2[,3]
 ```
@@ -242,7 +253,7 @@ m2[,3]
 ## [1] 7 8 9
 ```
 
-```r
+``` r
 # Extract the the second element of the third column
 m2[2,3]
 ```
@@ -260,13 +271,12 @@ A **list** is a more flexible structure since it can contain variables of differ
 Nevertheless, the preferred structure for statistical analyses and computation is the data frame.
 
 It is a good practice to explore the data frame before performing further computation on the data.
-This can be simply accomplished by using the commands \textcolor{red}{str} to explore the structure of the data and \textcolor{red}{summary} to display the summary statistics and quickly summarize the data.
-For numerical vectors the command \textcolor{red}{hist()} can be used to plot the basic histogram of the given values.
+This can be simply accomplished by using the commands `str()` to explore the structure of the data and *summary()* to display the summary statistics and quickly summarize the data.
+For numerical vectors the command `hist()` can be used to plot the basic histogram of the given values.
 
 
-```r
+``` r
 # Create the vectors with the variables
-
 cities <- c("Berlin", "New York", "Paris", "Tokyo")
 area <- c(892, 1214, 105, 2188)
 population <- c(3.4, 8.1, 2.1, 12.9)
@@ -274,7 +284,7 @@ continent <- c("Europe", "Norh America", "Europe", "Asia")
 ```
 
 
-```r
+``` r
 # Concatenate the vectors into a new data frame
 df1 <- data.frame(cities, area, population, continent)
 df1
@@ -288,7 +298,7 @@ df1
 ## 4    Tokyo 2188       12.9         Asia
 ```
 
-```r
+``` r
 #Add a column (e.g., language spoken) using the command "cbind"
 df2 <- cbind (df1, "Language" = c ("German", "English", "Freanch", "Japanese"))
 df2
@@ -303,7 +313,7 @@ df2
 ```
 
 
-```r
+``` r
 #Explore the data frame
 str(df2) # see the structure
 ```
@@ -317,7 +327,7 @@ str(df2) # see the structure
 ##  $ Language  : chr  "German" "English" "Freanch" "Japanese"
 ```
 
-```r
+``` r
 summary(df2) # compute basic statistics
 ```
 
@@ -338,7 +348,7 @@ summary(df2) # compute basic statistics
 ## 
 ```
 
-```r
+``` r
 # Use the symbol "$" to address a particular column
 pop<-(df2$population)
 pop
@@ -348,8 +358,8 @@ pop
 ## [1]  3.4  8.1  2.1 12.9
 ```
 
-```r
+``` r
 hist(pop) # plot the histogram
 ```
 
-<img src="01-IntrotoR_files/figure-html/data-frame3-1.png" width="672" />
+<img src="01-IntrotoR_files/figure-html/data-exp-1.png" width="672" />

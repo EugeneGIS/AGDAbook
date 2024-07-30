@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Interpretability &amp; Explainability in Random Forest | Preface</title>
+  <meta name="description" content="Chapter 6 Interpretability &amp; Explainability in Random Forest | Preface" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Interpretability &amp; Explainability in Random Forest | Preface" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Interpretability &amp; Explainability in Random Forest | Preface" />
+  
+  
+  
+
+<meta name="author" content="Dr. Marj Tonini, Haokun Liu" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="landslides-susceptibility-mapping-using-random-forest.html"/>
+<link rel="next" href="self-organizing-map.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="images/AGDA_ImageCover.webp"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#author-information"><i class="fa fa-check"></i>Author Information</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-language"><i class="fa fa-check"></i><b>1.1</b> R Language</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-packages"><i class="fa fa-check"></i><b>1.1.1</b> R Packages</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#some-tips"><i class="fa fa-check"></i><b>1.1.2</b> Some tips</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-commands-online-resources"><i class="fa fa-check"></i><b>1.1.3</b> R Commands (online resources)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-markdown"><i class="fa fa-check"></i><b>1.2</b> R Markdown</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-type-in-computational-analysis"><i class="fa fa-check"></i><b>1.3</b> Data type in computational analysis</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#variables"><i class="fa fa-check"></i><b>1.3.1</b> Variables</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-structure-in-r"><i class="fa fa-check"></i><b>1.3.2</b> Data structure in R</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frame"><i class="fa fa-check"></i><b>1.3.3</b> Data Frame</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html"><i class="fa fa-check"></i><b>2</b> Basic operation with geodata in R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#plotting-vector-dataset"><i class="fa fa-check"></i><b>2.2</b> Plotting vector dataset</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#load-libraries-and-vector-dataset"><i class="fa fa-check"></i><b>2.2.1</b> Load libraries and vector dataset</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#plot-vector-features"><i class="fa fa-check"></i><b>2.2.2</b> Plot vector features</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#plotting-raster-dataset"><i class="fa fa-check"></i><b>2.3</b> Plotting raster dataset</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#load-libraries-and-raster-dataset"><i class="fa fa-check"></i><b>2.3.1</b> Load libraries and raster dataset</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#plot-raster-features"><i class="fa fa-check"></i><b>2.3.2</b> Plot raster features</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#geodata-manipulation"><i class="fa fa-check"></i><b>2.4</b> Geodata manipulation</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#manipulate-tabular-datasets"><i class="fa fa-check"></i><b>2.4.1</b> Manipulate tabular datasets</a></li>
+<li class="chapter" data-level="2.4.2" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#pipes-chaining-of-multiple-operations"><i class="fa fa-check"></i><b>2.4.2</b> Pipes: chaining of multiple operations</a></li>
+<li class="chapter" data-level="2.4.3" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#join-table"><i class="fa fa-check"></i><b>2.4.3</b> Join table</a></li>
+<li class="chapter" data-level="2.4.4" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#mapping-with-ggplot2"><i class="fa fa-check"></i><b>2.4.4</b> Mapping with ggplot2</a></li>
+<li class="chapter" data-level="2.4.5" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#cropping-ratser"><i class="fa fa-check"></i><b>2.4.5</b> Cropping ratser</a></li>
+<li class="chapter" data-level="2.4.6" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#display-categorigal-variables-for-a-raster"><i class="fa fa-check"></i><b>2.4.6</b> Display categorigal variables for a raster</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html"><i class="fa fa-check"></i><b>3</b> Geographically Weighted Summary Statistics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#gwss-for-fire-management"><i class="fa fa-check"></i><b>3.1</b> GWSS for fire management</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#the-overall-methodology"><i class="fa fa-check"></i><b>3.1.1</b> The overall methodology</a></li>
+<li class="chapter" data-level="3.1.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#forest-fires-dataset"><i class="fa fa-check"></i><b>3.1.2</b> Forest fires dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#computer-lab-gwss"><i class="fa fa-check"></i><b>3.2</b> Computer lab: GWSS</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#load-the-libraries"><i class="fa fa-check"></i><b>3.2.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="3.2.2" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#import-the-forest-fire-dataset"><i class="fa fa-check"></i><b>3.2.2</b> Import the forest fire dataset</a></li>
+<li class="chapter" data-level="3.2.3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#forest-fires-spatial-distribution"><i class="fa fa-check"></i><b>3.2.3</b> Forest fires spatial distribution</a></li>
+<li class="chapter" data-level="3.2.4" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#compute-the-geographically-whited-statistics"><i class="fa fa-check"></i><b>3.2.4</b> Compute the geographically whited statistics</a></li>
+<li class="chapter" data-level="3.2.5" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#look-at-the-results"><i class="fa fa-check"></i><b>3.2.5</b> Look at the results</a></li>
+<li class="chapter" data-level="3.2.6" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#gwss-maps"><i class="fa fa-check"></i><b>3.2.6</b> GWSS maps</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="geographically-weighted-summary-statistics.html"><a href="geographically-weighted-summary-statistics.html#conclusions-and-further-analyses"><i class="fa fa-check"></i><b>3.3</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html"><i class="fa fa-check"></i><b>4</b> Kernel Density Estimator</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#method"><i class="fa fa-check"></i><b>4.2</b> Method</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ripleys-k-function"><i class="fa fa-check"></i><b>4.2.1</b> Ripley’s K-function</a></li>
+<li class="chapter" data-level="4.2.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#kernel-density-estimator-1"><i class="fa fa-check"></i><b>4.2.2</b> Kernel density estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#load-the-libraries-1"><i class="fa fa-check"></i><b>4.3</b> Load the libraries</a></li>
+<li class="chapter" data-level="4.4" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#import-the-portuguese-forest-fire-dataset"><i class="fa fa-check"></i><b>4.4</b> Import the Portuguese forest fire dataset</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ff-subsets-based-on-the-burned-areas-size"><i class="fa fa-check"></i><b>4.4.1</b> FF-subsets based on the burned areas’ size</a></li>
+<li class="chapter" data-level="4.4.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#ff-subsets-based-on-their-geographical-distribution"><i class="fa fa-check"></i><b>4.4.2</b> FF-subsets based on their geographical distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#the-space-time-k-function"><i class="fa fa-check"></i><b>4.5</b> The space-time K-function</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#extract-time-and-pts-object"><i class="fa fa-check"></i><b>4.5.1</b> Extract Time and PTS object</a></li>
+<li class="chapter" data-level="4.5.2" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#compute-the-space-time-k-function"><i class="fa fa-check"></i><b>4.5.2</b> Compute the space-time K-function</a></li>
+<li class="chapter" data-level="4.5.3" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#assess-the-space-time-clustering-behavior"><i class="fa fa-check"></i><b>4.5.3</b> Assess the space-time clustering behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="kernel-density-estimator.html"><a href="kernel-density-estimator.html#conclusions-and-further-analyses-1"><i class="fa fa-check"></i><b>4.6</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html"><i class="fa fa-check"></i><b>5</b> Landslides susceptibility mapping using Random Forest</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#the-main-objective"><i class="fa fa-check"></i><b>5.1.1</b> The main objective</a></li>
+<li class="chapter" data-level="5.1.2" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#the-overall-methodology-1"><i class="fa fa-check"></i><b>5.1.2</b> The overall methodology</a></li>
+<li class="chapter" data-level="5.1.3" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#load-libraries"><i class="fa fa-check"></i><b>5.1.3</b> Load libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#import-and-process-geodata"><i class="fa fa-check"></i><b>5.2</b> Import and process geodata</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#landslides-dataset"><i class="fa fa-check"></i><b>5.2.1</b> Landslides dataset</a></li>
+<li class="chapter" data-level="5.2.2" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#predictor-variables"><i class="fa fa-check"></i><b>5.2.2</b> Predictor variables</a></li>
+<li class="chapter" data-level="5.2.3" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#the-use-of-categorical-variables-in-machine-learning"><i class="fa fa-check"></i><b>5.2.3</b> The use of categorical variables in Machine Learning</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#extract-velues"><i class="fa fa-check"></i><b>5.3</b> Extract velues</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#split-the-input-dataset-into-training-80-and-testing-20"><i class="fa fa-check"></i><b>5.3.1</b> Split the input dataset into training (80%) and testing (20%)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#run-random-forest"><i class="fa fa-check"></i><b>5.4</b> Run Random Forest</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#rf-main-outputs"><i class="fa fa-check"></i><b>5.4.1</b> RF main outputs</a></li>
+<li class="chapter" data-level="5.4.2" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#model-evaluation"><i class="fa fa-check"></i><b>5.4.2</b> Model evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#susceptibility-map"><i class="fa fa-check"></i><b>5.5</b> Susceptibility map</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#class-intervals-for-decision-maker"><i class="fa fa-check"></i><b>5.5.1</b> Class intervals for decision maker</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#conclusions-and-further-analyses-2"><i class="fa fa-check"></i><b>5.6</b> Conclusions and further analyses</a></li>
+<li class="chapter" data-level="5.7" data-path="landslides-susceptibility-mapping-using-random-forest.html"><a href="landslides-susceptibility-mapping-using-random-forest.html#references"><i class="fa fa-check"></i><b>5.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html"><i class="fa fa-check"></i><b>6</b> Interpretability &amp; Explainability in Random Forest</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#basic-definations"><i class="fa fa-check"></i><b>6.1.1</b> Basic definations</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#aim-of-the-present-lab"><i class="fa fa-check"></i><b>6.1.2</b> Aim of the present lab</a></li>
+<li class="chapter" data-level="6.1.3" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#re-load-lybraries-and-workspace"><i class="fa fa-check"></i><b>6.1.3</b> Re-load lybraries and workspace</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#variable-importance-plot"><i class="fa fa-check"></i><b>6.2</b> Variable importance plot</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#partial-dependence-plot"><i class="fa fa-check"></i><b>6.2.1</b> Partial dependence plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#local-random-forest"><i class="fa fa-check"></i><b>6.3</b> Local Random Forest</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#run-grf"><i class="fa fa-check"></i><b>6.3.1</b> Run GRF</a></li>
+<li class="chapter" data-level="6.3.2" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#variable-importance-plot-1"><i class="fa fa-check"></i><b>6.3.2</b> Variable importance plot</a></li>
+<li class="chapter" data-level="6.3.3" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#local-r-squared"><i class="fa fa-check"></i><b>6.3.3</b> Local R squared</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interpretability-explainability-in-random-forest.html"><a href="interpretability-explainability-in-random-forest.html#conclusions-and-further-analyses-3"><i class="fa fa-check"></i><b>6.4</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="self-organizing-map.html"><a href="self-organizing-map.html"><i class="fa fa-check"></i><b>7</b> Self-organizing Map</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#introduction-4"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#material-and-method"><i class="fa fa-check"></i><b>7.2</b> Material and method</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#the-geo-demographic-context"><i class="fa fa-check"></i><b>7.2.1</b> The geo-demographic context</a></li>
+<li class="chapter" data-level="7.2.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#som"><i class="fa fa-check"></i><b>7.2.2</b> SOM</a></li>
+<li class="chapter" data-level="7.2.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#swiss-census-data"><i class="fa fa-check"></i><b>7.2.3</b> Swiss census data</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#variables-inspection"><i class="fa fa-check"></i><b>7.3</b> Variables inspection</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#import-the-data"><i class="fa fa-check"></i><b>7.3.1</b> Import the data</a></li>
+<li class="chapter" data-level="7.3.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#inspect-the-data"><i class="fa fa-check"></i><b>7.3.2</b> Inspect the data</a></li>
+<li class="chapter" data-level="7.3.3" data-path="self-organizing-map.html"><a href="self-organizing-map.html#data-transformation"><i class="fa fa-check"></i><b>7.3.3</b> Data transformation</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="self-organizing-map.html"><a href="self-organizing-map.html#running-som"><i class="fa fa-check"></i><b>7.4</b> Running SOM</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#load-the-libraries-2"><i class="fa fa-check"></i><b>7.4.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="7.4.2" data-path="self-organizing-map.html"><a href="self-organizing-map.html#compute-som"><i class="fa fa-check"></i><b>7.4.2</b> Compute SOM</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="self-organizing-map.html"><a href="self-organizing-map.html#soms-main-outputs"><i class="fa fa-check"></i><b>7.5</b> SOM’s main outputs</a></li>
+<li class="chapter" data-level="7.6" data-path="self-organizing-map.html"><a href="self-organizing-map.html#hierarchical-clustering"><i class="fa fa-check"></i><b>7.6</b> Hierarchical clustering</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="self-organizing-map.html"><a href="self-organizing-map.html#clusters-characterization"><i class="fa fa-check"></i><b>7.6.1</b> Clusters characterization</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="self-organizing-map.html"><a href="self-organizing-map.html#conclusions"><i class="fa fa-check"></i><b>7.7</b> Conclusions</a></li>
+<li class="chapter" data-level="7.8" data-path="self-organizing-map.html"><a href="self-organizing-map.html#further-analyses"><i class="fa fa-check"></i><b>7.8</b> Further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html"><i class="fa fa-check"></i><b>8</b> Density-based Clustering Algorithm</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#introduction-5"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#the-overall-methodology-2"><i class="fa fa-check"></i><b>8.2</b> The overall methodology</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#dbscan-3-d-density-based-clustering-algorithm"><i class="fa fa-check"></i><b>8.2.1</b> DBSCAN: 3-D density based clustering algorithm</a></li>
+<li class="chapter" data-level="8.2.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#field-campaign"><i class="fa fa-check"></i><b>8.2.2</b> Field campaign</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#dbscan-feature-detection-from-points-clouds"><i class="fa fa-check"></i><b>8.3</b> DBSCAN: feature detection from points clouds</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#load-the-libraries-3"><i class="fa fa-check"></i><b>8.3.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="8.3.2" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#import-and-visualise-the-point-clouds-dataset"><i class="fa fa-check"></i><b>8.3.2</b> Import and visualise the point clouds dataset</a></li>
+<li class="chapter" data-level="8.3.3" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#run-dbscan"><i class="fa fa-check"></i><b>8.3.3</b> Run DBSCAN</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="density-based-clustering-algorithm.html"><a href="density-based-clustering-algorithm.html#conclusions-and-further-analyses-4"><i class="fa fa-check"></i><b>8.4</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Preface</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="interpretability-explainability-in-random-forest" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Interpretability &amp; Explainability in Random Forest<a href="interpretability-explainability-in-random-forest.html#interpretability-explainability-in-random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-3" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Introduction<a href="interpretability-explainability-in-random-forest.html#introduction-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="basic-definations" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Basic definations<a href="interpretability-explainability-in-random-forest.html#basic-definations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The distinction between interpretability and explainability lies in their <strong>focus and depth</strong>.</p>
+<ul>
+<li><p><em>Interpretability</em> delves into comprehending the inner mechanisms of the algorithm.</p></li>
+<li><p><em>Explainability</em> aims to elucidate the decisions is makes.</p></li>
+</ul>
+<p><strong>Model complexity:</strong> when dealing with intricate models like Random Forest (with tens of variables and thousands of trees), up to deep neural networks, <em>interpretability</em> becomes challenging due to their complexity and the interplay among their components.
+In such scenarios, <em>explainability</em> proves to be a more practical approach, as it focuses on clarifying decisions rather than delving into the complexities of the model.</p>
+<p><strong>Communication</strong>: in terms of audience and purpose, <em>interpretability</em> primarily concerns AI specialists and researchers, whereas <em>explainability</em> targets end users seeking to grasp model decisions.
+Consequently, explainability necessitates a more straightforward and intuitive communication of information.</p>
+</div>
+<div id="aim-of-the-present-lab" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Aim of the present lab<a href="interpretability-explainability-in-random-forest.html#aim-of-the-present-lab" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this exercise you will work with the outputs of Random Forest resulting from the landslides susceptibility map project (LSM_RF).</p>
+<ul>
+<li><p>Firstly, we will explore the relative importance of the predictor variables, and then their relative probability of prediction success.</p></li>
+<li><p>Finally we will apply a local version of Random Forest (named Geographical Random Forest) to analyse the spatial heterogeneity of the local variable importance.</p></li>
+</ul>
+</div>
+<div id="re-load-lybraries-and-workspace" class="section level3 hasAnchor" number="6.1.3">
+<h3><span class="header-section-number">6.1.3</span> Re-load lybraries and workspace<a href="interpretability-explainability-in-random-forest.html#re-load-lybraries-and-workspace" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If you have quit the workspace where you have run the RF model for landslide susceptibility map you need to load it again in this new project.
+“<em>Loading the workspace</em>” refers to the action of restoring the saved state of the R environment.
+When you save your workspace in R, it typically includes all the objects (such as variables, functions, data frames, etc.) that are currently present in your R session.
+Loading the workspace means to restore this saved state, bringing back all the previously saved objects into your current R session.</p>
+<pre><code>##  [1] &quot;RColorBrewer&quot; &quot;tidyr&quot;        &quot;randomForest&quot; &quot;classInt&quot;     &quot;plotROC&quot;     
+##  [6] &quot;ggplot2&quot;      &quot;pROC&quot;         &quot;dplyr&quot;        &quot;readr&quot;        &quot;foreign&quot;     
+## [11] &quot;terra&quot;        &quot;distill&quot;      &quot;stats&quot;        &quot;graphics&quot;     &quot;grDevices&quot;   
+## [16] &quot;utils&quot;        &quot;datasets&quot;     &quot;methods&quot;      &quot;base&quot;</code></pre>
+</div>
+</div>
+<div id="variable-importance-plot" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Variable importance plot<a href="interpretability-explainability-in-random-forest.html#variable-importance-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Although machine learning algorithms are often considered as a black box, with RF is possible to plot a sample tree (selected randomly) to analyse its structure and investigate how decisions have been made.
+In addition RF provides two metrics allowing to assess the importance of each variables in the model: the mean decrease in accuracy (MDA), and the mean decrease in Gini index.
+Higher values indicate the most important variables.</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="interpretability-explainability-in-random-forest.html#cb167-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;party&quot;</span>)</span>
+<span id="cb167-2"><a href="interpretability-explainability-in-random-forest.html#cb167-2" tabindex="-1"></a></span>
+<span id="cb167-3"><a href="interpretability-explainability-in-random-forest.html#cb167-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">ctree</span>(LS<span class="sc">~</span>., <span class="at">data=</span>LS_train)</span>
+<span id="cb167-4"><a href="interpretability-explainability-in-random-forest.html#cb167-4" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="at">type=</span><span class="st">&quot;simple&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="interpretability-explainability-in-random-forest.html#cb168-1" tabindex="-1"></a><span class="co"># Display the plot with the relative importance of each variable</span></span>
+<span id="cb168-2"><a href="interpretability-explainability-in-random-forest.html#cb168-2" tabindex="-1"></a><span class="fu">importance</span>(RF_LS)</span>
+<span id="cb168-3"><a href="interpretability-explainability-in-random-forest.html#cb168-3" tabindex="-1"></a><span class="fu">varImpPlot</span>(RF_LS)</span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/var-imp-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="partial-dependence-plot" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Partial dependence plot<a href="interpretability-explainability-in-random-forest.html#partial-dependence-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In addition, the Partial Dependence Plot (PDP) allows to estimate, for each single variable, the relative probability of prediction success over different ranges of values.
+It gives a graphical depiction of the marginal effect of each variable on the class probability over different ranges of continuous or discrete values.
+Positive values are associated with the probability of occurrence of the phenomena (i.e., landslides presence), while negative vales indicate its absence.</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="interpretability-explainability-in-random-forest.html#cb169-1" tabindex="-1"></a><span class="co"># Slope</span></span>
+<span id="cb169-2"><a href="interpretability-explainability-in-random-forest.html#cb169-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_train, <span class="at">x.var =</span> slope, <span class="at">rug =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb169-3"><a href="interpretability-explainability-in-random-forest.html#cb169-3" tabindex="-1"></a>            <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],<span class="at">xlab=</span> <span class="st">&quot;Slope [Â°]&quot;</span>, </span>
+<span id="cb169-4"><a href="interpretability-explainability-in-random-forest.html#cb169-4" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;PDP&quot;</span>)</span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/par-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="interpretability-explainability-in-random-forest.html#cb170-1" tabindex="-1"></a><span class="co"># Elevation</span></span>
+<span id="cb170-2"><a href="interpretability-explainability-in-random-forest.html#cb170-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_train ,<span class="at">x.var =</span> DEM, <span class="at">rug =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb170-3"><a href="interpretability-explainability-in-random-forest.html#cb170-3" tabindex="-1"></a>            <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],<span class="at">xlab=</span> <span class="st">&quot;Elevation [m]&quot;</span>, </span>
+<span id="cb170-4"><a href="interpretability-explainability-in-random-forest.html#cb170-4" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">&quot;&quot;</span>,<span class="at">ylab =</span> <span class="st">&quot;PDP&quot;</span>)</span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/par-plot-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="interpretability-explainability-in-random-forest.html#cb171-1" tabindex="-1"></a><span class="co"># Profile curvature</span></span>
+<span id="cb171-2"><a href="interpretability-explainability-in-random-forest.html#cb171-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_train, <span class="at">x.var =</span> profCurv, <span class="at">rug =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb171-3"><a href="interpretability-explainability-in-random-forest.html#cb171-3" tabindex="-1"></a>            <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],<span class="at">xlab=</span> <span class="st">&quot;Profile curvature [1/m]&quot;</span>, </span>
+<span id="cb171-4"><a href="interpretability-explainability-in-random-forest.html#cb171-4" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;PDP&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.1</span>,<span class="fl">0.1</span>))</span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/par-plot-3.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="interpretability-explainability-in-random-forest.html#cb172-1" tabindex="-1"></a><span class="co"># Plan Curvature</span></span>
+<span id="cb172-2"><a href="interpretability-explainability-in-random-forest.html#cb172-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_train, <span class="at">x.var =</span> planCurv, <span class="at">rug =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb172-3"><a href="interpretability-explainability-in-random-forest.html#cb172-3" tabindex="-1"></a>            <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],<span class="at">xlab=</span> <span class="st">&quot;Plan curvature [1/m]&quot;</span>, </span>
+<span id="cb172-4"><a href="interpretability-explainability-in-random-forest.html#cb172-4" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;PDP&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.1</span>,<span class="fl">0.1</span>))</span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/par-plot-4.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="interpretability-explainability-in-random-forest.html#cb173-1" tabindex="-1"></a><span class="co"># Distance to road</span></span>
+<span id="cb173-2"><a href="interpretability-explainability-in-random-forest.html#cb173-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_train, <span class="at">x.var =</span> distRoad, <span class="at">rug =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb173-3"><a href="interpretability-explainability-in-random-forest.html#cb173-3" tabindex="-1"></a>            <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],<span class="at">xlab=</span> <span class="st">&quot;Distance to road [m]&quot;</span>, </span>
+<span id="cb173-4"><a href="interpretability-explainability-in-random-forest.html#cb173-4" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;PDP&quot;</span>)</span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/par-plot-5.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="interpretability-explainability-in-random-forest.html#cb174-1" tabindex="-1"></a><span class="co"># Topographic wetness index</span></span>
+<span id="cb174-2"><a href="interpretability-explainability-in-random-forest.html#cb174-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_train, <span class="at">x.var =</span> TWI, <span class="at">rug =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb174-3"><a href="interpretability-explainability-in-random-forest.html#cb174-3" tabindex="-1"></a>            <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],<span class="at">xlab=</span> <span class="st">&quot;TWI [-]&quot;</span>, </span>
+<span id="cb174-4"><a href="interpretability-explainability-in-random-forest.html#cb174-4" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;PDP&quot;</span>)</span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/par-plot-6.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="interpretability-explainability-in-random-forest.html#cb175-1" tabindex="-1"></a><span class="co"># Geology</span></span>
+<span id="cb175-2"><a href="interpretability-explainability-in-random-forest.html#cb175-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_train, <span class="at">x.var =</span> geology, <span class="at">rug =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb175-3"><a href="interpretability-explainability-in-random-forest.html#cb175-3" tabindex="-1"></a>            <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],<span class="at">xlab=</span> <span class="st">&quot;Geology&quot;</span>, </span>
+<span id="cb175-4"><a href="interpretability-explainability-in-random-forest.html#cb175-4" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;PDP&quot;</span>)</span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/par-plot-7.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="interpretability-explainability-in-random-forest.html#cb176-1" tabindex="-1"></a><span class="co"># Land cover</span></span>
+<span id="cb176-2"><a href="interpretability-explainability-in-random-forest.html#cb176-2" tabindex="-1"></a><span class="fu">partialPlot</span>(RF_LS, LS_train, <span class="at">x.var =</span> landCover, <span class="at">rug =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb176-3"><a href="interpretability-explainability-in-random-forest.html#cb176-3" tabindex="-1"></a>            <span class="at">which.class =</span> RF_LS<span class="sc">$</span>classes[<span class="dv">2</span>],<span class="at">xlab=</span> <span class="st">&quot;Land Cover&quot;</span>,</span>
+<span id="cb176-4"><a href="interpretability-explainability-in-random-forest.html#cb176-4" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;PDP&quot;</span>)</span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/par-plot-8.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="local-random-forest" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Local Random Forest<a href="interpretability-explainability-in-random-forest.html#local-random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Standard machine learning algorithms like Random Forest (RF) lack spatial calibration, hindering capturing the spatial non-stationarity in the relationship between a dependent and a set of independent variables.</p>
+<p>To account for the spatial heterogeneity (i.e. non-stationarity) when modeling landslides spatial patterns as function of geographical features, in the present work we explore the <strong>local feature importance</strong> of geographical independent predisposing variables on the spatial distribution of landslides in canton Vaud (Switzerland).</p>
+<p>We adopted <strong>Geographically Random Forest</strong> (GRF), a spatial analysis method using a local version of RF algorithm<span class="citation"><a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></span> .
+This is achieved by fitting a sub-model for each observation in space, taking into account the neighbouring observations.
+GRF can model the non-stationarity coupled with a non-linear model (RF) which tends not to overfit due to its bootstrapping nature.
+In addition it is suited for datasets with numerous predictors.</p>
+<p>Essentially, GRF was designed to be a bridge between machine learning and geographical models, combining inferential and explanatory power.</p>
+<div id="run-grf" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Run GRF<a href="interpretability-explainability-in-random-forest.html#run-grf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will use the last development of <strong>Geographical Random Forest</strong> (GRF) [4].
+This function have been implemented for regression problem, so we need to transform our binary response variable (i.e., presence=1 / absence = 0) as a numeric value which can assume a range of values from zero to one.</p>
+<pre><code>## &#39;data.frame&#39;:    5188 obs. of  11 variables:
+##  $ distRoad : num  160.1 55.9 106.1 70.7 125 ...
+##  $ DEM      : num  443 451 460 458 463 ...
+##  $ landCover: Factor w/ 7 levels &quot;11&quot;,&quot;15&quot;,&quot;21&quot;,..: 3 1 2 2 3 1 3 3 3 1 ...
+##  $ TWI      : num  7.4 8.72 9.08 8.55 8.33 ...
+##  $ planCurv : num  -0.000143 0.003633 0.005981 0.006165 0.000217 ...
+##  $ profCurv : num  0.013297 -0.006447 0.000381 -0.001675 -0.005383 ...
+##  $ slope    : num  20.86 2.91 2.04 3.46 4.32 ...
+##  $ geology  : Factor w/ 11 levels &quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;7&quot;,..: 8 8 8 8 8 8 8 8 8 8 ...
+##  $ x        : num  567887 568087 567912 567962 567812 ...
+##  $ y        : num  2e+05 2e+05 2e+05 2e+05 2e+05 ...
+##  $ LS       : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 2 2 2 2 2 2 2 ...</code></pre>
+<pre><code>## &#39;data.frame&#39;:    4150 obs. of  12 variables:
+##  $ distRoad : num  182 25 90.1 212.1 134.6 ...
+##  $ DEM      : num  917 719 662 498 810 ...
+##  $ landCover: Factor w/ 7 levels &quot;11&quot;,&quot;15&quot;,&quot;21&quot;,..: 5 5 1 3 3 3 3 2 5 3 ...
+##  $ TWI      : num  8.15 8.47 8.73 15.52 8.98 ...
+##  $ planCurv : num  0.000789 0.003464 0.000962 -0.00004 0.000359 ...
+##  $ profCurv : num  7.89e-04 -1.17e-02 -7.98e-04 -3.99e-05 -4.42e-04 ...
+##  $ slope    : num  28.31 33.15 2.88 1.94 4.49 ...
+##  $ geology  : Factor w/ 11 levels &quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;7&quot;,..: 7 4 8 2 2 8 8 2 2 8 ...
+##  $ x        : num  569837 561612 540062 504862 548312 ...
+##  $ y        : num  133062 139887 154237 140712 169212 ...
+##  $ LS       : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 1 1 2 2 2 1 1 ...
+##  $ LSregr   : num  1 1 1 0 0 1 1 1 0 0 ...</code></pre>
+<pre><code>## &#39;data.frame&#39;:    1038 obs. of  12 variables:
+##  $ distRoad : num  90.1 956.9 55.9 70.7 25 ...
+##  $ DEM      : num  490 1299 850 480 1338 ...
+##  $ landCover: Factor w/ 7 levels &quot;11&quot;,&quot;15&quot;,&quot;21&quot;,..: 3 5 5 1 3 3 2 3 1 4 ...
+##  $ TWI      : num  10.14 9.19 9.74 10.78 10.51 ...
+##  $ planCurv : num  0.005263 0.002523 -0.005231 -0.000883 0.001165 ...
+##  $ profCurv : num  -0.010737 -0.003077 0.008209 0.000877 0.000685 ...
+##  $ slope    : num  12.51 1.82 18.31 5.2 12.48 ...
+##  $ geology  : Factor w/ 11 levels &quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;7&quot;,..: 8 3 8 2 2 8 2 2 8 5 ...
+##  $ x        : num  529962 501762 552912 545262 572112 ...
+##  $ y        : num  160712 149912 148212 189712 135962 ...
+##  $ LS       : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 1 2 1 2 1 2 1 2 1 ...
+##  $ LSregr   : num  1 0 1 0 1 0 1 0 1 0 ...</code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="interpretability-explainability-in-random-forest.html#cb180-1" tabindex="-1"></a>Coords<span class="ot">&lt;-</span>LS_train[,<span class="dv">9</span><span class="sc">:</span><span class="dv">10</span>] <span class="co"># define coordinates</span></span>
+<span id="cb180-2"><a href="interpretability-explainability-in-random-forest.html#cb180-2" tabindex="-1"></a></span>
+<span id="cb180-3"><a href="interpretability-explainability-in-random-forest.html#cb180-3" tabindex="-1"></a><span class="co"># Run GRF</span></span>
+<span id="cb180-4"><a href="interpretability-explainability-in-random-forest.html#cb180-4" tabindex="-1"></a></span>
+<span id="cb180-5"><a href="interpretability-explainability-in-random-forest.html#cb180-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># initialize </span></span>
+<span id="cb180-6"><a href="interpretability-explainability-in-random-forest.html#cb180-6" tabindex="-1"></a></span>
+<span id="cb180-7"><a href="interpretability-explainability-in-random-forest.html#cb180-7" tabindex="-1"></a>gwRF_LS<span class="ot">&lt;-</span><span class="fu">grf</span>(LSregr<span class="sc">~</span>distRoad<span class="sc">+</span>DEM<span class="sc">+</span>landCover<span class="sc">+</span>TWI<span class="sc">+</span>planCurv<span class="sc">+</span>profCurv<span class="sc">+</span>slope<span class="sc">+</span>geology,  LS_train, <span class="at">bw=</span><span class="dv">40</span>, <span class="at">mtry=</span><span class="dv">3</span>, <span class="at">kernel=</span><span class="st">&quot;adaptive&quot;</span>,<span class="at">coords=</span>Coords)</span></code></pre></div>
+<pre><code>## Ranger result
+## 
+## Call:
+##  ranger(LSregr ~ distRoad + DEM + landCover + TWI + planCurv +      profCurv + slope + geology, data = LS_train, num.trees = 500,      mtry = 3, importance = &quot;impurity&quot;, num.threads = NULL) 
+## 
+## Type:                             Regression 
+## Number of trees:                  500 
+## Sample size:                      4150 
+## Number of independent variables:  8 
+## Mtry:                             3 
+## Target node size:                 5 
+## Variable importance mode:         impurity 
+## Splitrule:                        variance 
+## OOB prediction error (MSE):       0.117128 
+## R squared (OOB):                  0.5315825 
+##  distRoad       DEM landCover       TWI  planCurv  profCurv     slope   geology 
+## 181.93889 113.22987  33.98818 101.59075  83.15042 123.31246 302.83349  39.09378 
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -1.00000 -0.03162  0.00000 -0.01882  0.03284  1.00000 
+##       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+## -0.3981333 -0.0030000  0.0000000 -0.0003047  0.0042917  0.2957333 
+##           Min      Max      Mean       StD
+## distRoad    0 4.846175 0.6640442 0.8686210
+## DEM         0 4.442619 0.7486061 0.7680691
+## landCover   0 4.301103 0.1936414 0.3141822
+## TWI         0 4.284581 0.6287907 0.6790622
+## planCurv    0 3.126327 0.4565076 0.4888202
+## profCurv    0 4.048531 0.5832407 0.6300842
+## slope       0 4.913916 0.9080469 0.9518115
+## geology     0 3.669751 0.2213336 0.4038733</code></pre>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="interpretability-explainability-in-random-forest.html#cb182-1" tabindex="-1"></a><span class="fu">saveRDS</span>(gwRF_LS, <span class="st">&quot;gwRF_LS.rds&quot;</span>)</span></code></pre></div>
+</div>
+<div id="variable-importance-plot-1" class="section level3 hasAnchor" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Variable importance plot<a href="interpretability-explainability-in-random-forest.html#variable-importance-plot-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="global-variable-importance-plot" class="section level4 hasAnchor" number="6.3.2.1">
+<h4><span class="header-section-number">6.3.2.1</span> Global variable importance plot<a href="interpretability-explainability-in-random-forest.html#global-variable-importance-plot" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Based on the results of the GRF, we present a plot of the variable importance ranking for illustrative purposes.
+Values came from “Global ML Model Summary” - “Importance.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="interpretability-explainability-in-random-forest.html#cb183-1" tabindex="-1"></a><span class="co"># Create a data frame with variable names and importance values</span></span>
+<span id="cb183-2"><a href="interpretability-explainability-in-random-forest.html#cb183-2" tabindex="-1"></a>variable_importance <span class="ot">&lt;-</span> <span class="fu">data.frame</span> (</span>
+<span id="cb183-3"><a href="interpretability-explainability-in-random-forest.html#cb183-3" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">c</span>(<span class="st">&quot;distRoad&quot;</span>, <span class="st">&quot;DEM&quot;</span>, <span class="st">&quot;landCover&quot;</span>, <span class="st">&quot;TWI&quot;</span>, <span class="st">&quot;planCurv&quot;</span>, <span class="st">&quot;profCurv&quot;</span>, <span class="st">&quot;slope&quot;</span>, <span class="st">&quot;geology&quot;</span>),</span>
+<span id="cb183-4"><a href="interpretability-explainability-in-random-forest.html#cb183-4" tabindex="-1"></a>  <span class="at">Importance =</span> <span class="fu">c</span>(<span class="fl">181.18490</span>, <span class="fl">114.32444</span>,  <span class="fl">34.23643</span>, <span class="fl">101.51863</span>,  <span class="fl">84.81667</span>, <span class="fl">125.93651</span>, <span class="fl">297.74411</span>,  <span class="fl">39.22721</span> ) <span class="co"># Importance - Global ML</span></span>
+<span id="cb183-5"><a href="interpretability-explainability-in-random-forest.html#cb183-5" tabindex="-1"></a>)</span>
+<span id="cb183-6"><a href="interpretability-explainability-in-random-forest.html#cb183-6" tabindex="-1"></a></span>
+<span id="cb183-7"><a href="interpretability-explainability-in-random-forest.html#cb183-7" tabindex="-1"></a><span class="co"># Assign different colors to the top three important variables</span></span>
+<span id="cb183-8"><a href="interpretability-explainability-in-random-forest.html#cb183-8" tabindex="-1"></a>variable_importance<span class="sc">$</span>Color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(variable_importance<span class="sc">$</span>Importance <span class="sc">&gt;=</span> <span class="fu">sort</span>(variable_importance<span class="sc">$</span>Importance, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">3</span>], <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;skyblue&quot;</span>)</span>
+<span id="cb183-9"><a href="interpretability-explainability-in-random-forest.html#cb183-9" tabindex="-1"></a></span>
+<span id="cb183-10"><a href="interpretability-explainability-in-random-forest.html#cb183-10" tabindex="-1"></a><span class="co"># Create a bar plot for variable importance with different colors for the top three variables</span></span>
+<span id="cb183-11"><a href="interpretability-explainability-in-random-forest.html#cb183-11" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variable_importance, <span class="fu">aes</span>(<span class="at">x =</span> Variable, <span class="at">y =</span> Importance, <span class="at">fill =</span> Color)) <span class="sc">+</span></span>
+<span id="cb183-12"><a href="interpretability-explainability-in-random-forest.html#cb183-12" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb183-13"><a href="interpretability-explainability-in-random-forest.html#cb183-13" tabindex="-1"></a>  <span class="fu">scale_fill_identity</span>() <span class="sc">+</span></span>
+<span id="cb183-14"><a href="interpretability-explainability-in-random-forest.html#cb183-14" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Variable Importance Plot&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Variable&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Importance&quot;</span>) <span class="sc">+</span></span>
+<span id="cb183-15"><a href="interpretability-explainability-in-random-forest.html#cb183-15" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))  <span class="co"># Rotate x-axis labels for better readability</span></span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/Global-Var-Imp-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="local-variable-importance" class="section level4 hasAnchor" number="6.3.2.2">
+<h4><span class="header-section-number">6.3.2.2</span> Local Variable importance<a href="interpretability-explainability-in-random-forest.html#local-variable-importance" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="slope" class="section level5 hasAnchor" number="6.3.2.2.1">
+<h5><span class="header-section-number">6.3.2.2.1</span> Slope<a href="interpretability-explainability-in-random-forest.html#slope" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="interpretability-explainability-in-random-forest.html#cb184-1" tabindex="-1"></a><span class="co"># Create a data frame with the values of the local variables importance and the coordinates for each location¨</span></span>
+<span id="cb184-2"><a href="interpretability-explainability-in-random-forest.html#cb184-2" tabindex="-1"></a>gwRF_LS_var<span class="ot">&lt;-</span>gwRF_LS<span class="sc">$</span>Local.Variable.Importance</span>
+<span id="cb184-3"><a href="interpretability-explainability-in-random-forest.html#cb184-3" tabindex="-1"></a>gwRF_LS_var_XY<span class="ot">&lt;-</span><span class="fu">cbind</span>(gwRF_LS_var,LS_train<span class="sc">$</span>x,LS_train<span class="sc">$</span>y ) <span class="co"># add coordinates</span></span>
+<span id="cb184-4"><a href="interpretability-explainability-in-random-forest.html#cb184-4" tabindex="-1"></a><span class="fu">colnames</span>(gwRF_LS_var_XY)[<span class="dv">9</span>]<span class="ot">&lt;-</span> <span class="st">&quot;X&quot;</span> <span class="co">#rename column X-coordinate </span></span>
+<span id="cb184-5"><a href="interpretability-explainability-in-random-forest.html#cb184-5" tabindex="-1"></a><span class="fu">colnames</span>(gwRF_LS_var_XY)[<span class="dv">10</span>]<span class="ot">&lt;-</span> <span class="st">&quot;Y&quot;</span> <span class="co">#rename column Y-coordinate </span></span>
+<span id="cb184-6"><a href="interpretability-explainability-in-random-forest.html#cb184-6" tabindex="-1"></a><span class="fu">str</span>(gwRF_LS_var_XY) </span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    4150 obs. of  10 variables:
+##  $ distRoad : num  0.53312 0.00351 0.31458 0.07548 2.46608 ...
+##  $ DEM      : num  1.11112 0.00548 0.13488 0.79269 0.66155 ...
+##  $ landCover: num  0.1857 0.0072 0.0856 0.6757 0.0124 ...
+##  $ TWI      : num  0.2571 0.0425 1.1416 0.2105 0.392 ...
+##  $ planCurv : num  0.20406 0.00112 0.12462 0.84817 1.17041 ...
+##  $ profCurv : num  0.1011 0.0032 0.2125 1.6097 2.5097 ...
+##  $ slope    : num  0.3679 0.0269 0.6325 0.6656 0.9508 ...
+##  $ geology  : num  0.078629 0.000606 0.09991 0.572837 0.01066 ...
+##  $ X        : num  569837 561612 540062 504862 548312 ...
+##  $ Y        : num  133062 139887 154237 140712 169212 ...</code></pre>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="interpretability-explainability-in-random-forest.html#cb186-1" tabindex="-1"></a><span class="fu">library</span>(sf) <span class="co">#for spatial data operations</span></span>
+<span id="cb186-2"><a href="interpretability-explainability-in-random-forest.html#cb186-2" tabindex="-1"></a><span class="co"># Convert vector to sf (simple feature)</span></span>
+<span id="cb186-3"><a href="interpretability-explainability-in-random-forest.html#cb186-3" tabindex="-1"></a>Vaud<span class="ot">&lt;-</span><span class="fu">vect</span>(<span class="st">&quot;data/RF/Vaud_CH.shp&quot;</span>)</span>
+<span id="cb186-4"><a href="interpretability-explainability-in-random-forest.html#cb186-4" tabindex="-1"></a>Vaud_sf<span class="ot">&lt;-</span><span class="fu">st_as_sf</span>(Vaud) </span>
+<span id="cb186-5"><a href="interpretability-explainability-in-random-forest.html#cb186-5" tabindex="-1"></a></span>
+<span id="cb186-6"><a href="interpretability-explainability-in-random-forest.html#cb186-6" tabindex="-1"></a><span class="co"># Output predicted values are transformed to a vector</span></span>
+<span id="cb186-7"><a href="interpretability-explainability-in-random-forest.html#cb186-7" tabindex="-1"></a>pred.vect <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(gwRF_LS_var_XY<span class="sc">$</span>slope)</span>
+<span id="cb186-8"><a href="interpretability-explainability-in-random-forest.html#cb186-8" tabindex="-1"></a></span>
+<span id="cb186-9"><a href="interpretability-explainability-in-random-forest.html#cb186-9" tabindex="-1"></a><span class="fu">library</span>(classInt) <span class="co">#for classification</span></span>
+<span id="cb186-10"><a href="interpretability-explainability-in-random-forest.html#cb186-10" tabindex="-1"></a></span>
+<span id="cb186-11"><a href="interpretability-explainability-in-random-forest.html#cb186-11" tabindex="-1"></a>brk<span class="ot">&lt;-</span>(<span class="fu">classIntervals</span>(pred.vect, <span class="at">n=</span><span class="dv">5</span>, <span class="at">style =</span> <span class="st">&quot;fisher&quot;</span>))</span>
+<span id="cb186-12"><a href="interpretability-explainability-in-random-forest.html#cb186-12" tabindex="-1"></a>brkInt<span class="ot">&lt;-</span><span class="fu">round</span>(brk<span class="sc">$</span>brks, <span class="at">digits=</span><span class="dv">2</span>)</span>
+<span id="cb186-13"><a href="interpretability-explainability-in-random-forest.html#cb186-13" tabindex="-1"></a><span class="fu">print</span>(brkInt)</span></code></pre></div>
+<pre><code>## [1] 0.00 0.39 1.00 1.81 2.99 4.91</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="interpretability-explainability-in-random-forest.html#cb188-1" tabindex="-1"></a><span class="co">#natural breaks (fisher)</span></span>
+<span id="cb188-2"><a href="interpretability-explainability-in-random-forest.html#cb188-2" tabindex="-1"></a></span>
+<span id="cb188-3"><a href="interpretability-explainability-in-random-forest.html#cb188-3" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb188-4"><a href="interpretability-explainability-in-random-forest.html#cb188-4" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> gwRF_LS_var_XY, <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y, <span class="at">colour =</span> slope), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb188-5"><a href="interpretability-explainability-in-random-forest.html#cb188-5" tabindex="-1"></a>    <span class="fu">scale_color_gradientn</span>(<span class="at">colors =</span> <span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;orange&quot;</span>,<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>),  </span>
+<span id="cb188-6"><a href="interpretability-explainability-in-random-forest.html#cb188-6" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.00</span>, <span class="fl">0.40</span>, <span class="fl">1.15</span>, <span class="fl">2.11</span>, <span class="fl">3.23</span>, <span class="fl">4.91</span>), </span>
+<span id="cb188-7"><a href="interpretability-explainability-in-random-forest.html#cb188-7" tabindex="-1"></a>                       <span class="at">labels=</span><span class="fu">c</span>(<span class="fl">0.00</span>, <span class="fl">0.40</span>, <span class="fl">1.15</span>, <span class="fl">2.11</span>, <span class="fl">3.23</span>, <span class="fl">4.91</span>)) <span class="sc">+</span></span>
+<span id="cb188-8"><a href="interpretability-explainability-in-random-forest.html#cb188-8" tabindex="-1"></a>        <span class="fu">labs</span>( <span class="at">x =</span> <span class="st">&quot;X Coordinate&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Y Coordinate&quot;</span>)<span class="sc">+</span></span>
+<span id="cb188-9"><a href="interpretability-explainability-in-random-forest.html#cb188-9" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot;Local average feature importance&quot;</span>)<span class="sc">+</span></span>
+<span id="cb188-10"><a href="interpretability-explainability-in-random-forest.html#cb188-10" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> Vaud_sf, <span class="at">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="co">#overlap borders</span></span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/Slope_Imp-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="distance-to-roads" class="section level5 hasAnchor" number="6.3.2.2.2">
+<h5><span class="header-section-number">6.3.2.2.2</span> Distance to roads<a href="interpretability-explainability-in-random-forest.html#distance-to-roads" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="interpretability-explainability-in-random-forest.html#cb189-1" tabindex="-1"></a><span class="co"># Output predicted values are transformed to a vector</span></span>
+<span id="cb189-2"><a href="interpretability-explainability-in-random-forest.html#cb189-2" tabindex="-1"></a>pred.vect <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(gwRF_LS<span class="sc">$</span>Local.Variable.Importance<span class="sc">$</span>distRoad)</span>
+<span id="cb189-3"><a href="interpretability-explainability-in-random-forest.html#cb189-3" tabindex="-1"></a> </span>
+<span id="cb189-4"><a href="interpretability-explainability-in-random-forest.html#cb189-4" tabindex="-1"></a>brk<span class="ot">&lt;-</span>(<span class="fu">classIntervals</span>(pred.vect, <span class="at">n=</span><span class="dv">5</span>, <span class="at">style =</span> <span class="st">&quot;fisher&quot;</span>))</span>
+<span id="cb189-5"><a href="interpretability-explainability-in-random-forest.html#cb189-5" tabindex="-1"></a>brkInt<span class="ot">&lt;-</span><span class="fu">round</span>(brk<span class="sc">$</span>brks, <span class="at">digits=</span><span class="dv">2</span>)</span>
+<span id="cb189-6"><a href="interpretability-explainability-in-random-forest.html#cb189-6" tabindex="-1"></a><span class="fu">print</span>(brkInt) <span class="co"># print breaks</span></span></code></pre></div>
+<pre><code>## [1] 0.00 0.36 0.98 2.04 3.33 4.85</code></pre>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="interpretability-explainability-in-random-forest.html#cb191-1" tabindex="-1"></a><span class="co">#natural breaks (fisher)</span></span>
+<span id="cb191-2"><a href="interpretability-explainability-in-random-forest.html#cb191-2" tabindex="-1"></a></span>
+<span id="cb191-3"><a href="interpretability-explainability-in-random-forest.html#cb191-3" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb191-4"><a href="interpretability-explainability-in-random-forest.html#cb191-4" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> gwRF_LS_var_XY, <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y, <span class="at">colour =</span> distRoad), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb191-5"><a href="interpretability-explainability-in-random-forest.html#cb191-5" tabindex="-1"></a>    <span class="fu">scale_color_gradientn</span>(<span class="at">colors =</span> <span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;orange&quot;</span>,<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>), </span>
+<span id="cb191-6"><a href="interpretability-explainability-in-random-forest.html#cb191-6" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.00</span>, <span class="fl">0.37</span>, <span class="fl">1.02</span>, <span class="fl">2.17</span>, <span class="fl">3.58</span>, <span class="fl">4.85</span>), </span>
+<span id="cb191-7"><a href="interpretability-explainability-in-random-forest.html#cb191-7" tabindex="-1"></a>                       <span class="at">labels=</span><span class="fu">c</span>(<span class="fl">0.00</span>, <span class="fl">0.37</span>, <span class="fl">1.02</span>, <span class="fl">2.17</span>, <span class="fl">3.58</span>, <span class="fl">4.85</span>)) <span class="sc">+</span></span>
+<span id="cb191-8"><a href="interpretability-explainability-in-random-forest.html#cb191-8" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">x =</span> <span class="st">&quot;X Coordinate&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Y Coordinate&quot;</span>)<span class="sc">+</span></span>
+<span id="cb191-9"><a href="interpretability-explainability-in-random-forest.html#cb191-9" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot;Local average feature importance&quot;</span>)<span class="sc">+</span></span>
+<span id="cb191-10"><a href="interpretability-explainability-in-random-forest.html#cb191-10" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> Vaud_sf, <span class="at">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="co">#overlap borders</span></span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/distRoad-Imp-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="local-r-squared" class="section level3 hasAnchor" number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> Local R squared<a href="interpretability-explainability-in-random-forest.html#local-r-squared" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Local R-squared value ranges from 0 to 1 and represents the strength of the correlations of the local model on the features.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="interpretability-explainability-in-random-forest.html#cb192-1" tabindex="-1"></a>Rsq<span class="ot">&lt;-</span>gwRF_LS<span class="sc">$</span>LGofFit<span class="sc">$</span>LM_Rsq100</span>
+<span id="cb192-2"><a href="interpretability-explainability-in-random-forest.html#cb192-2" tabindex="-1"></a>Rsq_XY<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(Rsq,LS_train<span class="sc">$</span>x,LS_train<span class="sc">$</span>y)) <span class="co"># add coordinates</span></span>
+<span id="cb192-3"><a href="interpretability-explainability-in-random-forest.html#cb192-3" tabindex="-1"></a><span class="fu">colnames</span>(Rsq_XY)[<span class="dv">2</span>]<span class="ot">&lt;-</span> <span class="st">&quot;X&quot;</span></span>
+<span id="cb192-4"><a href="interpretability-explainability-in-random-forest.html#cb192-4" tabindex="-1"></a><span class="fu">colnames</span>(Rsq_XY)[<span class="dv">3</span>]<span class="ot">&lt;-</span> <span class="st">&quot;Y&quot;</span></span>
+<span id="cb192-5"><a href="interpretability-explainability-in-random-forest.html#cb192-5" tabindex="-1"></a><span class="fu">str</span>(Rsq_XY)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    4150 obs. of  3 variables:
+##  $ Rsq: num  -0.2341 -0.0148 -0.2604 0.2742 0.5882 ...
+##  $ X  : num  569837 561612 540062 504862 548312 ...
+##  $ Y  : num  133062 139887 154237 140712 169212 ...</code></pre>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="interpretability-explainability-in-random-forest.html#cb194-1" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb194-2"><a href="interpretability-explainability-in-random-forest.html#cb194-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> Rsq_XY, <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y, <span class="at">colour =</span> Rsq), <span class="at">size =</span> <span class="dv">1</span>)<span class="sc">+</span> </span>
+<span id="cb194-3"><a href="interpretability-explainability-in-random-forest.html#cb194-3" tabindex="-1"></a>  <span class="fu">scale_color_gradientn</span>(<span class="at">colors =</span> <span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;yellow&quot;</span>,<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>))<span class="sc">+</span></span>
+<span id="cb194-4"><a href="interpretability-explainability-in-random-forest.html#cb194-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Rsq&quot;</span>, <span class="at">x =</span> <span class="st">&quot;X Coordinate&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Y Coordinate&quot;</span>)<span class="sc">+</span></span>
+<span id="cb194-5"><a href="interpretability-explainability-in-random-forest.html#cb194-5" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Local R2&quot;</span>)<span class="sc">+</span></span>
+<span id="cb194-6"><a href="interpretability-explainability-in-random-forest.html#cb194-6" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Vaud_sf, <span class="at">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="co">#overlap borders</span></span></code></pre></div>
+<p><img src="06-Exp_RF_files/figure-html/local-R2-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="conclusions-and-further-analyses-3" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Conclusions and further analyses<a href="interpretability-explainability-in-random-forest.html#conclusions-and-further-analyses-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the present exercise GRF has been used as a purely exploratory tool to estimate the spatial variation of the relationship between landslides in canton Vaud (Switzerland) and the influencing factors.
+It allowed to elaborate maps delineating the local average importance of the most highly correlated features and to visualise the local fitting performance (R2 local value) into a map.</p>
+<p>To be sure that everything is perfectly clear for you, we propose you to <strong>answer the following questions</strong> and to discuss your answers with the other participants to the course or directly with the teacher.</p>
+<ol style="list-style-type: decimal">
+<li><p>Among the following angorithm evaluate them in therms of their interpretability and explainability: Support Vector Machines , linear regression, Deep Learning Models, Decision Trees, K-Nearest Neighbors, Neural Networks, Random Forests, logistic regression.</p></li>
+<li><p>Which are the three most important variables of your model (based on the MDA)?</p></li>
+<li><p>What is the slope value (or range of values) that gives the highest probability of landslides occurrence?
+And for the geology, which are the most important classes?</p></li>
+<li><p>Evaluate the spatial variation of the relationship between landslides and slope / distance to roads in your study area by visually inspecting the local average importance of these features.</p></li>
+<li><p>You can replicate this code (some chiuncks of it) to evaluate the local average importance of the third most important variable, as well as to map the local mean squared error.</p></li>
+</ol>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="12">
+<li id="fn12"><p><a href="#ref-georganos_forest_2022"><strong>Georganos_forest_2022?</strong></a><a href="interpretability-explainability-in-random-forest.html#fnref12" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="landslides-susceptibility-mapping-using-random-forest.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="self-organizing-map.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/EugeneGIS/AGDAbook/edit/master/06-Exp_RF.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["fake-book.pdf", "fake-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

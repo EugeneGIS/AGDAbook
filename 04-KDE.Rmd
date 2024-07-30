@@ -101,21 +101,21 @@ You will start by exploring the datasets using mainly visual tools (plotting and
 ```{r import-data, results='hide'}
 
 # Import Portugal boundary 
-Portugal <- st_read("data/Lab02/Portugal.shp") # entire area
+Portugal <- st_read("data/KDE/Portugal.shp") # entire area
 
-PortN<- st_read("data/Lab02/Porto_North.shp") # northern area 
-PortS<- st_read("data/Lab02/Porto_South.shp") # southern
+PortN<- st_read("data/KDE/Porto_North.shp") # northern area 
+PortS<- st_read("data/KDE/Porto_South.shp") # southern
 
 # Import the forest fires dataset
 
-FF<-st_read("data/Lab02/ForestFires.shp") # entire area
-FFN<-st_read("data/Lab02/FF_North.shp") #entire area
-FFS<-st_read("data/Lab02/FF_South.shp") # Northern area
+FF<-st_read("data/KDE/ForestFires.shp") # entire area
+FFN<-st_read("data/KDE/FF_North.shp") # Northern area
+FFS<-st_read("data/KDE/FF_South.shp") # Southern area
 
 # Import the shapefile of the Tagus river
-river<-st_read("data/Lab02/Rio_Tajo.shp")
+river<-st_read("data/KDE/Rio_Tajo.shp")
 
-summary(FF$Area_ha)# summary statistics
+summary(FF$Area_ha) # summary statistics
 hist(FF$Area_ha)
 
 hist(log10(FF$Area_ha)) # see the lab GWSS for more details 
@@ -229,9 +229,8 @@ Namely the user needs to specify:
 -   *s* and *tm*: a vector of spatial (*s*) and a vector of temporal (*tm*) distances for the analysis.
 
 ```{r stk-input-North-fires}
-
 # Extract "pts" (divided by 1000 to compute in Km)
-FFN_pts<-as.points(FFN$X/1000,FFN$Y/1000) 
+FFN_pts <- as.points(FFN$X/1000, FFN$Y/1000) 
 FFN_times<-FFN$Year # extract "times"
 
 # Extract the coordinates (in Km):
@@ -272,7 +271,7 @@ help(stkhat)
 ```{r load-output}
 library(readr)
 
-STK_North_10y <- readRDS("data/Lab02/STK_North_10y.RData")
+STK_North_10y <- readRDS("data/KDE/STK_North_10y.RData")
 
 str(STK_North_10y)
 ```

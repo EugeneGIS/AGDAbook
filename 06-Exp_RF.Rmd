@@ -1,19 +1,11 @@
 ---
-title: "Towards Geo-Data Science"
-author: "Dr. Marj Tonini^[IDYST, University of Lausanne, marj.tonini@unil.ch]"
-date: "`r format(Sys.time(), '%d/%m/%Y')`"
-output:
-  pdf_document: default
-  html_document: default
-  toc: yes
-  word_document: default
-subtitle: 'Interpretability & Explainability in Random Forest'
-editor_options:
-  chunk_output_type: inline
-  markdown:
+bibliography: book.bib
+link-citations: true
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+editor_options: 
+  markdown: 
     wrap: sentence
-urlcolor: blue
-bibliography: RF.bib
 ---
 
 ```{r  global-options, echo = FALSE}
@@ -24,9 +16,11 @@ knitr::opts_chunk$set( fig.align = "center",
 library(distill) #R Markdown' Format for Scientific and Technical Writing
 ```
 
-# 1) Interpretability and Explainability Machine Learinig
+# Interpretability & Explainability in Random Forest
 
-## 1.1) Some definitinions
+## Introduction
+
+### Basic definations
 
 The distinction between interpretability and explainability lies in their **focus and depth**.
 
@@ -40,7 +34,7 @@ In such scenarios, *explainability* proves to be a more practical approach, as i
 **Communication**: in terms of audience and purpose, *interpretability* primarily concerns AI specialists and researchers, whereas *explainability* targets end users seeking to grasp model decisions.
 Consequently, explainability necessitates a more straightforward and intuitive communication of information.
 
-## 1.2) Aim of the present lab
+### Aim of the present lab
 
 In this exercise you will work with the outputs of Random Forest resulting from the landslides susceptibility map project (LSM_RF).
 
@@ -48,7 +42,7 @@ In this exercise you will work with the outputs of Random Forest resulting from 
 
 -   Finally we will apply a local version of Random Forest (named Geographical Random Forest) to analyse the spatial heterogeneity of the local variable importance.
 
-## 1.3) Re-load lybraries and workspace
+### Re-load lybraries and workspace
 
 If you have quit the workspace where you have run the RF model for landslide susceptibility map you need to load it again in this new project.
 "*Loading the workspace*" refers to the action of restoring the saved state of the R environment.
@@ -58,7 +52,7 @@ Loading the workspace means to restore this saved state, bringing back all the p
 ```{r import-WS, echo = FALSE}
 
 # Load the workspace (all the data)
-load("LSM_RF.RData")
+load("data/RF/LSM_RF.RData")
 
 # Load the required libraries
 ## See details from the LSM_RF project
@@ -76,15 +70,15 @@ library(RColorBrewer)
 (.packages())
 ```
 
-# 2) Variable importance plot
+## Variable importance plot
 
 Although machine learning algorithms are often considered as a black box, with RF is possible to plot a sample tree (selected randomly) to analyse its structure and investigate how decisions have been made.
 In addition RF provides two metrics allowing to assess the importance of each variables in the model: the mean decrease in accuracy (MDA), and the mean decrease in Gini index.
 Higher values indicate the most important variables.
 
 ```{r plot-tree, fig.show='hide'}
-
 library("party")
+
 x <- ctree(LS~., data=LS_train)
 plot(x, type="simple")
 ```
@@ -96,7 +90,7 @@ importance(RF_LS)
 varImpPlot(RF_LS)
 ```
 
-## 2.1) Partial dependence plot
+### Partial dependence plot
 
 In addition, the Partial Dependence Plot (PDP) allows to estimate, for each single variable, the relative probability of prediction success over different ranges of values.
 It gives a graphical depiction of the marginal effect of each variable on the class probability over different ranges of continuous or discrete values.
@@ -145,7 +139,7 @@ partialPlot(RF_LS, LS_train, x.var = landCover, rug = TRUE,
             main = "", ylab = "PDP")
 ```
 
-# 2) Local Random Forest
+## Local Random Forest
 
 Standard machine learning algorithms like Random Forest (RF) lack spatial calibration, hindering capturing the spatial non-stationarity in the relationship between a dependent and a set of independent variables.
 
@@ -158,7 +152,7 @@ In addition it is suited for datasets with numerous predictors.
 
 Essentially, GRF was designed to be a bridge between machine learning and geographical models, combining inferential and explanatory power.
 
-## 2.1) Run GRF
+### Run GRF
 
 We will use the last development of **Geographical Random Forest** (GRF) [4].
 This function have been implemented for regression problem, so we need to transform our binary response variable (i.e., presence=1 / absence = 0) as a numeric value which can assume a range of values from zero to one.
@@ -190,7 +184,9 @@ gwRF_LS<-grf(LSregr~distRoad+DEM+landCover+TWI+planCurv+profCurv+slope+geology, 
 saveRDS(gwRF_LS, "gwRF_LS.rds")
 ```
 
-### 2.1.1) Global variable importance plot
+### Variable importance plot
+
+#### Global variable importance plot
 
 Based on the results of the GRF, we present a plot of the variable importance ranking for illustrative purposes.
 Values came from "Global ML Model Summary" - "Importance.
@@ -215,9 +211,9 @@ ggplot(data = variable_importance, aes(x = Variable, y = Importance, fill = Colo
 
 ```
 
-### 2.1.2) Local Variable importance
+#### Local Variable importance
 
-### - Slope
+##### Slope
 
 ```{r Slope_Imp}
 
@@ -230,7 +226,7 @@ str(gwRF_LS_var_XY)
 
 library(sf) #for spatial data operations
 # Convert vector to sf (simple feature)
-Vaud<-vect("Vaud_CH.shp")
+Vaud<-vect("data/RF/Vaud_CH.shp")
 Vaud_sf<-st_as_sf(Vaud) 
 
 # Output predicted values are transformed to a vector
@@ -254,7 +250,7 @@ ggplot() +
     geom_sf(data = Vaud_sf, fill = "transparent", color = "black", size=2) #overlap borders
 ```
 
-### - Distance to roads
+##### Distance to roads
 
 ```{r distRoad-Imp}
 
@@ -277,7 +273,7 @@ ggplot() +
     geom_sf(data = Vaud_sf, fill = "transparent", color = "black", size=2) #overlap borders
 ```
 
-## 2.1.3) Local R squared
+### Local R squared
 
 The Local R-squared value ranges from 0 to 1 and represents the strength of the correlations of the local model on the features.
 
@@ -297,7 +293,7 @@ ggplot () +
   geom_sf(data = Vaud_sf, fill = "transparent", color = "black", size=2) #overlap borders
 ```
 
-# 6) Conclusions and further analyses
+## Conclusions and further analyses
 
 In the present exercise GRF has been used as a purely exploratory tool to estimate the spatial variation of the relationship between landslides in canton Vaud (Switzerland) and the influencing factors.
 It allowed to elaborate maps delineating the local average importance of the most highly correlated features and to visualise the local fitting performance (R2 local value) into a map.
@@ -314,5 +310,3 @@ To be sure that everything is perfectly clear for you, we propose you to **answe
 4.  Evaluate the spatial variation of the relationship between landslides and slope / distance to roads in your study area by visually inspecting the local average importance of these features.
 
 5.  You can replicate this code (some chiuncks of it) to evaluate the local average importance of the third most important variable, as well as to map the local mean squared error.
-
-# References

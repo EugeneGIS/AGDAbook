@@ -102,7 +102,7 @@ Finally we will plot the 3D-points cloud filtered dataset using the displacement
 ```{r import-data, results = FALSE}
 # Import point cloud dataset (ptc)
 # 1 year displacement TLS campaigns; data masked over the active front only.
-ptc <- read.table("data/Lab03/TsarmineRG_230914_frontonly_XYZ_dist_ref_220915.txt", header=FALSE, sep="")
+ptc <- read.table("data/DBSCAN/TsarmineRG_230914_frontonly_XYZ_dist_ref_220915.txt", header=FALSE, sep="")
 
 # Add names to columns: X,Y, Z coordinates and the displacement distance "d".
 colnames(ptc)<-c("Y","X","Z","d") # rename columns
