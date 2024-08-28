@@ -1,6 +1,5 @@
 ---
-title: "Preface"
-subtitle: 'Advanced Geospatial Data Analysis in R - Environmental applications'
+title: "Advanced Geospatial Data Analysis in R - Environmental applications"
 author: "Dr. Marj Tonini, Haokun Liu"
 date: "`r format(Sys.time(), '%d/%m/%Y')`"
 output:

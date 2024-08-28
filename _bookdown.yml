@@ -16,3 +16,4 @@ language:
   ui:
     chapter_name: 'Chapter '
 new_session: true
+number_sections: true
