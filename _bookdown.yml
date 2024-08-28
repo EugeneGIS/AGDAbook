@@ -1,16 +1,16 @@
 book_filename: fake-book
 delete_merged_file: true
 rmd_files:
-- index.Rmd
-- 01-IntrotoR.Rmd
-- 02-RGIS.Rmd
-- 03-GWSS.Rmd
-- 04-KDE.Rmd
-- 05-RF_Cl.Rmd
-- 06-Exp_RF.Rmd
-- 07-SOM.Rmd
-- 08-DBSCAN.Rmd
-- 10-references.Rmd
+- "index.Rmd"
+- "01-IntrotoR.Rmd"
+- "02-RGIS.Rmd"
+- "03-GWSS.Rmd"
+- "04-KDE.Rmd"
+- "05-RF_Cl.Rmd"
+- "06-Exp_RF.Rmd"
+- "07-SOM.Rmd"
+- "08-DBSCAN.Rmd"
+- "10-references.Rmd"
 output_dir: docs
 language:
   ui:
