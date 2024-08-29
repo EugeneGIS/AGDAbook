@@ -90,14 +90,18 @@ Her work is driven by the goal of creating a robust methodological framework to 
 Her current research focuses on the analysis of land use and land cover changes, alongside the development of predictive scenarios and the assessment of susceptibility and risks associated with natural hazards.
 Through her work, she seeks to advance the field of geospatial science by translating data-driven insights into practical solutions for managing and mitigating environmental risks.
 
+Marj has written the vast majority of this book.
+Her contributions include the development of the conceptual framework, writing the theoretical background chapters, developing case studies, designing methodologies, and conducting data collection and analysis, software/tool development.
+the Sections "My Journey of Learning" refers to her personal experience.
+
 **Haokun Liu** is a Ph.D. student at the Group of Cities and Dynamics of Networks (CITADYNE Group) at the University of Lausanne.
 In addition to his doctoral studies, he serves as a student assistant at the Swiss Geocomputing Center (SGC).
 Benefiting from rigorous and comprehensive training in both China and Switzerland, Haokun has developed a diverse research portfolio.
 His primary research interests and experience encompass a wide range of interdisciplinary fields, including urban analytics, health geography, and spatial data science.
 His work focuses on leveraging advanced computational techniques to address complex urban and environmental challenges, bridging the gap between data-driven insights and real-world applications.
 
-Marj's contributions to this book include the development of the conceptual framework, writing the theoretical background chapters, developing case studies, designing methodologies, and conducting data collection and analysis, software/tool development.
-Haokun's contributions include establishing and managing the GitHub repository to host and mantaing the eBook; he also collaborated to data visualization and mapping and revised the applied computing labs.
+Haokun's contributions were instrumental in establishing and managing the GitHub repository used to host and maintain this eBook.
+He also played a key role in data visualization and mapping, and provided valuable revisions to the applied computing labs.
 
 ## My Journey of Learning: Integrating Geospatial Data Analysis with Data Science
 
@@ -133,19 +137,14 @@ It’s a story of how spatial data and advanced analytics have become indispensa
 The case studies presented in each chapter came from different projects carried out in collaboration with several colleagues, including master and PhD students.
 All the produced scientific papers are duly cited in the bibliography.
 
-We would like to thank the following collaborators:
+I would like to express my gratitude to Professor Mário Gonzalez Pereira and Dr. Joana Parente, for their extensive and fruitful collaboration in investigating the spatio-temporal distribution of wildfires in Portugal.
+One of our studies, which explores the evolution of forest fires from spatio-temporal point events to smoothed density maps, forms an integral part of Chapters 3 and 4.
 
--   Professor Mário Gonzalez Pereira and Dr. Joana Parente, for the extensive and fruitful collaboration in investigating the spatio-temporal distribution of wildfires in Portugal.
-    One of our studies, which explores the evolution of forest fires from spatio-temporal point events to smoothed density maps, forms an integral part of Chapters 3 and 4.
+I also thank Professor Stuart Lane and Dr. Natan Micheletti for introducing me to the fascinating world of rock glacier research.
+Notably, the 3D point cloud dataset analyzed in Chapter 8 was acquired and processed by Natan during his PhD studies.
 
--   Professor Stuart Lane and Dr. Natan Micheletti, for introducing me to the fascinating world of rock glacier research.
-    Notably, the 3D-points clouds dataset analysed in Chapter 8 was acquired and processed by Natan during his PhD studies.
-
--   Axelle Bersier, for the meticulous work she did in acquiring and pre-processing the Swiss national population census dataset.
-    This dataset is used for the exercise on unsupervised learning in Chapter 5.
-
--   Julien Riese, for producing the input dataset and collaborating with me in developing the code allowing to assess the landslides susceptibility in Canton Vaud, which is the main focus of Chapter 6.
-
+My thanks also go to Axelle Bersier for her meticulous work in acquiring and pre-processing the Swiss national population census dataset, which is used for the exercise on unsupervised learning in Chapter 5.
+The same for Julien Riese, who produced the input dataset and collaborated with me in developing the code that assesses landslide susceptibility in Canton Vaud, the main focus of Chapter 6.
 Both Julien and Axelle exemplify the high caliber of master's students I have had the pleasure of supervising.
 
-For transparency, the author acknowledges the use of ChatGPT in assisting with the reformulation of certain sentences in this book and DALL-E to generate the image icon.
+For transparency, I acknowledge the use of ChatGPT in assisting with the reformulation of certain sentences in this book and DALL-E to generate the image icon.
