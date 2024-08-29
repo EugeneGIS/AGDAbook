@@ -6,6 +6,7 @@ csl: chicago-fullnote-bibliography.csl
 editor_options: 
   markdown: 
     wrap: sentence
+    urlcolor: blue
 ---
 
 # Introduction to R
@@ -45,9 +46,7 @@ Many table resuming the main R commands can be found online.
 Here some useful links:
 
 -   [A short list of the most useful R commands](https://www.maths.usyd.edu.au/u/jchan/Rcommands.pdf)
-
 -   [Table of Useful R commands](https://sites.calvin.edu/scofield/courses/m143/materials/RcmdsFromClass.pdf)
-
 -   [Basic Commands to Get Started with R](https://rpubs.com/ssammut/ResearchStats)
 
 ## R Markdown
@@ -188,3 +187,5 @@ pop<-(df2$population)
 pop
 hist(pop) # plot the histogram
 ```
+
+## Further reading on this topic

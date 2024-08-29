@@ -6,17 +6,18 @@ csl: chicago-fullnote-bibliography.csl
 editor_options: 
   markdown: 
     wrap: sentence
+    urlcolor: blue
 ---
+
+```{r  global-options, include=FALSE}
+#knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
+```
 
 # Geographically Weighted Summary Statistics
 
 Geographically Weighted Summary Statistics (GWSS) represent an advanced analytical approach in geoscience, allowing researchers to explore spatial variations in data across a geographical landscape.
 Unlike traditional summary statistics that provide a single, overall summary measure (like mean, median, or standard deviation) for an entire dataset, GWSS techniques calculate these measures locally, reflecting the unique characteristics and variations at different spatial locations.
 This method is particularly valuable in geoscience, where spatial heterogeneity often plays a critical role.
-
-```{r  global-options, include=FALSE}
-#knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo=FALSE, fig.align="center")
-```
 
 ## GWSS for fire management
 
@@ -75,7 +76,7 @@ First you have to load the following libraries:
 -   **ggplot2**: a system for 'declaratively' creating graphics
 -   **sp**: classes and methods for spatial data
 
-```{r libs-loaded, message = FALSE, warning = FALSE}
+```{r libs-loaded}
 
 library(splancs)
 library(GWmodel)
@@ -135,9 +136,7 @@ For a better understanding of the phenomenon, you can group the events according
 Based on the frequency distribution of the burned areas, the following three classes can be defined:
 
 -   **Small fires**: less than 15 ha
-
 -   **Medium fires**: between 15 ha and 100 ha
-
 -   **Large fires**: bigger than 100 ha
 
 Plotting the forest fires events using different colors, based on the size of the burned areas, can simplify the understanding of their pattern distribution, knowing that fires of different size have normally different drivers.
@@ -177,9 +176,7 @@ str(FFspdf)
 **GWSS parameters**:
 
 -   We summarize the data based on the size of the burned area (*vars*).
-
 -   We use here an adaptive kernel where the bandwidth (*bw*) corresponds to the number (100 in this case) of nearest neighbors (i.e. adaptive distance).
-
 -   We keep the default values for the other parameters.
 
 ```{r run-gwss}
@@ -242,7 +239,7 @@ quick.map(FFgwss$SDF, "Area_LSD", "Area (ha)", "GWL Standard Deviation")
 quick.map(FFgwss$SDF, "Area_LSKe", "Area (ha)", "GWL Skewness")
 ```
 
-## Discussions and further analyses
+## Conclusions and further analyses
 
 This practical computer lab allowed you to familiarize with GWSS, by the proposed application about geographically weighted summary statistics.
 This method allowed us to explore how the average burned area vary locally through Continental Portugal in the period 1990-2013.
@@ -251,7 +248,7 @@ The global Geographically Weighted (GW) means informs us about the local average
 Similarly, you may compute the GW standard deviation to see the extent to which the size of the burned area spread around this mean.
 Finally you can compute the GW skewness to measure the symmetry of distribution: a positively skewed distribution means that there is a higher number of data points with low values, with mean value lower that the median; and the contrary for a negatively skewed distribution.
 
-To ensure that everything is perfectly clear, we suggest you answer the following questions.
+To ensure that everything is perfectly clear, we propose you to answer the following questions.
 You can find the answers in the reference paper [@tonini_evolution_2017].
 
 1)  What is the pattern distribution of the GW-means for burned area in Portugal during the investigated periods?
@@ -266,3 +263,5 @@ You can find the answers in the reference paper [@tonini_evolution_2017].
     In other words, can you imagine other geo-environmental dataset that can be analysed using GWSS?
 
 5)  You can finally play with the code and try to run it using a different numbers of nearest neighbors (*bw=x*) and compare the results.
+
+## Further reading on this topic

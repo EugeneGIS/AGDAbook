@@ -6,6 +6,7 @@ csl: chicago-fullnote-bibliography.csl
 editor_options: 
   markdown: 
     wrap: sentence
+    urlcolor: blue
 ---
 
 ```{r  global-options, include=FALSE}
@@ -381,7 +382,7 @@ This practical computing lab allowed you to asses the global cluster behavior of
 In addition, we learned how smoothed density maps can be elaborated from punctual events, namely using the kernel density estimator.
 Both spatial and the temporal dimension have been considered in this case.
 
-This method allowed us to explore the density distribution of forest fires events through Continental Portugal in the period 1990-2013.
+You cluld explore the density distribution of forest fires events through Continental Portugal in the period 1990-2013.
 In the northern half of the country, hot spots are present almost on each investigated years, with a higher concentration in the northern areas.
 
 To ensure that everything is perfectly clear, we propose you to do this lab again, by using this time another subset chosen among the forest fires in the Southern area, the small, medium or the large forest fires dataset.
@@ -392,3 +393,5 @@ The reading of the paper @tonini_evolution_2017, which inspired this lab, can he
 1.  At which spatial and temporal distance you can observe a peak of clustering?
 
 2.  Describe which is spatio-temporal density distribution of forest fires events through the study area.
+
+## Further reading on this topic

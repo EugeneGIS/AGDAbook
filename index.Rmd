@@ -40,26 +40,22 @@ This openness is increasingly important as society struggles to respond to the i
 
 The primary focus of this eBook is the application of Data Science methodologies to analyze and understand Earth's surface environmental processes.
 The scientific approaches in this emerging field (spanning statistics, mathematics, geomatics, and computer science) are often challenging to master.
-Thus, while maintaining a rigorous emphasis on mathematical and statistical formalism, this eBook prioritizes practical applications within the Geosciences.
+Thus, while maintaining a rigorous emphasis on mathematical and statistical formalism, this eBook prioritizes practical applications in the domain of Geosciences.
 
-Emphasis will be placed on the application of these advanced geospatial tools to natural and anthropogenic hazards, and to land use processes.
+Emphasis will be placed on the application of advanced geospatial tools to natural and anthropogenic hazards, and to land use processes.
 Theoretical concepts will be supported by case studies achieved using spatial clustering techniques and supervised and unsupervised machine learning algorithms (e.g., stochastic point process models for spatio-temporal cluster analysis; application of machine learning based approaches for geodemographic segmentation, susceptibility assessment and risk mapping).
 
 ### Computing lab
 
 Computations are conducted using the R free software environment, which is specifically designed for data analysis and manipulation.
-To complete the applied computing labs presented in each chapter, readers can download the datasets from here: [AGDA Book Gihub]
+To complete the applied computing labs presented in each chapter, readers can download the datasets from here: [AGDA Book Gihub].
 
 The computing labs will cover the following geocomputational techniques:
 
 -   **Exploratory Data Analysis and Visualization**: Examining geographical variations in statistical data distributions, including Geographically Weighted Summary Statistics.
-
 -   **Cluster Detection and Mapping**: Techniques such as Ripley’s K-function, kernel density estimation, and DBSCAN for identifying and visualizing clusters.
-
 -   **Self-Organizing Maps**: As example of unsupervised machine learning method for data clustering/segmentation and visualization.
-
--   **Random Forest**: As example of supervised machine learning algorithm.
-    We present both the global and the local version, and we use Random Forest to introduce interpretability & explainability in machine learning.
+-   **Random Forest**: As example of supervised machine learning algorithm. We present both the global and the local version, and we use Random Forest to introduce interpretability & explainability in machine learning.
 
 ### Target audience
 
@@ -72,7 +68,8 @@ This eBook aims to equip the audience with:
 -   Advanced tools to effectively navigate and analyze spatial datasets in geosciences.
 
 This book is designed for intermediate to advanced R users with experience in geospatial data and a keen interest in geocomputing.
-If you have only basic knowledge in these areas, we encourage you to explore the links provided in each chapter, which offer additional resources and documentation to help you deepen your understanding.
+If you have only a basic knowledge of these areas, we strongly encourage you to explore the essential references provided in each chapter.
+These resources offer valuable documentation and additional materials to help deepen your understanding.
 
 The main prerequisites are the following.
 

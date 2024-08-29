@@ -6,6 +6,7 @@ csl: chicago-fullnote-bibliography.csl
 editor_options: 
   markdown: 
     wrap: sentence
+    urlcolor: blue
 ---
 
 # Basic operation with geodata in R
@@ -60,11 +61,8 @@ This dataset is available in shapefile format, one of the most widely used file 
 A **shapefile** includes multiple files allowing to store different kind of object:
 
 -   \*shp: the features' geometries (i.e., the geometric vector primitive used to describe the features).
-
 -   \*dbf: the attributes, describing the characteristics of the features (i.e., tabular information).
-
 -   \*shx: shape index format, an index file for the geometry data.
-
 -   \*prj: the coordinate reference systems, defining how the geometries are projected on the Earth's surface.
 
 To read a shapefile, you only need to specify the file name with ".shp" extension.
@@ -134,27 +132,16 @@ This format is also effective in representing categorical variables such as land
 Common raster formats used for spatial analses include:
 
 1.  **GeoTIFF (.tif, .tiff)**:
-
     -   A widely used format that includes geographic metadata such as coordinates and projection information, making it easy to integrate with GIS applications.
-
 2.  **ESRI Grid**:
-
     -   A proprietary format developed by ESRI for use with its software, such as ArcGIS. It supports both integer and floating-point grids.
-
 3.  **Erdas Imagine (.img)**:
-
     -   A format developed by ERDAS for its Imagine software, often used for remote sensing data and satellite imagery. It supports large files and multiple bands.
-
 4.  **NetCDF (.nc)**:
-
     -   Stands for Network Common Data Form, used for array-oriented scientific data, including GIS data. It supports multidimensional data arrays, making it suitable for complex environmental and atmospheric data.
-
 5.  **HDF (Hierarchical Data Format)**:
-
     -   Similar to NetCDF, HDF is used for managing and storing large amounts of data, especially in scientific computing. It supports various data types and is used for satellite imagery and climate data.
-
 6.  **ASCII Grid (.asc)**:
-
     -   A simple, text-based raster format where each cell value is represented by a number in a grid layout. It's easy to read and edit with a text editor.
 
 These formats vary in terms of compression, metadata support, and suitability for different types of raster data, from simple images to complex scientific datasets.
@@ -412,3 +399,5 @@ color_palette <- colorRampPalette(brewer.pal(8, "Set3"))(num_classes)
 plot(landCover, col = color_palette, main = "Land Cover Classes")
 
 ```
+
+## Further reading on this topic
