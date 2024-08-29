@@ -36,11 +36,33 @@ Indeed, disciplinary boundaries are more and more permeable, pushing scientists 
 Modern earth and environmental scientists need to interact with other disciplines, apparently far from their domain.
 This openness is increasingly important as society struggles to respond to the implication of anthropogenic pressures on different issues, such as natural hazards and climate change, or the harmful impacts of human activities on biodiversity, water and air quality, human health.
 
-## Target audience
+## Book overview
 
 The primary focus of this eBook is the application of Data Science methodologies to analyze and understand Earth's surface environmental processes.
-The scientific approaches in this emerging field—spanning statistics, mathematics, geomatics, and computer science—are often challenging to master.
+The scientific approaches in this emerging field (spanning statistics, mathematics, geomatics, and computer science) are often challenging to master.
 Thus, while maintaining a rigorous emphasis on mathematical and statistical formalism, this eBook prioritizes practical applications within the Geosciences.
+
+Emphasis will be placed on the application of these advanced geospatial tools to natural and anthropogenic hazards, and to land use processes.
+Theoretical concepts will be supported by case studies achieved using spatial clustering techniques and supervised and unsupervised machine learning algorithms (e.g., stochastic point process models for spatio-temporal cluster analysis; application of machine learning based approaches for geodemographic segmentation, susceptibility assessment and risk mapping).
+
+### Computing lab
+
+Computations are conducted using the R free software environment, which is specifically designed for data analysis and manipulation.
+To complete the applied computing labs presented in each chapter, readers can download the datasets from here: [AGDA Book Gihub]
+
+The computing labs will cover the following geocomputational techniques:
+
+-   **Exploratory Data Analysis and Visualization**: Examining geographical variations in statistical data distributions, including Geographically Weighted Summary Statistics.
+
+-   **Cluster Detection and Mapping**: Techniques such as Ripley’s K-function, kernel density estimation, and DBSCAN for identifying and visualizing clusters.
+
+-   **Self-Organizing Maps**: As example of unsupervised machine learning method for data clustering/segmentation and visualization.
+
+-   **Random Forest**: As example of supervised machine learning algorithm.
+    We present both the global and the local version, and we use Random Forest to introduce interpretability & explainability in machine learning.
+
+### Target audience
+
 The target audience includes master’s and PhD students in Earth and Environmental Sciences, Biology and Spatial Ecology, Physical Geography, and related disciplines.
 Our goal is to empower students by guiding them through both theoretical knowledge and hands-on practical applications, helping them develop strong problem-solving skills.
 
@@ -48,18 +70,6 @@ This eBook aims to equip the audience with:
 
 -   A solid understanding of key practical concepts and applied aspects in AGDA.
 -   Advanced tools to effectively navigate and analyze spatial datasets in geosciences.
-
-The methodologies presented will provide readers with expertise in a range of algorithms tailored for analyzing complex geo-environmental datasets.
-This knowledge will empower them to extract valuable insights and translate those insights into actionable decisions.
-
-**Explored algorithms include:**
-
--   *Geographically Weighted Summary Statistics* for exploratory data analyses and visualization of geographical variations in the statistical data distribution;
--   *Ripley's K-function, Kernel Density Estimator, DBSCAN* for cluster detection and mapping;
--   *Self-Organizing Maps* as an example of unsupervised machine learning approach to data clustering and visualization;
--   *Random Forest* as an example of a supervised machine learning algorithm, applied here for classification.
-
-To complete the applied computing labs presented in the following chapters, you can download the datasets from here: [AGDA Book Gihub]
 
 This book is designed for intermediate to advanced R users with experience in geospatial data and a keen interest in geocomputing.
 If you have only basic knowledge in these areas, we encourage you to explore the links provided in each chapter, which offer additional resources and documentation to help you deepen your understanding.
@@ -86,12 +96,12 @@ Benefiting from rigorous and comprehensive training in both China and Switzerlan
 His primary research interests and experience encompass a wide range of interdisciplinary fields, including urban analytics, health geography, and spatial data science.
 His work focuses on leveraging advanced computational techniques to address complex urban and environmental challenges, bridging the gap between data-driven insights and real-world applications.
 
-Mary's contributions to this book include the development of the conceptual framework, writing the theoretical background chapters, developing case studies, designing methodologies, and conducting data collection and analysis, software/tool development.
+Marj's contributions to this book include the development of the conceptual framework, writing the theoretical background chapters, developing case studies, designing methodologies, and conducting data collection and analysis, software/tool development.
 Haokun's contributions include establishing and managing the GitHub repository to host and mantaing the eBook; he also collaborated to data visualization and mapping and revised the applied computing labs.
 
 ## My Journey of Learning: Integrating Geospatial Data Analysis with Data Science
 
-In the early 2000s, as I embarked on my PhD journey, a new frontier was beginning to unfold in the world of environmental research.
+In the early 2000s, as I (Marj) embarked on my PhD journey, a new frontier was beginning to unfold in the world of environmental research.
 Geographical information systems (GIS) were just starting to make waves, offering a fresh perspective on how we could investigate and understand the environment.
 It was through my thesis on the effects of spreading olive vegetation water on agricultural land that I first delved into the world of GIS.
 Each tool and technique I learned opened new doors, revealing the vast potential of spatial data in environmental analysis and management.
