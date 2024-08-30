@@ -14,6 +14,10 @@ urlcolor: blue
 bibliography: book.bib
 ---
 
+```{r  global-options, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
+```
+
 # Preface {.unnumbered}
 
 Earth surface environmental processes exhibit distinctive characteristics, encompassing both spatial and temporal dimensions, along with various attributes and predictive variables.

@@ -10,10 +10,10 @@ editor_options:
 ---
 
 ```{r  global-options, include=FALSE}
-#knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
 ```
 
-# Spatio-temporal cluster analysis
+# Spatio-Temporal Cluster Analysis of Geoenvironmental Processes
 
 Spatio-temporal cluster analysis (ST clustering) is a powerful tool used to identify patterns and relationships in data that vary across both space and time.
 In the context of geoenvironmental processes, this type of analysis helps in understanding how environmental phenomena—such as wildfires, landslides, or flood events—are distributed geographically and how they evolve over time.

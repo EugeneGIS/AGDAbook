@@ -10,7 +10,7 @@ editor_options:
 ---
 
 ```{r  global-options, include=FALSE}
-#knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
 ```
 
 # Interpretability & Explainability with Random Forest

@@ -9,6 +9,10 @@ editor_options:
     urlcolor: blue
 ---
 
+```{r  global-options, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
+```
+
 # Basic operation with geodata in R
 
 ## Introduction

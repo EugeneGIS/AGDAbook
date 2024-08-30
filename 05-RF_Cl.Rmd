@@ -10,10 +10,10 @@ editor_options:
 ---
 
 ```{r  global-options, include=FALSE}
-#knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
 ```
 
-# Random Forest
+# Predictive Mapping of Natural Hazards Using Random Forest 
 
 Random Forest (RF) is a robust and widely-used machine learning algorithm particularly suited for predictive mapping in the context of natural hazards and susceptibility assessments.
 It operates by constructing multiple decision trees during training, and then aggregating their predictions to improve accuracy and generalizability (@breiman_random_2001).
@@ -41,7 +41,7 @@ knitr::include_graphics("images/Methodology.png")
 
 ## Computing lab: Random Forest
 
-### Load libraries
+### Load the libraries
 
 To perform the analysis, you have first to install the following libraries:
 
@@ -420,7 +420,7 @@ To ensure that everything is perfectly clear, we propose you to **answer the fol
 
     \newpage
 
-## Further reading on this topic.
+## Further reading on this topic
 
 The research framework that inspired this computing lab refers to a pioneering study in susceptibility mapping for wildfire events by [@tonini_machine_2020] and further developed for the assessment of variable importance by [@trucchia_machine-learning_2022].
 Analyses have been adapted to the case study of landslides.
