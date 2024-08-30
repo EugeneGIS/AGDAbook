@@ -191,5 +191,3 @@ pop<-(df2$population)
 pop
 hist(pop) # plot the histogram
 ```
-
-## Further reading on this topic

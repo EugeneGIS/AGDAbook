@@ -11,9 +11,10 @@ editor_options:
 
 ```{r  global-options, include=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
+
 ```
 
-# Geographically Weighted Summary Statistics in geosciences
+# Geographically Weighted Summary Statistics in Geosciences
 
 Geographically Weighted Summary Statistics (GWSS) represent an advanced analytical approach in geoscience, allowing researchers to explore spatial variations in data across a geographical landscape.
 Unlike traditional summary statistics that provide a single, overall summary measure (like mean, median, or standard deviation) for an entire dataset, GWSS techniques calculate these measures locally, reflecting the unique characteristics and variations at different spatial locations.
@@ -205,7 +206,7 @@ FFgwss
 ### GWSS maps
 
 To produce a map of the local geographically weighted summary statistic of your choice, firstly we need to enter a small R function definition.
-This is just a short R program to draw a map: you can think of it as a command that tells R how to draw a map (see [Geographically Weighted Summary Statistics in geosciences] (<https://rpubs.com/chrisbrunsdon/99667>) for more details).
+This is just a short R program to draw a map: you can think of it as a command that tells R how to draw a map (see [Geographically Weighted Summary Statistics in Geosciences] (<https://rpubs.com/chrisbrunsdon/99667>) for more details).
 The advantage of defining a function is that the entire map can now be drawn using a single command for each variable, rather than having to repeat those steps each time.
 To define the intervals for the classification, we use Jenks natural breaks classification method (`style="fisher"`).
 
@@ -263,5 +264,3 @@ You can find the answers in the reference paper [@tonini_evolution_2017].
     In other words, can you imagine other geo-environmental dataset that can be analysed using GWSS?
 
 5)  You can finally play with the code and try to run it using a different numbers of nearest neighbors (*bw=x*) and compare the results.
-
-## Further reading on this topic

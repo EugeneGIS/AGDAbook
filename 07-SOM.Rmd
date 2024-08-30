@@ -1,8 +1,5 @@
 ---
 bibliography: book.bib
-link-citations: true
-biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
 editor_options: 
   markdown: 
     wrap: sentence
@@ -269,14 +266,8 @@ write.table(clsnorm, file="hcM_7cls.csv", sep=",")
 -   **Map the resulting clusters to the geographical space**
 
 You can import the final table with the values of the population census variable in a GIS and join the values to the administrative limits at municipality levels in Switzerland.
-This allows you to elaborate a map as in \autoref{Clusters_7}.
-
-**NB**. You need only two columns: the code identifying each municipality ("BFS_nummer") and the cluster number (hc).
+You need only two columns: the code identifying each municipality ("BFS_nummer") and the cluster number (hc).
 Open the table including the resulting clusters with a dedicated program (like Excel) to reorganize the header, as a new column for unique identifier has been created automatically (you can name it "ID"), and headers has to be shifted of one place on the right.
-
-```{r jpg2, fig.cap="Spatial pattern distribution of Swiss poputaion census \\label{Clusters_7}", dpi=300, out.width="70%", out.height="70%", fig.align="center", echo = FALSE}
-knitr::include_graphics("images/Clusters_7.jpg")
-```
 
 If you want to try the primary and automatic process in Rstudio, you can conduct the below codes and see the map.
 
@@ -403,17 +394,18 @@ This approach led to represent and interpret the main patterns characterizing th
 
 ## Further analyses
 
-To be sure that everything is perfectly clear for you, we propose you to **answer the following questions** and to discuss your answers with the other participants to the course or directly with the teacher.
+To ensure that everything is perfectly clear, we propose you to answer the following questions and to discuss your answers with the other participants to the course or directly with the teacher.
 
-1)  Change the size of the gridmap and check if you get better results for SOM. **N.B.** Better results are achieved when the quantisation error decreases, the explained variance increases, and there are no empty observations revealed by the Node Counts map.
+1.  Change the size of the gridmap and check if you get better results for SOM.
+    **N.B.** Better results are achieved when the quantisation error decreases, the explained variance increases, and there are no empty observations revealed by the Node Counts map.
 
-2.1) Focusing on Cluster 6: which variable characterize it the most?
-Based on these variables, which class of land use can be associated to this cluster?
-2.2) And in the case of Cluster 4?
+2.  Focusing on Cluster 6: which variable characterize it the most?
+    Based on these variables, which class of land use can be associated to this cluster?
+    And in the case of Cluster 4?
 
-3)  Describe the distribution of the clusters in the geographical space.
+3.  Describe the distribution of the clusters in the geographical space.
     In more details, describe to which kind of land use the different clusters can be referred and specify why.
 
-4)  From the visual inspection of the heatmaps, describe the correlation you can observe between the following variables: a) "p_transport" and "p_infrastructure"; b) "p_agriculture" and "p_improductible".
+4.  From the visual inspection of the heatmaps, describe the correlation you can observe between the following variables: a) "p_transport" and "p_infrastructure"; b) "p_agriculture" and "p_improductible".
 
-## Further reading on this topic
+## References

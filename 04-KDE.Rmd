@@ -393,5 +393,3 @@ The reading of the paper @tonini_evolution_2017, which inspired this lab, can he
 1.  At which spatial and temporal distance you can observe a peak of clustering?
 
 2.  Describe which is spatio-temporal density distribution of forest fires events through the study area.
-
-## Further reading on this topic

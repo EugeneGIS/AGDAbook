@@ -19,14 +19,12 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.align="center")
 
 Geodata, or geospatial data, refers to features associated with a specific location on the Earth's surface.
 Geodata can be in various forms and is often used in Geographic Information Systems (GIS) for mapping and analysis.
-
 The two key components characterizing geodata are **spatial identifier** and **attributes**.
 Spatial identifier specifies the location and shape of the features, with different levels of detail, while attributes describe their characteristics.
 
 The **two basic formats** used to represent the spatial component of geodata are:
 
 1.  **Vector**: this format uses points, lines, and polygons to identify each individual features.
-
 2.  **Raster**: this format uses a regular grid of pixels to represent the global geographic context.
 
 In addition, **attribute tables** are used to store the characteristics associated with the geospatial features.
@@ -342,7 +340,7 @@ plot(DEM_Lausanne, main = "DEM of Lausanne")
 plot(st_geometry(Lausanne), add = TRUE, border = "red", lwd = 2)
 ```
 
-### Display categorigal variables for a raster
+### Display categorical variables for a raster
 
 Categorical variables, also known as qualitative variables, are variables that represent distinct groups or categories.
 These variables are typically non-numeric and can be divided into a finite number of categories or levels.
@@ -403,5 +401,3 @@ color_palette <- colorRampPalette(brewer.pal(8, "Set3"))(num_classes)
 plot(landCover, col = color_palette, main = "Land Cover Classes")
 
 ```
-
-## Further reading on this topic
