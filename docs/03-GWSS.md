@@ -2,26 +2,27 @@
 bibliography: book.bib
 link-citations: true
 biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
+csl: apa.csl
 editor_options: 
   markdown: 
     wrap: sentence
+    urlcolor: blue
 ---
 
-# Geographically Weighted Summary Statistics
+
+
+# Geographically Weighted Summary Statistics in Geosciences
 
 Geographically Weighted Summary Statistics (GWSS) represent an advanced analytical approach in geoscience, allowing researchers to explore spatial variations in data across a geographical landscape.
 Unlike traditional summary statistics that provide a single, overall summary measure (like mean, median, or standard deviation) for an entire dataset, GWSS techniques calculate these measures locally, reflecting the unique characteristics and variations at different spatial locations.
 This method is particularly valuable in geoscience, where spatial heterogeneity often plays a critical role.
 
-
-
 ## GWSS for fire management
 
-In fire risk assesmnt, it is essential to identify areas where fires occur most frequently and differentiate between small and large fires.
+In fire risk assessment, it is essential to identify areas where fires occur most frequently and differentiate between small and large fires.
 This information is critical for understanding ignition factors and developing strategies to reduce forest fires, manage ignition sources, and identify high-risk areas.
 
-Despite the availability of spatio-temporal inventories of forest fires, extracting meaningful information about their distribution patterns is challenging by merely examining the mapped burnt areas.
+Although spatio-temporal inventories of forest fires are available, extracting meaningful insights about their distribution patterns remains challenging when relying solely on the examination of mapped burnt areas.
 To address this, Geographically Weighted Summary Statistics (GWSS) can be utilized.
 GWSS assumes that burned areas exhibit geographic trends and calculates local statistics to reveal these patterns more clearly.
 This approach provides valuable insights for effective fire management and prevention strategies.
@@ -34,13 +35,13 @@ This application is inspired by the work of [@tonini_evolution_2017]
 **Summary statistics** include a number of measures that can be used to summarize a set of observations, the most important of which are measures of central tendency (arithmetic mean, median and mode) and measures of dispersion around the mean (variance and standard deviation).
 In addition, measures of skewness and kurtosis are descriptors of the shape of the probability distribution function, the former indicating the asymmetry and the latter the peakedness/tailedness of the curve.
 
-In the case of geodata, these global statistical descriptors may vary from one region to another, as their values may be affected by local environmental and socio-economic factors.
+For geoenvironmental processes, these global statistical descriptors may vary from one region to another, as their values may be affected by local environmental and socio-economic factors.
 In this case, an appropriately localized calibration can provide a better description of the observed values.
-One way to achieve this goal is to *weight* the above statistical measures for a given quantitative variable based on their geographical location.
+One way to achieve this goal is to weight the above statistical measures for a given quantitative variable based on their geographical location.
 
 We introduce here the method proposed by [@brunsdon_geographically_2002] and implemented in the **function GWSS** presented in the R package GWmodel [@lu_gwmodel_2014; @brunsdon_rpubs_2019].
 
-The evaluation of geographically weighted summary statistics is obtained by computing a summary for a small area around each geolocalized punctual observation, by using the *kernel density estimation* technique (KDE) [@brunsdon_estimating_1995].
+The evaluation of geographically weighted summary statistics is obtained by computing a summary for a small area around each geolocalized punctual observation, by using the kernel density estimation technique (KDE) [@brunsdon_estimating_1995].
 KDE is estimated at each point, taking into account the influence of the points falling within an area, with increasing weight towards the center, corresponding to the point location.
 A surface summary statistic is thus obtained.
 
@@ -62,7 +63,7 @@ In this work, for consistency reasons, we consider only fires occurred between 1
 <p class="caption">(\#fig:jpg)Total annual number of forest fire events, expressed in thousands of square metres \label{Histo_FF}</p>
 </div>
 
-## Computer lab: GWSS
+## Computing lab: GWSS
 
 ### Load the libraries
 
@@ -93,7 +94,7 @@ library(sp)
 
 ### Import the forest fire dataset
 
-In this section you will load the geodata representing the dataset of forest fires occurred in the continental Portuguese area in the period 1990-2013.
+In this section you will load the geodata representing the forest fires inventories for events occurred in the continental Portuguese area in the period 1990-2013.
 You will also load the boundaries of the study area.
 You will start by exploring the datasets using mainly visual tools (plotting and histogram).
 
@@ -111,7 +112,7 @@ You will start by visualizing the databases.
 In the GIS environment, this correspond to the attribute table of a vector punctual feature.
 
 Than you can plot the histogram of events distribution based on the variable *"Area_ha"* (the size in hectares of the burned area).
-Since this is a power low distribution, for a better understanding it's recommended to transform the data using a logarithmic scale.
+Since this is a power low distribution, for a better understanding it is recommended to transform the data using a logarithmic scale.
 Using Log10 you can easily evaluate the frequency distribution of the burned areas.
 
 
@@ -132,13 +133,13 @@ summary(FFPorto$Area_ha)
 hist(FFPorto$Area_ha)
 ```
 
-<img src="03-GWSS_files/figure-html/histo_FF-1.png" width="672" />
+<img src="03-GWSS_files/figure-html/histo_FF-1.png" width="672" style="display: block; margin: auto;" />
 
 ``` r
 hist(log10(FFPorto$Area_ha))
 ```
 
-<img src="03-GWSS_files/figure-html/histo_FF-2.png" width="672" />
+<img src="03-GWSS_files/figure-html/histo_FF-2.png" width="672" style="display: block; margin: auto;" />
 
 ### Forest fires spatial distribution
 
@@ -146,31 +147,21 @@ For a better understanding of the phenomenon, you can group the events according
 Based on the frequency distribution of the burned areas, the following three classes can be defined:
 
 -   **Small fires**: less than 15 ha
-
 -   **Medium fires**: between 15 ha and 100 ha
-
 -   **Large fires**: bigger than 100 ha
 
 Plotting the forest fires events using different colors, based on the size of the burned areas, can simplify the understanding of their pattern distribution, knowing that fires of different size have normally different drivers.
 
-<img src="03-GWSS_files/figure-html/plot-all-fires-1.png" width="672" />
+<img src="03-GWSS_files/figure-html/plot-all-fires-1.png" width="672" style="display: block; margin: auto;" />
 
-### Compute the geographically whited statistics
+### Compute the geographically weighted statistics
 
 From the exploratory data analysis performed above, it seems that a simple plotting of the forest fires events based on their spatial distribution, even if classified based on their size, can not really help to understand their behaviors.
 This is because we face to a huge number of events and the variable that we are using to characterize them (i.e., the size of the burned area) is very heterogeneous.
 To this aim, we can compute basic and robust GWSS and plot the data accordingly.
 
 GWSS includes *geographically weighted means*, *standard deviations* and the *skweness*.
-As you can see from the R Documentation - command: `help(gwss)` - , same data manipulations are necessary to transform the forest fires dataset in a compatible data frame format.
-
-**GWSS parameters**:
-
--   We summarize the data based on the size of the burned area (*vars*).
-
--   We use here an adaptive kernel where the bandwidth (*bw*) corresponds to the number (100 in this case) of nearest neighbors (i.e. adaptive distance).
-
--   We keep the default values for the other parameters.
+As you can see from the R Documentation - command: `help(gwss)` - same data manipulations are necessary to transform the forest fires dataset into a compatible data frame format.
 
 
 ``` r
@@ -180,10 +171,16 @@ FFspdf<-SpatialPointsDataFrame(FFdf[,1:2], FFdf)
 str(FFspdf)
 ```
 
+**GWSS parameters**:
+
+-   We summarize the data based on the size of the burned area (*vars*).
+-   We use here an adaptive kernel where the bandwidth (*bw*) corresponds to the number (100 in this case) of nearest neighbors (i.e. adaptive distance).
+-   We keep the default values for the other parameters.
+
 
 ``` r
 # Run gwss: this operation can take several minutes...be patient!
-# While waiting, you can look at gwss R Documentation
+# While waiting, you can look at gwss R Documentation:
 help(gwss)
 
 FFgwss <- gwss(FFspdf,vars=("Area"),adaptive=TRUE, bw=100)
@@ -191,8 +188,8 @@ FFgwss <- gwss(FFspdf,vars=("Area"),adaptive=TRUE, bw=100)
 
 ### Look at the results
 
-The resulting object (**FFgwss**) has a number of components.
-The most important one is the spatial data frame containing the results of local summary statistics for each data point location, stored in *FFgwss\$SDF* (that is a spatial DataFrame).
+The resulting object (*FFgwss*) has a number of components.
+The most important one is the spatial data frame containing the results of local summary statistics for each data point location, stored in *FFgwss\$SDF* (that is a spatial data frame).
 
 
 ``` r
@@ -206,10 +203,9 @@ FFgwss
 ### GWSS maps
 
 To produce a map of the local geographically weighted summary statistic of your choice, firstly we need to enter a small R function definition.
-This is just a short R program to draw a map: you can think of it as a command that tells R how to draw a map (see [Geographically Weighted Summary Statistics] (<https://rpubs.com/chrisbrunsdon/99667>) for more details).
+This is just a short R program to draw a map: you can think of it as a command that tells R how to draw a map (see [Geographically Weighted Summary Statistics in Geosciences] (<https://rpubs.com/chrisbrunsdon/99667>) for more details).
 The advantage of defining a function is that the entire map can now be drawn using a single command for each variable, rather than having to repeat those steps each time.
-To define the intervals for the classification we used Jenks natural breaks classification method (`style="fisher"`).
-
+To define the intervals for the classification, we use Jenks natural breaks classification method (`style="fisher"`).
 
 
 ``` r
@@ -233,47 +229,27 @@ quick.map <- function(spdf,var,legend.title,main.title) {
   legend("bottomright",cut.levels,col=colors,pch=16,bty="n",title=legend.title)
   }
 
-# Call the function to display the maps of the Local Mean (LM), Local Standard Deviation(LSD), and Local Skweness (LSKe)
+# Call the function to display the maps of the Local Mean (LM), Local Standard Deviation(LS), and Local Skweness (LSKe)
 
 par(mfrow=c(1,3))
 quick.map(FFgwss$SDF, "Area_LM", "Area (ha)", "GWL Means")
-```
-
-```
-## Warning in classIntervals(x, n = 5, style = "fisher"): N is large, and some
-## styles will run very slowly; sampling imposed
-```
-
-``` r
 quick.map(FFgwss$SDF, "Area_LSD", "Area (ha)", "GWL Standard Deviation")
-```
-
-```
-## Warning in classIntervals(x, n = 5, style = "fisher"): N is large, and some
-## styles will run very slowly; sampling imposed
-```
-
-``` r
 quick.map(FFgwss$SDF, "Area_LSKe", "Area (ha)", "GWL Skewness")
 ```
 
-```
-## Warning in classIntervals(x, n = 5, style = "fisher"): N is large, and some
-## styles will run very slowly; sampling imposed
-```
-
-<img src="03-GWSS_files/figure-html/gwss-maps-1.png" width="672" />
+<img src="03-GWSS_files/figure-html/gwss-maps-1.png" width="672" style="display: block; margin: auto;" />
 
 ## Conclusions and further analyses
 
 This practical computer lab allowed you to familiarize with GWSS, by the proposed application about geographically weighted summary statistics.
 This method allowed us to explore how the average burned area vary locally through Continental Portugal in the period 1990-2013.
 
-The global Geographically Weighted (GW) means informs you about the local average value of the burned area, based of the neighboring events occurred in a given period.
-Similarly, you may compute a GW standard deviation to see the extent to which the size of the burned area spread around this mean.
-Finally you can compute the GW skewness to measure the symmetry of distribution: a positively skewed distribution means that there is a higher number of data points having low values, with mean value lower that the median; and the contrary for a negatively skewed distribution.
+The global Geographically Weighted (GW) means informs us about the local average value of the burned area, based of the neighboring events occurred in a given period.
+Similarly, you may compute the GW standard deviation to see the extent to which the size of the burned area spread around this mean.
+Finally you can compute the GW skewness to measure the symmetry of distribution: a positively skewed distribution means that there is a higher number of data points with low values, with mean value lower that the median; and the contrary for a negatively skewed distribution.
 
-To be sure that everything is perfectly clear for you, we propose you to **answer the following questions** and to discuss your answers with the other participants to the course or directly with the teacher.
+To ensure that everything is perfectly clear, we propose you to answer the following questions.
+You can find the answers in the reference paper [@tonini_evolution_2017].
 
 1)  What is the pattern distribution of the GW-means for burned area in Portugal during the investigated periods?
 
@@ -286,4 +262,4 @@ To be sure that everything is perfectly clear for you, we propose you to **answe
 4)  Which can be other applications of GWSS for geo-environmental data?
     In other words, can you imagine other geo-environmental dataset that can be analysed using GWSS?
 
-5)  You can finally play with the code and try to run it using a different numbers of nearest neighbors (bw=x) and comparing the results.
+5)  You can finally play with the code and try to run it using a different numbers of nearest neighbors (*bw=x*) and compare the results.

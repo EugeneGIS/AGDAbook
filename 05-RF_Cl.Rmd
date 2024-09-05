@@ -1,5 +1,6 @@
 ---
 bibliography: book.bib
+csl: apa.csl
 link-citations: true
 editor_options: 
   markdown: 

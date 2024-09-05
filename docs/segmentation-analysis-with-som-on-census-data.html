@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Segmentation Analysis with SOM on Census Data | Advanced Geospatial Data Analysis in R - Environmental applications</title>
+  <meta name="description" content="Chapter 8 Segmentation Analysis with SOM on Census Data | Advanced Geospatial Data Analysis in R - Environmental applications" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Segmentation Analysis with SOM on Census Data | Advanced Geospatial Data Analysis in R - Environmental applications" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Segmentation Analysis with SOM on Census Data | Advanced Geospatial Data Analysis in R - Environmental applications" />
+  
+  
+  
+
+<meta name="author" content="Dr. Marj Tonini, Haokun Liu" />
+
+
+<meta name="date" content="2024-05-09" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="local-random-forest.html"/>
+<link rel="next" href="dbscan-for-3d-fetures-detection-in-point-clouds.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="images/AGDA_ImageCover.webp"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-overview"><i class="fa fa-check"></i>Book overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#computing-lab"><i class="fa fa-check"></i>Computing lab</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#target-audience"><i class="fa fa-check"></i>Target audience</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#authors-information"><i class="fa fa-check"></i>Authors information</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#my-journey-of-learning-integrating-geospatial-data-analysis-with-data-science"><i class="fa fa-check"></i>My Journey of Learning: Integrating Geospatial Data Analysis with Data Science</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-language"><i class="fa fa-check"></i><b>1.1</b> R Language</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-packages"><i class="fa fa-check"></i><b>1.1.1</b> R Packages</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#some-tips"><i class="fa fa-check"></i><b>1.1.2</b> Some tips</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-commands-online-resources"><i class="fa fa-check"></i><b>1.1.3</b> R Commands (online resources)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-markdown"><i class="fa fa-check"></i><b>1.2</b> R Markdown</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-type-in-computational-analysis"><i class="fa fa-check"></i><b>1.3</b> Data type in computational analysis</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#variables"><i class="fa fa-check"></i><b>1.3.1</b> Variables</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-structure-in-r"><i class="fa fa-check"></i><b>1.3.2</b> Data structure in R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html"><i class="fa fa-check"></i><b>2</b> Basic operation with geodata in R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#plotting-vector-dataset"><i class="fa fa-check"></i><b>2.2</b> Plotting vector dataset</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#package-sf-and-vector-dataset"><i class="fa fa-check"></i><b>2.2.1</b> Package <strong>sf</strong> and vector dataset</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#plot-vector-features"><i class="fa fa-check"></i><b>2.2.2</b> Plot vector features</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#plotting-raster-dataset"><i class="fa fa-check"></i><b>2.3</b> Plotting raster dataset</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#terra-package-and-raster-dataset"><i class="fa fa-check"></i><b>2.3.1</b> Terra package and raster dataset</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#plot-raster-features"><i class="fa fa-check"></i><b>2.3.2</b> Plot raster features</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#geodata-manipulation"><i class="fa fa-check"></i><b>2.4</b> Geodata manipulation</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#manipulate-tabular-datasets"><i class="fa fa-check"></i><b>2.4.1</b> Manipulate tabular datasets</a></li>
+<li class="chapter" data-level="2.4.2" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#pipes-chaining-of-multiple-operations"><i class="fa fa-check"></i><b>2.4.2</b> Pipes: chaining of multiple operations</a></li>
+<li class="chapter" data-level="2.4.3" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#join-table"><i class="fa fa-check"></i><b>2.4.3</b> Join table</a></li>
+<li class="chapter" data-level="2.4.4" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#mapping-with-ggplot2"><i class="fa fa-check"></i><b>2.4.4</b> Mapping with ggplot2</a></li>
+<li class="chapter" data-level="2.4.5" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#cropping-ratser"><i class="fa fa-check"></i><b>2.4.5</b> Cropping ratser</a></li>
+<li class="chapter" data-level="2.4.6" data-path="basic-operation-with-geodata-in-r.html"><a href="basic-operation-with-geodata-in-r.html#display-categorical-variables-for-a-raster"><i class="fa fa-check"></i><b>2.4.6</b> Display categorical variables for a raster</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html"><i class="fa fa-check"></i><b>3</b> Geographically Weighted Summary Statistics in Geosciences</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#gwss-for-fire-management"><i class="fa fa-check"></i><b>3.1</b> GWSS for fire management</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#the-overall-methodology"><i class="fa fa-check"></i><b>3.1.1</b> The overall methodology</a></li>
+<li class="chapter" data-level="3.1.2" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#forest-fires-dataset"><i class="fa fa-check"></i><b>3.1.2</b> Forest fires dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#computing-lab-gwss"><i class="fa fa-check"></i><b>3.2</b> Computing lab: GWSS</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#load-the-libraries"><i class="fa fa-check"></i><b>3.2.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="3.2.2" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#import-the-forest-fire-dataset"><i class="fa fa-check"></i><b>3.2.2</b> Import the forest fire dataset</a></li>
+<li class="chapter" data-level="3.2.3" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#forest-fires-spatial-distribution"><i class="fa fa-check"></i><b>3.2.3</b> Forest fires spatial distribution</a></li>
+<li class="chapter" data-level="3.2.4" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#compute-the-geographically-weighted-statistics"><i class="fa fa-check"></i><b>3.2.4</b> Compute the geographically weighted statistics</a></li>
+<li class="chapter" data-level="3.2.5" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#look-at-the-results"><i class="fa fa-check"></i><b>3.2.5</b> Look at the results</a></li>
+<li class="chapter" data-level="3.2.6" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#gwss-maps"><i class="fa fa-check"></i><b>3.2.6</b> GWSS maps</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="geographically-weighted-summary-statistics-in-geosciences.html"><a href="geographically-weighted-summary-statistics-in-geosciences.html#conclusions-and-further-analyses"><i class="fa fa-check"></i><b>3.3</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><i class="fa fa-check"></i><b>4</b> Spatio-Temporal Cluster Analysis of Geoenvironmental Processes</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#st-clustering-for-fire-management"><i class="fa fa-check"></i><b>4.1</b> ST clustering for fire management</a></li>
+<li class="chapter" data-level="4.2" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#clustering-methods"><i class="fa fa-check"></i><b>4.2</b> Clustering methods</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#ripleys-k-function"><i class="fa fa-check"></i><b>4.2.1</b> Ripley’s K-function</a></li>
+<li class="chapter" data-level="4.2.2" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#kernel-density-estimator"><i class="fa fa-check"></i><b>4.2.2</b> Kernel density estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#computing-lab-spatio-temporal-clustering"><i class="fa fa-check"></i><b>4.3</b> Computing lab: spatio-temporal clustering</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#load-the-libraries-1"><i class="fa fa-check"></i><b>4.3.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="4.3.2" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#import-the-forest-fire-dataset-1"><i class="fa fa-check"></i><b>4.3.2</b> Import the forest fire dataset</a></li>
+<li class="chapter" data-level="4.3.3" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#ff-subsets-based-on-the-burned-areas-size"><i class="fa fa-check"></i><b>4.3.3</b> FF-subsets based on the burned areas’ size</a></li>
+<li class="chapter" data-level="4.3.4" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#ff-subsets-based-on-their-geographical-distribution"><i class="fa fa-check"></i><b>4.3.4</b> FF-subsets based on their geographical distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#space-time-k-function"><i class="fa fa-check"></i><b>4.4</b> Space-time K-function</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#extract-time-and-pts-object"><i class="fa fa-check"></i><b>4.4.1</b> Extract time and PTS object</a></li>
+<li class="chapter" data-level="4.4.2" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#compute-the-space-time-k-function"><i class="fa fa-check"></i><b>4.4.2</b> Compute the space-time K-function</a></li>
+<li class="chapter" data-level="4.4.3" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#assess-the-space-time-clustering-behavior"><i class="fa fa-check"></i><b>4.4.3</b> Assess the space-time clustering behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html"><a href="spatio-temporal-cluster-analysis-of-geoenvironmental-processes.html#conclusions-and-further-analyses-1"><i class="fa fa-check"></i><b>4.5</b> Conclusions and further analyses</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html"><i class="fa fa-check"></i><b>5</b> Predictive Mapping of Natural Hazards Using Random Forest</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#rf-for-landslides-susceptibility-mapping"><i class="fa fa-check"></i><b>5.1</b> RF for landslides susceptibility mapping</a></li>
+<li class="chapter" data-level="5.2" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#computing-lab-random-forest"><i class="fa fa-check"></i><b>5.2</b> Computing lab: Random Forest</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#load-the-libraries-2"><i class="fa fa-check"></i><b>5.2.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="5.2.2" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#import-and-process-geodata"><i class="fa fa-check"></i><b>5.2.2</b> Import and process geodata</a></li>
+<li class="chapter" data-level="5.2.3" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#landslides-dataset"><i class="fa fa-check"></i><b>5.2.3</b> Landslides dataset</a></li>
+<li class="chapter" data-level="5.2.4" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#predictor-variables"><i class="fa fa-check"></i><b>5.2.4</b> Predictor variables</a></li>
+<li class="chapter" data-level="5.2.5" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#the-use-of-categorical-variables-in-machine-learning"><i class="fa fa-check"></i><b>5.2.5</b> The use of categorical variables in Machine Learning</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#extract-values"><i class="fa fa-check"></i><b>5.3</b> Extract values</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#split-the-input-dataset-into-training-80-and-testing-20"><i class="fa fa-check"></i><b>5.3.1</b> Split the input dataset into training (80%) and testing (20%)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#run-random-forest"><i class="fa fa-check"></i><b>5.4</b> Run Random Forest</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#rf-main-outputs"><i class="fa fa-check"></i><b>5.4.1</b> RF main outputs</a></li>
+<li class="chapter" data-level="5.4.2" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#model-evaluation"><i class="fa fa-check"></i><b>5.4.2</b> Model evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#susceptibility-mapping"><i class="fa fa-check"></i><b>5.5</b> Susceptibility mapping</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#class-intervals-for-decision-maker"><i class="fa fa-check"></i><b>5.5.1</b> Class intervals for decision maker</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#conclusions-and-further-analyses-2"><i class="fa fa-check"></i><b>5.6</b> Conclusions and further analyses</a></li>
+<li class="chapter" data-level="5.7" data-path="predictive-mapping-of-natural-hazards-using-random-forest.html"><a href="predictive-mapping-of-natural-hazards-using-random-forest.html#further-reading-on-this-topic"><i class="fa fa-check"></i><b>5.7</b> Further reading on this topic</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interpretability-explainability-with-random-forest.html"><a href="interpretability-explainability-with-random-forest.html"><i class="fa fa-check"></i><b>6</b> Interpretability &amp; Explainability with Random Forest</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interpretability-explainability-with-random-forest.html"><a href="interpretability-explainability-with-random-forest.html#aim-of-the-present-lab"><i class="fa fa-check"></i><b>6.1</b> Aim of the present lab</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interpretability-explainability-with-random-forest.html"><a href="interpretability-explainability-with-random-forest.html#re-load-libraries-and-workspace"><i class="fa fa-check"></i><b>6.1.1</b> Re-load libraries and workspace</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interpretability-explainability-with-random-forest.html"><a href="interpretability-explainability-with-random-forest.html#features-importance-score"><i class="fa fa-check"></i><b>6.2</b> Features importance score</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interpretability-explainability-with-random-forest.html"><a href="interpretability-explainability-with-random-forest.html#partial-dependence-plot"><i class="fa fa-check"></i><b>6.2.1</b> Partial dependence plot</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="local-random-forest.html"><a href="local-random-forest.html"><i class="fa fa-check"></i><b>7</b> Local Random Forest</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="local-random-forest.html"><a href="local-random-forest.html#computing-lab-grf"><i class="fa fa-check"></i><b>7.1</b> Computing lab: GRF</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="local-random-forest.html"><a href="local-random-forest.html#feature-importance"><i class="fa fa-check"></i><b>7.1.1</b> Feature importance</a></li>
+<li class="chapter" data-level="7.1.2" data-path="local-random-forest.html"><a href="local-random-forest.html#local-r-squared"><i class="fa fa-check"></i><b>7.1.2</b> Local R squared</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="local-random-forest.html"><a href="local-random-forest.html#conclusions-and-further-analyses-3"><i class="fa fa-check"></i><b>7.2</b> Conclusions and further analyses</a></li>
+<li class="chapter" data-level="7.3" data-path="local-random-forest.html"><a href="local-random-forest.html#further-reading-on-this-topic-1"><i class="fa fa-check"></i><b>7.3</b> Further reading on this topic</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html"><i class="fa fa-check"></i><b>8</b> Segmentation Analysis with SOM on Census Data</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#geo-demographic-context-in-switzerland"><i class="fa fa-check"></i><b>8.1</b> Geo-demographic context in Switzerland</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#swiss-census-data"><i class="fa fa-check"></i><b>8.1.1</b> Swiss census data</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#self-organizing-map"><i class="fa fa-check"></i><b>8.2</b> Self Organizing Map</a></li>
+<li class="chapter" data-level="8.3" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#computing-lab-som"><i class="fa fa-check"></i><b>8.3</b> Computing lab: SOM</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#import-the-swiss-census-dataset"><i class="fa fa-check"></i><b>8.3.1</b> Import the Swiss census dataset</a></li>
+<li class="chapter" data-level="8.3.2" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#load-the-libraries-3"><i class="fa fa-check"></i><b>8.3.2</b> Load the libraries</a></li>
+<li class="chapter" data-level="8.3.3" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#run-som"><i class="fa fa-check"></i><b>8.3.3</b> Run SOM</a></li>
+<li class="chapter" data-level="8.3.4" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#soms-main-outputs"><i class="fa fa-check"></i><b>8.3.4</b> SOM’s main outputs</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#hierarchical-clustering"><i class="fa fa-check"></i><b>8.4</b> Hierarchical clustering</a></li>
+<li class="chapter" data-level="8.5" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#clusters-characterization"><i class="fa fa-check"></i><b>8.5</b> Clusters characterization</a></li>
+<li class="chapter" data-level="8.6" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#conclusions"><i class="fa fa-check"></i><b>8.6</b> Conclusions</a></li>
+<li class="chapter" data-level="8.7" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#further-analyses"><i class="fa fa-check"></i><b>8.7</b> Further analyses</a></li>
+<li class="chapter" data-level="8.8" data-path="segmentation-analysis-with-som-on-census-data.html"><a href="segmentation-analysis-with-som-on-census-data.html#references"><i class="fa fa-check"></i><b>8.8</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="dbscan-for-3d-fetures-detection-in-point-clouds.html"><a href="dbscan-for-3d-fetures-detection-in-point-clouds.html"><i class="fa fa-check"></i><b>9</b> DBSCAN for 3D fetures detection in point clouds</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="dbscan-for-3d-fetures-detection-in-point-clouds.html"><a href="dbscan-for-3d-fetures-detection-in-point-clouds.html#the-overall-methodology-1"><i class="fa fa-check"></i><b>9.1</b> The overall methodology</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="dbscan-for-3d-fetures-detection-in-point-clouds.html"><a href="dbscan-for-3d-fetures-detection-in-point-clouds.html#dbscan-3-d-density-based-clustering-algorithm"><i class="fa fa-check"></i><b>9.1.1</b> DBSCAN: 3-D density based clustering algorithm</a></li>
+<li class="chapter" data-level="9.1.2" data-path="dbscan-for-3d-fetures-detection-in-point-clouds.html"><a href="dbscan-for-3d-fetures-detection-in-point-clouds.html#field-campaign"><i class="fa fa-check"></i><b>9.1.2</b> Field campaign</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="dbscan-for-3d-fetures-detection-in-point-clouds.html"><a href="dbscan-for-3d-fetures-detection-in-point-clouds.html#computing-lab-dbscan"><i class="fa fa-check"></i><b>9.2</b> Computing lab: DBSCAN</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="dbscan-for-3d-fetures-detection-in-point-clouds.html"><a href="dbscan-for-3d-fetures-detection-in-point-clouds.html#load-the-libraries-4"><i class="fa fa-check"></i><b>9.2.1</b> Load the libraries</a></li>
+<li class="chapter" data-level="9.2.2" data-path="dbscan-for-3d-fetures-detection-in-point-clouds.html"><a href="dbscan-for-3d-fetures-detection-in-point-clouds.html#import-and-visualize-the-point-clouds-dataset"><i class="fa fa-check"></i><b>9.2.2</b> Import and visualize the point clouds dataset</a></li>
+<li class="chapter" data-level="9.2.3" data-path="dbscan-for-3d-fetures-detection-in-point-clouds.html"><a href="dbscan-for-3d-fetures-detection-in-point-clouds.html#run-dbscan"><i class="fa fa-check"></i><b>9.2.3</b> Run DBSCAN</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="dbscan-for-3d-fetures-detection-in-point-clouds.html"><a href="dbscan-for-3d-fetures-detection-in-point-clouds.html#conclusions-and-further-analyses-4"><i class="fa fa-check"></i><b>9.3</b> Conclusions and further analyses</a></li>
+<li class="chapter" data-level="9.4" data-path="dbscan-for-3d-fetures-detection-in-point-clouds.html"><a href="dbscan-for-3d-fetures-detection-in-point-clouds.html#further-reading-on-this-topic-2"><i class="fa fa-check"></i><b>9.4</b> Further reading on this topic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Geospatial Data Analysis in R - Environmental applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="segmentation-analysis-with-som-on-census-data" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Segmentation Analysis with SOM on Census Data<a href="segmentation-analysis-with-som-on-census-data.html#segmentation-analysis-with-som-on-census-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The increasing availability of multivariate datatets stimulates researches to develop new techniques that differ from those utilized in earlier scientific paradigms.
+In the field of social and economic science, geo-demographic segmentation defines a technique used to classify a population based on input data describing administrative units and people living there <span class="citation">(see <a href="#ref-spielman_social_2008">Spielman &amp; Thill, 2008</a>)</span>.
+Small areas can thus be classified into discrete categories using demographic input data, by means of data reduction techniques (such as the Principal component analysis).
+The main limitation of these approaches is the problem of communicating the multidimensional complexity characterizing the different output classes.</p>
+<p>Machine learning techniques can help in this context, as they are designed to extract useful formation and insight from the interaction of the variables describing the complex structure of a given phenomenon.
+In the present computing lab we introduce an unsupervised learning procedure based on <strong>Self-Organizing Map (SOM)</strong> <span class="citation">(see <a href="#ref-kohonen_self-organized_1982">Kohonen, 1982</a>)</span>, allowing detecting clusters and characterizing the pattern of population dynamic in Switzerland in the recent period.
+This lab is inspired by the work of <span class="citation">Marj Tonini et al. (<a href="#ref-marj_tonini_unsupervised_2023">2023</a>)</span>.</p>
+<div id="geo-demographic-context-in-switzerland" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Geo-demographic context in Switzerland<a href="segmentation-analysis-with-som-on-census-data.html#geo-demographic-context-in-switzerland" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Switzerland has the highest life expectancy in the world.
+It counts about 8,5 million inhabitants (official census data 2020), twice as much as at the beginning of the 20th century, mainly because of the high level of immigration.
+The number of foreigners that currently reside in the country corresponds to about one quarter of the total population.
+Most of the population (85%) lives in cities.
+Population aging increased over the course of the 20th century, with one in five person of retirement age today.
+In the present study, we developed a machine learning based approach to understand and describe the population patterns in different geographic areas.</p>
+<div id="swiss-census-data" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Swiss census data<a href="segmentation-analysis-with-som-on-census-data.html#swiss-census-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Input data come from the national population census, provided by the <a href="https://www.bfs.admin.ch/bfs/en/home.html">Swiss Federal Statistical Office</a>, and including information on the socio-economic status of the population and surveyed land use and land cover.
+This information has been aggregated to the municipality level for the purpose of the present investigation.
+Census data 2020 have been considered to analyse the current pattern, while the former census surveys can be considered to assess transitions and evaluate population dynamics.</p>
+</div>
+</div>
+<div id="self-organizing-map" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Self Organizing Map<a href="segmentation-analysis-with-som-on-census-data.html#self-organizing-map" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We use <strong>SOM</strong>, an unsupervised competitive learning neural network allowing representing a high-dimensional feature space (defined by the multivariate input dataset), as two-dimensional discretized pattern (the SOM grid of neurons).
+In SOM the proximity of the units in the output grid reflects the similarity of the corresponding input observations, which guarantees the preservation of the topological structure of the input data.</p>
+<p>Compared to other approaches, SOM is very efficient for data visualization.
+Indeed it provides additional outputs such as the heatmaps, representing the distribution of each input feature across the SOM grid, extremely useful to visually explore the relationship between the input variables.</p>
+</div>
+<div id="computing-lab-som" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Computing lab: SOM<a href="segmentation-analysis-with-som-on-census-data.html#computing-lab-som" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="import-the-swiss-census-dataset" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Import the Swiss census dataset<a href="segmentation-analysis-with-som-on-census-data.html#import-the-swiss-census-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Fist, you have to import the Swiss census dataset for the year 2020, referred to the municipality administrative units.
+As you can see from the description of the selected variables , some of them can be discarded from the analysis.
+So, in the following step, we extract a subset of the most meaningful variables for the purpose of the present study.</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb180-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="fu">c</span>(<span class="st">&quot;images/Variables1.jpg&quot;</span>, <span class="st">&quot;images/Variables2.jpg&quot;</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:variables-1"></span>
+<img src="images/Variables1.jpg" alt="Variables description \label{Variables}" width="100%" height="100%" />
+<p class="caption">
+Figure 8.1: Variables description
+</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:variables-2"></span>
+<img src="images/Variables2.jpg" alt="Variables description \label{Variables}" width="100%" height="100%" />
+<p class="caption">
+Figure 8.2: Variables description
+</p>
+</div>
+<div id="inspect-the-data" class="section level4 hasAnchor" number="8.3.1.1">
+<h4><span class="header-section-number">8.3.1.1</span> Inspect the data<a href="segmentation-analysis-with-som-on-census-data.html#inspect-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Plotting the histogram of the variables distribution allows to detect outliers, see if they have comparable range of values, and evaluate if a data transformation is necessary.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb181-1" tabindex="-1"></a><span class="co"># Plot variables&#39; frequency distribution</span></span>
+<span id="cb181-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb181-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(subset2020)) {      </span>
+<span id="cb181-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb181-3" tabindex="-1"></a>    <span class="fu">hist</span>((subset2020[ , i]),  <span class="at">main=</span><span class="fu">colnames</span>(subset2020[i]))</span>
+<span id="cb181-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb181-4" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="data-transformation" class="section level4 hasAnchor" number="8.3.1.2">
+<h4><span class="header-section-number">8.3.1.2</span> Data transformation<a href="segmentation-analysis-with-som-on-census-data.html#data-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Data transformation seeks the make the variables range comparable.
+This process ensure the data entries to look similar across all fields and records, making information easier to find, group and analyze.</p>
+<p>With <strong>Min-Max Scaling</strong>, the data values are scaled in a range between 0 and 1.
+As a consequence, the effect of outliers suppresses to a certain extent.
+Moreover, it helps us to have a smaller value of the standard deviation of the data scaled.</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb182-1" tabindex="-1"></a><span class="co"># Custom function to implement min max scaling</span></span>
+<span id="cb182-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb182-2" tabindex="-1"></a>minMax <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb182-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb182-3" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
+<span id="cb182-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb182-4" tabindex="-1"></a>}</span>
+<span id="cb182-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb182-5" tabindex="-1"></a></span>
+<span id="cb182-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb182-6" tabindex="-1"></a><span class="co"># Apply max-min to the data</span></span>
+<span id="cb182-7"><a href="segmentation-analysis-with-som-on-census-data.html#cb182-7" tabindex="-1"></a>dfnorm2020<span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">lapply</span>((subset2020[ , <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]), minMax))</span>
+<span id="cb182-8"><a href="segmentation-analysis-with-som-on-census-data.html#cb182-8" tabindex="-1"></a><span class="fu">summary</span>(dfnorm2020)</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb183-1" tabindex="-1"></a><span class="co"># Plot the histograms of the transformed data </span></span>
+<span id="cb183-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb183-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(dfnorm2020)) {      </span>
+<span id="cb183-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb183-3" tabindex="-1"></a>    <span class="fu">hist</span>((dfnorm2020[ , i]),  <span class="at">main=</span><span class="fu">colnames</span>(dfnorm2020[i]))</span>
+<span id="cb183-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb183-4" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+</div>
+<div id="load-the-libraries-3" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Load the libraries<a href="segmentation-analysis-with-som-on-census-data.html#load-the-libraries-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To perform the analyses and visualize the results you have to load the following libraries:</p>
+<ul>
+<li><strong>kohonen</strong>: Supervised and Unsupervised Self-Organizing Maps (SOM)</li>
+<li><strong>aweSOM:</strong> offers a set of tools to explore and analyze datasets with SOM</li>
+<li><strong>ggplot2</strong>: create Elegant Data Visualizations Using the Grammar of Graphics</li>
+<li><strong>colorpatch</strong>: rendering methods (ggplot extensions)</li>
+</ul>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb184-1" tabindex="-1"></a><span class="fu">library</span>(kohonen)</span>
+<span id="cb184-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb184-2" tabindex="-1"></a><span class="fu">library</span>(aweSOM)</span>
+<span id="cb184-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb184-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb184-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb184-4" tabindex="-1"></a><span class="fu">library</span>(colorpatch)</span>
+<span id="cb184-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb184-5" tabindex="-1"></a>(<span class="fu">.packages</span>())</span></code></pre></div>
+</div>
+<div id="run-som" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> Run SOM<a href="segmentation-analysis-with-som-on-census-data.html#run-som" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The main idea with <strong>SOM</strong> is to map the input high-dimensional feature space in a lower-dimensional output space organized on a grid made up of regular units (i.e. the neurons).
+At the end of the process, each observation from the input space (<span class="math inline">\(X_{k,i}\)</span>) will be associated (i.e., mapped) to a unit in the SOM grid.
+Depending on the size of the grid, one unit can include several input observations.</p>
+<p>The first step consists in defining the size and geometry of the SOM grid.
+In this case we define a rectangular grid of 18 by 13 units, allowing to allocate, on average, about 15 input-items per units, and whose geometry reproduces the shape of the study area.
+(<strong>NB</strong>: several parameters and configurations of the SOM grid can be implemented and compared, seeking to minimize the <em>Quantization Error, QE</em>)</p>
+<p>Finally, you can run the SOM model.
+Note that <em>rlen</em> indicates the number of times the complete data set will be presented to the network, while for the other parameters we will keep the default values.</p>
+<p>The overall computation include the following steps:</p>
+<p><strong>1) The data frame has to be transformed to a matrix</strong></p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb185-1" tabindex="-1"></a>mxM2020<span class="ot">&lt;-</span><span class="fu">as.matrix</span>(dfnorm2020) <span class="co"># max-min</span></span></code></pre></div>
+<p><strong>2) Create the SOM-grid</strong></p>
+<p>Before running SOM, you have to create the grid of output units.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb186-1" tabindex="-1"></a><span class="co"># Gird size 18x13 units</span></span>
+<span id="cb186-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb186-2" tabindex="-1"></a>som_grid <span class="ot">&lt;-</span> <span class="fu">somgrid</span>(<span class="at">xdim =</span> <span class="dv">18</span>, <span class="at">ydim=</span><span class="dv">13</span>) </span></code></pre></div>
+<p><strong>3) Run-SOM</strong></p>
+<p>The general R function is used for creating simulations of random objects that can be reproduced.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb187-1" tabindex="-1"></a><span class="co"># Use max-min data transformation</span></span>
+<span id="cb187-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb187-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) </span>
+<span id="cb187-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb187-3" tabindex="-1"></a></span>
+<span id="cb187-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb187-4" tabindex="-1"></a><span class="co"># Run SOM</span></span>
+<span id="cb187-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb187-5" tabindex="-1"></a>SOM2020M<span class="ot">&lt;-</span> <span class="fu">som</span>(mxM2020,</span>
+<span id="cb187-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb187-6" tabindex="-1"></a>               <span class="at">grid=</span>som_grid, </span>
+<span id="cb187-7"><a href="segmentation-analysis-with-som-on-census-data.html#cb187-7" tabindex="-1"></a>               <span class="at">rlen=</span><span class="dv">1000</span>)</span>
+<span id="cb187-8"><a href="segmentation-analysis-with-som-on-census-data.html#cb187-8" tabindex="-1"></a><span class="fu">print</span>(SOM2020M)</span></code></pre></div>
+<pre><code>## SOM of size 18x13 with a rectangular topology.
+## Training data included.</code></pre>
+<p><strong>4) SOM-model evaluation</strong></p>
+<p>Finally, you can optimize the size of the grid by inspecting several quality measure and changing the parameters accordingly.
+In particular we will explore the following:</p>
+<ul>
+<li><strong>Changes</strong>: shows the mean distance to the closest codebook vector during the training.</li>
+<li><strong>Quantization error</strong>: average squared distance between the data points and the map’s codebook to which they are mapped. Lower is better.</li>
+<li><strong>Percentage of explained variance</strong>: similar to other clustering methods, the share of total variance that is explained by the clustering (equal to 1 minus the ratio of quantization error to total variance). Higher is better.</li>
+</ul>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb189-1" tabindex="-1"></a><span class="co"># Evaluate rlen</span></span>
+<span id="cb189-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb189-2" tabindex="-1"></a><span class="fu">plot</span>(SOM2020M, <span class="at">type=</span><span class="st">&quot;changes&quot;</span>)</span></code></pre></div>
+<p><img src="07-SOM_files/figure-html/SOM-quality-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb190-1" tabindex="-1"></a><span class="co"># Evaluate the results</span></span>
+<span id="cb190-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb190-2" tabindex="-1"></a>QEM<span class="ot">&lt;-</span><span class="fu">somQuality</span>(SOM2020M, dfnorm2020) </span>
+<span id="cb190-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb190-3" tabindex="-1"></a></span>
+<span id="cb190-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb190-4" tabindex="-1"></a><span class="do">## Quality measures:</span></span>
+<span id="cb190-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb190-5" tabindex="-1"></a>QEM<span class="sc">$</span>err.quant <span class="co"># Quantization error</span></span></code></pre></div>
+<pre><code>## [1] 0.04534672</code></pre>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb192-1" tabindex="-1"></a>QEM<span class="sc">$</span>err.varratio <span class="co"># % explained variance</span></span></code></pre></div>
+<pre><code>## [1] 82.06</code></pre>
+</div>
+<div id="soms-main-outputs" class="section level3 hasAnchor" number="8.3.4">
+<h3><span class="header-section-number">8.3.4</span> SOM’s main outputs<a href="segmentation-analysis-with-som-on-census-data.html#soms-main-outputs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The main graphical outputs of SOM are the node counts, the neighborhood distances, and the heatmaps.</p>
+<ul>
+<li><strong>Node counts map</strong> informs about the number of input vectors falling inside each output unit.</li>
+<li><strong>Neighbourhood distance plot</strong> shows the distance between each unit and its neighborhoods.</li>
+<li><strong>Heatmaps</strong> show the distribution of each input variable, associated to each input vectors, across the SOM grid.</li>
+</ul>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb194-1" tabindex="-1"></a><span class="co"># Create a color palette</span></span>
+<span id="cb194-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb194-2" tabindex="-1"></a>coolBlueHotRed <span class="ot">&lt;-</span> <span class="cf">function</span>(n, <span class="at">alpha =</span> <span class="dv">1</span>) {<span class="fu">rainbow</span>(n, <span class="at">end=</span><span class="dv">4</span><span class="sc">/</span><span class="dv">6</span>, <span class="at">alpha=</span>alpha)[n<span class="sc">:</span><span class="dv">1</span>]}</span>
+<span id="cb194-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb194-3" tabindex="-1"></a></span>
+<span id="cb194-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb194-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb194-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb194-5" tabindex="-1"></a></span>
+<span id="cb194-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb194-6" tabindex="-1"></a><span class="co"># Plot node counts map</span></span>
+<span id="cb194-7"><a href="segmentation-analysis-with-som-on-census-data.html#cb194-7" tabindex="-1"></a><span class="fu">plot</span>(SOM2020M, <span class="at">type=</span><span class="st">&quot;count&quot;</span>, <span class="at">main=</span><span class="st">&quot;Node Counts&quot;</span>, <span class="at">palette.name=</span>coolBlueHotRed)</span>
+<span id="cb194-8"><a href="segmentation-analysis-with-som-on-census-data.html#cb194-8" tabindex="-1"></a></span>
+<span id="cb194-9"><a href="segmentation-analysis-with-som-on-census-data.html#cb194-9" tabindex="-1"></a><span class="co"># Plot SOM neighbourhood distance</span></span>
+<span id="cb194-10"><a href="segmentation-analysis-with-som-on-census-data.html#cb194-10" tabindex="-1"></a><span class="fu">plot</span>(SOM2020M, <span class="at">type=</span><span class="st">&quot;dist.neighbours&quot;</span>, <span class="at">main =</span> <span class="st">&quot;SOM neighbour distances&quot;</span>)</span></code></pre></div>
+<p><img src="07-SOM_files/figure-html/outputs-SOM-maxmin-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Visualized side by side, heatmaps provide a useful tool to explore the correlation between the input variables .</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb195-1" tabindex="-1"></a><span class="co"># Plot heatmaps for selected variables</span></span>
+<span id="cb195-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb195-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>) </span>
+<span id="cb195-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb195-3" tabindex="-1"></a>  {</span>
+<span id="cb195-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb195-4" tabindex="-1"></a><span class="fu">plot</span>(SOM2020M, <span class="at">type =</span> <span class="st">&quot;property&quot;</span>, <span class="at">property =</span> <span class="fu">getCodes</span>(SOM2020M)[,i],</span>
+<span id="cb195-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb195-5" tabindex="-1"></a>     <span class="at">main=</span><span class="fu">colnames</span>(<span class="fu">getCodes</span>(SOM2020M))[i], <span class="at">palette.name=</span>coolBlueHotRed)</span>
+<span id="cb195-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb195-6" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb196-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;images/Heatmaps.jpg&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:jpg1"></span>
+<img src="images/Heatmaps.jpg" alt="Heatmaps \label{Heatmaps}" width="70%" height="70%" />
+<p class="caption">
+Figure 8.3: Heatmaps
+</p>
+</div>
+</div>
+</div>
+<div id="hierarchical-clustering" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Hierarchical clustering<a href="segmentation-analysis-with-som-on-census-data.html#hierarchical-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Hierarchical clustering can finally be performed to isolate groups of input vectors characterized by a similar distribution of the input variables.
+This second step takes the SOM-units (i.e., the CodeBook vectors) as input and group them into the desired number of clusters (we choose 7 in this case).
+This allows to characterize main typologies of geo-demographic groups.</p>
+<ul>
+<li><strong>Apply hierarchical clustering:</strong></li>
+</ul>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb197-1" tabindex="-1"></a>CB2020M <span class="ot">&lt;-</span> <span class="fu">getCodes</span>(SOM2020M) <span class="co"># Extract codebook vectors</span></span>
+<span id="cb197-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb197-2" tabindex="-1"></a></span>
+<span id="cb197-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb197-3" tabindex="-1"></a>cls2020M <span class="ot">&lt;-</span> <span class="fu">cutree</span>(<span class="fu">hclust</span>(<span class="fu">dist</span>(CB2020M)), <span class="dv">7</span>)</span></code></pre></div>
+<ul>
+<li><strong>Display the SOM-grid with different colors for each cluster:</strong></li>
+</ul>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb198-1" tabindex="-1"></a><span class="co"># Colour palette definition, will use later too.</span></span>
+<span id="cb198-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb198-2" tabindex="-1"></a><span class="co"># If you change the number of hierarchical clustering, remember change the number of color.</span></span>
+<span id="cb198-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb198-3" tabindex="-1"></a></span>
+<span id="cb198-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb198-4" tabindex="-1"></a>map_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;steelblue3&quot;</span>,<span class="st">&quot;darkgoldenrod4&quot;</span>,<span class="st">&quot;darkolivegreen&quot;</span>, <span class="st">&quot;springgreen3&quot;</span>, <span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;firebrick&quot;</span>, <span class="st">&quot;darkolivegreen1&quot;</span> )</span>
+<span id="cb198-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb198-5" tabindex="-1"></a></span>
+<span id="cb198-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb198-6" tabindex="-1"></a><span class="fu">plot</span>(SOM2020M, <span class="at">type=</span><span class="st">&quot;mapping&quot;</span>, <span class="at">pchs=</span><span class="st">&quot;&quot;</span>, <span class="at">bgcol =</span> map_palette[cls2020M], <span class="at">main =</span> <span class="st">&quot;Clusters&quot;</span>)</span></code></pre></div>
+<p><img src="07-SOM_files/figure-html/clustermap_maxmin-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Assign the cluster number (based on hierarchical clustering) to each unit:</strong></li>
+</ul>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb199-1" tabindex="-1"></a>clasgn <span class="ot">&lt;-</span> cls2020M[SOM2020M<span class="sc">$</span>unit.classif]</span>
+<span id="cb199-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb199-2" tabindex="-1"></a>dfnorm2020<span class="sc">$</span>hc<span class="ot">&lt;-</span>clasgn</span>
+<span id="cb199-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb199-3" tabindex="-1"></a>clsnorm<span class="ot">&lt;-</span><span class="fu">cbind</span>(dfnorm2020, subset2020<span class="sc">$</span>BFS_nummer)</span>
+<span id="cb199-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb199-4" tabindex="-1"></a></span>
+<span id="cb199-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb199-5" tabindex="-1"></a><span class="co"># Export the table with clusters </span></span>
+<span id="cb199-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb199-6" tabindex="-1"></a><span class="fu">write.table</span>(clsnorm, <span class="at">file=</span><span class="st">&quot;hcM_7cls.csv&quot;</span>, <span class="at">sep=</span><span class="st">&quot;,&quot;</span>)</span></code></pre></div>
+<ul>
+<li><strong>Map the resulting clusters to the geographical space</strong></li>
+</ul>
+<p>You can import the final table with the values of the population census variable in a GIS and join the values to the administrative limits at municipality levels in Switzerland.
+You need only two columns: the code identifying each municipality (“BFS_nummer”) and the cluster number (hc).
+Open the table including the resulting clusters with a dedicated program (like Excel) to reorganize the header, as a new column for unique identifier has been created automatically (you can name it “ID”), and headers has to be shifted of one place on the right.</p>
+<p>If you want to try the primary and automatic process in Rstudio, you can conduct the below codes and see the map.</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb200-1" tabindex="-1"></a><span class="fu">library</span>(st)</span>
+<span id="cb200-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb200-2" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb200-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb200-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb200-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb200-4" tabindex="-1"></a><span class="fu">library</span>(ggspatial)</span>
+<span id="cb200-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb200-5" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb201-1" tabindex="-1"></a><span class="co"># Load the shapefile data</span></span>
+<span id="cb201-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb201-2" tabindex="-1"></a>CH_outline <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data/SOM/Municiplities.shp&quot;</span>)</span>
+<span id="cb201-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb201-3" tabindex="-1"></a></span>
+<span id="cb201-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb201-4" tabindex="-1"></a><span class="co"># Quick check the shapefile data</span></span>
+<span id="cb201-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb201-5" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb201-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb201-6" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> CH_outline, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;cyan1&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb201-7"><a href="segmentation-analysis-with-som-on-census-data.html#cb201-7" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Swiss municiplities&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb201-8"><a href="segmentation-analysis-with-som-on-census-data.html#cb201-8" tabindex="-1"></a>  <span class="fu">coord_sf</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb202-1" tabindex="-1"></a><span class="co"># Rename the column</span></span>
+<span id="cb202-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb202-2" tabindex="-1"></a><span class="fu">colnames</span>(clsnorm)[<span class="dv">20</span>] <span class="ot">&lt;-</span> <span class="st">&quot;BFS_NUMMER&quot;</span></span>
+<span id="cb202-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb202-3" tabindex="-1"></a></span>
+<span id="cb202-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb202-4" tabindex="-1"></a><span class="co"># Merge the dataframe and shapefile together by the column with the same name</span></span>
+<span id="cb202-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb202-5" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">merge</span>(CH_outline, clsnorm, <span class="at">by =</span> <span class="st">&quot;BFS_NUMMER&quot;</span>)</span>
+<span id="cb202-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb202-6" tabindex="-1"></a></span>
+<span id="cb202-7"><a href="segmentation-analysis-with-som-on-census-data.html#cb202-7" tabindex="-1"></a><span class="co"># Rename the column with clustering results</span></span>
+<span id="cb202-8"><a href="segmentation-analysis-with-som-on-census-data.html#cb202-8" tabindex="-1"></a>z<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(z<span class="sc">$</span>hc)</span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-1" tabindex="-1"></a><span class="co"># Mapping the clusters via ggplot like QGIS/ArcGIS Pro/Arcmap, similar package &#39;tmap&#39;</span></span>
+<span id="cb203-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-2" tabindex="-1"></a>CH_cluster <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> z) <span class="sc">+</span> <span class="co"># Original data</span></span>
+<span id="cb203-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-3" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">as.factor</span>(cluster))) <span class="sc">+</span> <span class="co"># Mapping the clusters</span></span>
+<span id="cb203-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-4" tabindex="-1"></a>    <span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">&quot;bl&quot;</span>, <span class="at">width_hint =</span> <span class="fl">0.3</span>,</span>
+<span id="cb203-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-5" tabindex="-1"></a>                     <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;cm&quot;</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">&quot;cm&quot;</span>)) <span class="sc">+</span> <span class="co"># Mapping scales, which are calculated by project coordinates</span></span>
+<span id="cb203-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-6" tabindex="-1"></a>    <span class="fu">annotation_north_arrow</span>(<span class="at">location =</span> <span class="st">&quot;tr&quot;</span>, <span class="at">which_north =</span> <span class="st">&quot;true&quot;</span>, </span>
+<span id="cb203-7"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-7" tabindex="-1"></a>          <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">&quot;cm&quot;</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb203-8"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-8" tabindex="-1"></a>          <span class="at">style =</span> north_arrow_fancy_orienteering) <span class="sc">+</span> <span class="co"># Mapping north arrow</span></span>
+<span id="cb203-9"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-9" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> map_palette) <span class="sc">+</span> <span class="co"># Set up the our color palette</span></span>
+<span id="cb203-10"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-10" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co"># Background color, if use, it means without color</span></span>
+<span id="cb203-11"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-11" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Spatial pattern distribution of Swiss poputaion census&quot;</span>) <span class="sc">+</span> <span class="co"># Insert title of the map</span></span>
+<span id="cb203-12"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-12" tabindex="-1"></a>    <span class="fu">scale_fill_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Clusters&quot;</span>, </span>
+<span id="cb203-13"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-13" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;1: Unproductive&quot;</span>, <span class="st">&quot;2: Forest/Peri-urban&quot;</span>, <span class="st">&quot;3: Peri-urban/Rural&quot;</span>,</span>
+<span id="cb203-14"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-14" tabindex="-1"></a>                                 <span class="st">&quot;4: Rural&quot;</span>,<span class="st">&quot;5: Suburban&quot;</span>,<span class="st">&quot;6: Urban centre&quot;</span>,<span class="st">&quot;7: Peri-urban fringe&quot;</span>)) <span class="co"># Legend labels</span></span>
+<span id="cb203-15"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-15" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">&quot;Clusters&quot;</span>)) <span class="co"># Legend name</span></span>
+<span id="cb203-16"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-16" tabindex="-1"></a></span>
+<span id="cb203-17"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-17" tabindex="-1"></a><span class="co"># Save the map as jpg</span></span>
+<span id="cb203-18"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-18" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;CH_cluster.jpg&quot;</span>)</span>
+<span id="cb203-19"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-19" tabindex="-1"></a>    </span>
+<span id="cb203-20"><a href="segmentation-analysis-with-som-on-census-data.html#cb203-20" tabindex="-1"></a>CH_cluster</span></code></pre></div>
+<p><img src="07-SOM_files/figure-html/mapping%20the%20clusters-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="clusters-characterization" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Clusters characterization<a href="segmentation-analysis-with-som-on-census-data.html#clusters-characterization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To interpret the final main clusters in therms of their geo-demographic characteristics, you can evaluate the distribution of each variable within the clusters by using <strong>box plots</strong> (also known as <em>whisker plot</em>).</p>
+<p>Box-plot is a standardized way to display a dataset based on the five-number summary statistics: the minimum, the maximum, the sample median, and the first and third quartiles (i.e., the median of the lower half (25%) and the median of the upper half (75%) of the dataset).</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-1" tabindex="-1"></a><span class="co"># Creates an empty list object that will be filled by the loop</span></span>
+<span id="cb204-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-2" tabindex="-1"></a>cls20M <span class="ot">&lt;-</span> <span class="fu">list</span>() </span>
+<span id="cb204-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-3" tabindex="-1"></a></span>
+<span id="cb204-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-4" tabindex="-1"></a><span class="co"># Split the single clusters</span></span>
+<span id="cb204-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-5" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) {</span>
+<span id="cb204-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-6" tabindex="-1"></a>  cls20M[[i]]<span class="ot">&lt;-</span><span class="fu">subset</span>(clsnorm, clsnorm<span class="sc">$</span>hc<span class="sc">==</span>i) </span>
+<span id="cb204-7"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-7" tabindex="-1"></a>}</span>
+<span id="cb204-8"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-8" tabindex="-1"></a></span>
+<span id="cb204-9"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-9" tabindex="-1"></a>clsvar20M <span class="ot">&lt;-</span> <span class="fu">lapply</span>(cls20M, <span class="st">&quot;[&quot;</span>, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>)) </span>
+<span id="cb204-10"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-10" tabindex="-1"></a></span>
+<span id="cb204-11"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-11" tabindex="-1"></a><span class="co"># Box-plots for the single clusters</span></span>
+<span id="cb204-12"><a href="segmentation-analysis-with-som-on-census-data.html#cb204-12" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) {<span class="fu">boxplot</span> ((clsvar20M[[i]]), <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;Cluster&quot;</span>, i), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">cex.axis=</span><span class="fl">0.5</span>,  <span class="at">las=</span><span class="dv">2</span>)}</span></code></pre></div>
+<p>To better investigate the values assumed by each class of variables withing the different clusters, you can group them by category.</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb205-1" tabindex="-1"></a><span class="co"># Box plot by categories: &quot;Physical space&quot;</span></span>
+<span id="cb205-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb205-2" tabindex="-1"></a></span>
+<span id="cb205-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb205-3" tabindex="-1"></a>clsvar20M <span class="ot">&lt;-</span> <span class="fu">lapply</span>(cls20M, <span class="st">&quot;[&quot;</span>, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)) </span>
+<span id="cb205-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb205-4" tabindex="-1"></a></span>
+<span id="cb205-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb205-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">cex.axis=</span><span class="fl">0.7</span>)</span>
+<span id="cb205-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb205-6" tabindex="-1"></a></span>
+<span id="cb205-7"><a href="segmentation-analysis-with-som-on-census-data.html#cb205-7" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) {<span class="fu">boxplot</span> ((clsvar20M[[i]]), <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;Cluster&quot;</span>, i),  <span class="at">las=</span><span class="dv">2</span>)}</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:boxplot-clsM-PhisicalSpace"></span>
+<img src="07-SOM_files/figure-html/boxplot-clsM-PhisicalSpace-1.png" alt="Physical space" width="672" />
+<p class="caption">
+Figure 8.4: Physical space
+</p>
+</div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb206-1" tabindex="-1"></a><span class="co"># Box plot by categories: &quot;Demographics&quot;</span></span>
+<span id="cb206-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb206-2" tabindex="-1"></a></span>
+<span id="cb206-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb206-3" tabindex="-1"></a>clsvar20M <span class="ot">&lt;-</span> <span class="fu">lapply</span>(cls20M, <span class="st">&quot;[&quot;</span>, <span class="fu">c</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">13</span>)) </span>
+<span id="cb206-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb206-4" tabindex="-1"></a></span>
+<span id="cb206-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb206-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">cex.axis=</span><span class="fl">0.7</span>)</span>
+<span id="cb206-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb206-6" tabindex="-1"></a></span>
+<span id="cb206-7"><a href="segmentation-analysis-with-som-on-census-data.html#cb206-7" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) {<span class="fu">boxplot</span> ((clsvar20M[[i]]), <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;Cluster&quot;</span>, i),  <span class="at">las=</span><span class="dv">2</span>)}</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:boxplot-clsM-Deographic"></span>
+<img src="07-SOM_files/figure-html/boxplot-clsM-Deographic-1.png" alt="Demographics" width="672" />
+<p class="caption">
+Figure 8.5: Demographics
+</p>
+</div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="segmentation-analysis-with-som-on-census-data.html#cb207-1" tabindex="-1"></a><span class="co"># Box plot by categories: &quot;Socio-economics&quot;</span></span>
+<span id="cb207-2"><a href="segmentation-analysis-with-som-on-census-data.html#cb207-2" tabindex="-1"></a></span>
+<span id="cb207-3"><a href="segmentation-analysis-with-som-on-census-data.html#cb207-3" tabindex="-1"></a>clsvar20M <span class="ot">&lt;-</span> <span class="fu">lapply</span>(cls20M, <span class="st">&quot;[&quot;</span>, <span class="fu">c</span>(<span class="dv">14</span><span class="sc">:</span><span class="dv">18</span>)) </span>
+<span id="cb207-4"><a href="segmentation-analysis-with-som-on-census-data.html#cb207-4" tabindex="-1"></a></span>
+<span id="cb207-5"><a href="segmentation-analysis-with-som-on-census-data.html#cb207-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">cex.axis=</span><span class="fl">0.7</span>)</span>
+<span id="cb207-6"><a href="segmentation-analysis-with-som-on-census-data.html#cb207-6" tabindex="-1"></a></span>
+<span id="cb207-7"><a href="segmentation-analysis-with-som-on-census-data.html#cb207-7" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) {<span class="fu">boxplot</span> ((clsvar20M[[i]]), <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;Cluster&quot;</span>, i),  <span class="at">las=</span><span class="dv">2</span>)}</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:boxplot-clsM-SocioEconomic"></span>
+<img src="07-SOM_files/figure-html/boxplot-clsM-SocioEconomic-1.png" alt="Socio-economics" width="672" />
+<p class="caption">
+Figure 8.6: Socio-economics
+</p>
+</div>
+</div>
+<div id="conclusions" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Conclusions<a href="segmentation-analysis-with-som-on-census-data.html#conclusions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Results of the present study reveal the main patterns of the population in Switzerland based on the surveyed land-use, socio-economic, and demographic indicators.
+To characterize the final main clusters, the distribution of each variable within them have been assessed by using <strong>box plots</strong>.
+We could thus identify main clusters including the most developed and active cities with higher income, the peri-urban areas mostly devoted to the agricultural activity, or the areas with higher levels of migration.</p>
+<p><strong>SOM heatmaps</strong> allow to display the pattern distribution of each input variable over the SOM-grid and how values change in space.
+Visualized side by side, heatmaps show a picture of the different areas and their characteristics.
+In this way it is possible to explore the level of complementarity that links one or more variables among them.</p>
+<p>In conclusion, in the present study we proposed a performant data-driven approach based on unsupervised learning allowing to extract useful information from a huge volume of multivariate population census data.
+This approach led to represent and interpret the main patterns characterizing the dynamic of population in Switzerland in the recent period.</p>
+</div>
+<div id="further-analyses" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Further analyses<a href="segmentation-analysis-with-som-on-census-data.html#further-analyses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To ensure that everything is perfectly clear, we propose you to answer the following questions and to discuss your answers with the other participants to the course or directly with the teacher.</p>
+<ol style="list-style-type: decimal">
+<li><p>Change the size of the gridmap and check if you get better results for SOM.
+<strong>N.B.</strong> Better results are achieved when the quantisation error decreases, the explained variance increases, and there are no empty observations revealed by the Node Counts map.</p></li>
+<li><p>Focusing on Cluster 6: which variable characterize it the most?
+Based on these variables, which class of land use can be associated to this cluster?
+And in the case of Cluster 4?</p></li>
+<li><p>Describe the distribution of the clusters in the geographical space.
+In more details, describe to which kind of land use the different clusters can be referred and specify why.</p></li>
+<li><p>From the visual inspection of the heatmaps, describe the correlation you can observe between the following variables: a) “p_transport” and “p_infrastructure”; b) “p_agriculture” and “p_improductible”.</p></li>
+</ol>
+</div>
+<div id="references" class="section level2 hasAnchor" number="8.8">
+<h2><span class="header-section-number">8.8</span> References<a href="segmentation-analysis-with-som-on-census-data.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
+</div>
+</div>
+<h3>References<a href="references-1.html#references-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-kohonen_self-organized_1982" class="csl-entry">
+Kohonen, T. (1982). Self-organized formation of topologically correct feature maps. <em>Biological Cybernetics</em>, <em>43</em>(1), 59–69. <a href="https://doi.org/10.1007/BF00337288">https://doi.org/10.1007/BF00337288</a>
+</div>
+<div id="ref-marj_tonini_unsupervised_2023" class="csl-entry">
+Marj Tonini, Axelle Bersier, Jingyan Yu, &amp; Francois Bavaud. (2023, September). An unsupervised learning approach to explore geodemographic clusters in switzerland. <em><span>ECTQG</span> 2023 Proceedings</em>. 23rd european colloquium on theoretical and quantitative geography. <a href="https://ucpages.uc.pt/site/assets/files/1249198/ectqg_2023_proceedings_final.pdf">https://ucpages.uc.pt/site/assets/files/1249198/ectqg_2023_proceedings_final.pdf</a>
+</div>
+<div id="ref-spielman_social_2008" class="csl-entry">
+Spielman, S. E., &amp; Thill, J.-C. (2008). Social area analysis, data mining, and <span>GIS</span>. <em>Computers, Environment and Urban Systems</em>, <em>32</em>(2), 110–122. <a href="https://doi.org/10.1016/j.compenvurbsys.2007.11.004">https://doi.org/10.1016/j.compenvurbsys.2007.11.004</a>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="local-random-forest.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dbscan-for-3d-fetures-detection-in-point-clouds.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/EugeneGIS/AGDAbook/edit/master/07-SOM.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["fake-book.pdf", "fake-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

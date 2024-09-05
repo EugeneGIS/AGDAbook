@@ -1,31 +1,26 @@
 ---
 bibliography: book.bib
-link-citations: true
-biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
+csl: apa.csl
 editor_options: 
   markdown: 
     wrap: sentence
+    urlcolor: blue
 ---
 
-# Self-organizing Map
 
 
-
-## Introduction
+# Segmentation Analysis with SOM on Census Data
 
 The increasing availability of multivariate datatets stimulates researches to develop new techniques that differ from those utilized in earlier scientific paradigms.
 In the field of social and economic science, geo-demographic segmentation defines a technique used to classify a population based on input data describing administrative units and people living there [see @spielman_social_2008].
-Small areas can thus be classified into discrete categories using demographic input data, by means of data reduction techniques (such as the *Principal component analysis*).
+Small areas can thus be classified into discrete categories using demographic input data, by means of data reduction techniques (such as the Principal component analysis).
 The main limitation of these approaches is the problem of communicating the multidimensional complexity characterizing the different output classes.
 
-**Machine learning** techniques can help in this context, as they are designed to extract useful formation and insight from the interaction of the variables describing the complex structure of a given phenomenon.
-In the present computing lab we introduce an unsupervised learning procedure based on *Self-Organizing Map (SOM)* [see @kohonen_self-organized_1982], allowing detecting clusters and characterizing the pattern of population dynamic in Switzerland in the recent period.
+Machine learning techniques can help in this context, as they are designed to extract useful formation and insight from the interaction of the variables describing the complex structure of a given phenomenon.
+In the present computing lab we introduce an unsupervised learning procedure based on **Self-Organizing Map (SOM)** [see @kohonen_self-organized_1982], allowing detecting clusters and characterizing the pattern of population dynamic in Switzerland in the recent period.
 This lab is inspired by the work of @marj_tonini_unsupervised_2023.
 
-## Material and method
-
-### The geo-demographic context
+## Geo-demographic context in Switzerland
 
 Switzerland has the highest life expectancy in the world.
 It counts about 8,5 million inhabitants (official census data 2020), twice as much as at the beginning of the 20th century, mainly because of the high level of immigration.
@@ -34,23 +29,23 @@ Most of the population (85%) lives in cities.
 Population aging increased over the course of the 20th century, with one in five person of retirement age today.
 In the present study, we developed a machine learning based approach to understand and describe the population patterns in different geographic areas.
 
-### SOM
-
-We use **SOM**, an *unsupervised competitive learning neural network* allowing representing a high-dimensional feature space (defined by the multivariate input dataset), as two-dimensional discretized pattern (the SOM grid of neurons).
-In SOM the proximity of the units in the output grid reflects the similarity of the corresponding input observations, which guarantees the preservation of the topological structure of the input data.
-
-Compared to other approaches, SOM is very efficient for data visualization.
-Indeed it provides additional outputs such as the heatmaps, representing the distribution of each input feature across the SOM grid, extremely useful to visually explore the relationship between the input variables.
-
 ### Swiss census data
 
 Input data come from the national population census, provided by the [Swiss Federal Statistical Office](https://www.bfs.admin.ch/bfs/en/home.html), and including information on the socio-economic status of the population and surveyed land use and land cover.
 This information has been aggregated to the municipality level for the purpose of the present investigation.
 Census data 2020 have been considered to analyse the current pattern, while the former census surveys can be considered to assess transitions and evaluate population dynamics.
 
-## Variables inspection
+## Self Organizing Map
 
-### Import the data
+We use **SOM**, an unsupervised competitive learning neural network allowing representing a high-dimensional feature space (defined by the multivariate input dataset), as two-dimensional discretized pattern (the SOM grid of neurons).
+In SOM the proximity of the units in the output grid reflects the similarity of the corresponding input observations, which guarantees the preservation of the topological structure of the input data.
+
+Compared to other approaches, SOM is very efficient for data visualization.
+Indeed it provides additional outputs such as the heatmaps, representing the distribution of each input feature across the SOM grid, extremely useful to visually explore the relationship between the input variables.
+
+## Computing lab: SOM
+
+### Import the Swiss census dataset
 
 Fist, you have to import the Swiss census dataset for the year 2020, referred to the municipality administrative units.
 As you can see from the description of the selected variables \autoref{Variables}, some of them can be discarded from the analysis.
@@ -61,17 +56,17 @@ So, in the following step, we extract a subset of the most meaningful variables 
 knitr::include_graphics(c("images/Variables1.jpg", "images/Variables2.jpg"))
 ```
 
-<div class="figure">
+<div class="figure" style="text-align: center">
 <img src="images/Variables1.jpg" alt="Variables description \label{Variables}" width="100%" height="100%" />
 <p class="caption">(\#fig:variables-1)Variables description \label{Variables}</p>
-</div><div class="figure">
+</div><div class="figure" style="text-align: center">
 <img src="images/Variables2.jpg" alt="Variables description \label{Variables}" width="100%" height="100%" />
 <p class="caption">(\#fig:variables-2)Variables description \label{Variables}</p>
 </div>
 
 
 
-### Inspect the data
+#### Inspect the data
 
 Plotting the histogram of the variables distribution allows to detect outliers, see if they have comparable range of values, and evaluate if a data transformation is necessary.
 
@@ -83,7 +78,7 @@ for(i in 3:ncol(subset2020)) {
 }
 ```
 
-### Data transformation
+#### Data transformation
 
 Data transformation seeks the make the variables range comparable.
 This process ensure the data entries to look similar across all fields and records, making information easier to find, group and analyze.
@@ -112,18 +107,13 @@ for(i in 1:ncol(dfnorm2020)) {
 }
 ```
 
-## Running SOM
-
 ### Load the libraries
 
-Fist you have to load the following libraries:
+To perform the analyses and visualize the results you have to load the following libraries:
 
 -   **kohonen**: Supervised and Unsupervised Self-Organizing Maps (SOM)
-
 -   **aweSOM:** offers a set of tools to explore and analyze datasets with SOM
-
 -   **ggplot2**: create Elegant Data Visualizations Using the Grammar of Graphics
-
 -   **colorpatch**: rendering methods (ggplot extensions)
 
 
@@ -135,7 +125,7 @@ library(colorpatch)
 (.packages())
 ```
 
-### Compute SOM
+### Run SOM
 
 The main idea with **SOM** is to map the input high-dimensional feature space in a lower-dimensional output space organized on a grid made up of regular units (i.e. the neurons).
 At the end of the process, each observation from the input space ($X_{k,i}$) will be associated (i.e., mapped) to a unit in the SOM grid.
@@ -193,13 +183,9 @@ print(SOM2020M)
 Finally, you can optimize the size of the grid by inspecting several quality measure and changing the parameters accordingly.
 In particular we will explore the following:
 
--   *Changes*: shows the mean distance to the closest codebook vector during the training.
-
--   *Quantization error*: average squared distance between the data points and the map's codebook to which they are mapped.
-    Lower is better.
-
--   *Percentage of explained variance*: similar to other clustering methods, the share of total variance that is explained by the clustering (equal to 1 minus the ratio of quantization error to total variance).
-    Higher is better.
+-   **Changes**: shows the mean distance to the closest codebook vector during the training.
+-   **Quantization error**: average squared distance between the data points and the map's codebook to which they are mapped. Lower is better.
+-   **Percentage of explained variance**: similar to other clustering methods, the share of total variance that is explained by the clustering (equal to 1 minus the ratio of quantization error to total variance). Higher is better.
 
 
 ``` r
@@ -207,7 +193,7 @@ In particular we will explore the following:
 plot(SOM2020M, type="changes")
 ```
 
-<img src="07-SOM_files/figure-html/SOM-quality-1.png" width="672" />
+<img src="07-SOM_files/figure-html/SOM-quality-1.png" width="672" style="display: block; margin: auto;" />
 
 ``` r
 # Evaluate the results
@@ -229,14 +215,12 @@ QEM$err.varratio # % explained variance
 ## [1] 82.06
 ```
 
-## SOM's main outputs
+### SOM's main outputs
 
 The main graphical outputs of SOM are the node counts, the neighborhood distances, and the heatmaps.
 
 -   **Node counts map** informs about the number of input vectors falling inside each output unit.
-
 -   **Neighbourhood distance plot** shows the distance between each unit and its neighborhoods.
-
 -   **Heatmaps** show the distribution of each input variable, associated to each input vectors, across the SOM grid.
 
 
@@ -253,7 +237,7 @@ plot(SOM2020M, type="count", main="Node Counts", palette.name=coolBlueHotRed)
 plot(SOM2020M, type="dist.neighbours", main = "SOM neighbour distances")
 ```
 
-<img src="07-SOM_files/figure-html/outputs-SOM-maxmin-1.png" width="672" />
+<img src="07-SOM_files/figure-html/outputs-SOM-maxmin-1.png" width="672" style="display: block; margin: auto;" />
 
 Visualized side by side, heatmaps provide a useful tool to explore the correlation between the input variables \autoref{Heatmaps}.
 
@@ -304,7 +288,7 @@ map_palette <- c("steelblue3","darkgoldenrod4","darkolivegreen", "springgreen3",
 plot(SOM2020M, type="mapping", pchs="", bgcol = map_palette[cls2020M], main = "Clusters")
 ```
 
-<img src="07-SOM_files/figure-html/clustermap_maxmin-1.png" width="672" />
+<img src="07-SOM_files/figure-html/clustermap_maxmin-1.png" width="672" style="display: block; margin: auto;" />
 
 -   **Assign the cluster number (based on hierarchical clustering) to each unit:**
 
@@ -321,15 +305,8 @@ write.table(clsnorm, file="hcM_7cls.csv", sep=",")
 -   **Map the resulting clusters to the geographical space**
 
 You can import the final table with the values of the population census variable in a GIS and join the values to the administrative limits at municipality levels in Switzerland.
-This allows you to elaborate a map as in \autoref{Clusters_7}.
-
-**NB**. You need only two columns: the code identifying each municipality ("BFS_nummer") and the cluster number (hc).
+You need only two columns: the code identifying each municipality ("BFS_nummer") and the cluster number (hc).
 Open the table including the resulting clusters with a dedicated program (like Excel) to reorganize the header, as a new column for unique identifier has been created automatically (you can name it "ID"), and headers has to be shifted of one place on the right.
-
-<div class="figure" style="text-align: center">
-<img src="images/Clusters_7.jpg" alt="Spatial pattern distribution of Swiss poputaion census \label{Clusters_7}" width="70%" height="70%" />
-<p class="caption">(\#fig:jpg2)Spatial pattern distribution of Swiss poputaion census \label{Clusters_7}</p>
-</div>
 
 If you want to try the primary and automatic process in Rstudio, you can conduct the below codes and see the map.
 
@@ -389,9 +366,9 @@ ggsave("CH_cluster.jpg")
 CH_cluster
 ```
 
-<img src="07-SOM_files/figure-html/mapping the clusters-1.png" width="672" />
+<img src="07-SOM_files/figure-html/mapping the clusters-1.png" width="672" style="display: block; margin: auto;" />
 
-### Clusters characterization
+## Clusters characterization
 
 To interpret the final main clusters in therms of their geo-demographic characteristics, you can evaluate the distribution of each variable within the clusters by using **box plots** (also known as *whisker plot*).
 
@@ -426,7 +403,7 @@ par(mfrow=c(2,4), mar=c(7,3,3,1), cex.axis=0.7)
 for (i in 1:7) {boxplot ((clsvar20M[[i]]), main=paste("Cluster", i),  las=2)}
 ```
 
-<div class="figure">
+<div class="figure" style="text-align: center">
 <img src="07-SOM_files/figure-html/boxplot-clsM-PhisicalSpace-1.png" alt="Physical space" width="672" />
 <p class="caption">(\#fig:boxplot-clsM-PhisicalSpace)Physical space</p>
 </div>
@@ -442,7 +419,7 @@ par(mfrow=c(2,4), mar=c(7,3,3,1), cex.axis=0.7)
 for (i in 1:7) {boxplot ((clsvar20M[[i]]), main=paste("Cluster", i),  las=2)}
 ```
 
-<div class="figure">
+<div class="figure" style="text-align: center">
 <img src="07-SOM_files/figure-html/boxplot-clsM-Deographic-1.png" alt="Demographics" width="672" />
 <p class="caption">(\#fig:boxplot-clsM-Deographic)Demographics</p>
 </div>
@@ -458,7 +435,7 @@ par(mfrow=c(2,4), mar=c(7,3,3,1), cex.axis=0.7)
 for (i in 1:7) {boxplot ((clsvar20M[[i]]), main=paste("Cluster", i),  las=2)}
 ```
 
-<div class="figure">
+<div class="figure" style="text-align: center">
 <img src="07-SOM_files/figure-html/boxplot-clsM-SocioEconomic-1.png" alt="Socio-economics" width="672" />
 <p class="caption">(\#fig:boxplot-clsM-SocioEconomic)Socio-economics</p>
 </div>
@@ -478,15 +455,18 @@ This approach led to represent and interpret the main patterns characterizing th
 
 ## Further analyses
 
-To be sure that everything is perfectly clear for you, we propose you to **answer the following questions** and to discuss your answers with the other participants to the course or directly with the teacher.
+To ensure that everything is perfectly clear, we propose you to answer the following questions and to discuss your answers with the other participants to the course or directly with the teacher.
 
-1)  Change the size of the gridmap and check if you get better results for SOM. **N.B.** Better results are achieved when the quantisation error decreases, the explained variance increases, and there are no empty observations revealed by the Node Counts map.
+1.  Change the size of the gridmap and check if you get better results for SOM.
+    **N.B.** Better results are achieved when the quantisation error decreases, the explained variance increases, and there are no empty observations revealed by the Node Counts map.
 
-2.1) Focusing on Cluster 6: which variable characterize it the most?
-Based on these variables, which class of land use can be associated to this cluster?
-2.2) And in the case of Cluster 4?
+2.  Focusing on Cluster 6: which variable characterize it the most?
+    Based on these variables, which class of land use can be associated to this cluster?
+    And in the case of Cluster 4?
 
-3)  Describe the distribution of the clusters in the geographical space.
+3.  Describe the distribution of the clusters in the geographical space.
     In more details, describe to which kind of land use the different clusters can be referred and specify why.
 
-4)  From the visual inspection of the heatmaps, describe the correlation you can observe between the following variables: a) "p_transport" and "p_infrastructure"; b) "p_agriculture" and "p_improductible".
+4.  From the visual inspection of the heatmaps, describe the correlation you can observe between the following variables: a) "p_transport" and "p_infrastructure"; b) "p_agriculture" and "p_improductible".
+
+## References

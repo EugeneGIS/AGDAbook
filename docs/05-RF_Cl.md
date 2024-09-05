@@ -1,91 +1,81 @@
 ---
 bibliography: book.bib
+csl: apa.csl
 link-citations: true
-biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
 editor_options: 
   markdown: 
     wrap: sentence
-urlcolor: blue
+    urlcolor: blue
 ---
 
 
 
-# Landslides susceptibility mapping using Random Forest
+# Predictive Mapping of Natural Hazards Using Random Forest
 
-## Introduction
+Random Forest (RF) is a robust and widely-used machine learning algorithm particularly suited for predictive mapping in the context of natural hazards and susceptibility assessments.
+It operates by constructing multiple decision trees during training, and then aggregating their predictions to improve accuracy and generalizability [@breiman_random_2001].
+For the sake of clarity, we define “susceptibility of an area” as the potential to experience a particular hazard in the future, based only on the intrinsic local properties of the territory, assessed in terms of relative spatial likelihood.
+Machine Learning (ML) based approaches lend themselves particularly well to this purpose.
+Essentially ML includes algorithms capable of learning from and making predictions on data by modelling the hidden/non-linear relationships between a set of input variables (predictor variables) and output observations.
 
-In this application, we explore the capabilities of a stochastic approach based on a machine learning (ML) algorithm to elaborate landslides susceptibility mapping in Canton Vaud, Switzerland.
-Generally speaking, ML includes a class of algorithms for the analysis, modelling, and visualization of environmental data and it performs particularly well to model environmental hazards, which naturally have a complex and non-linear behavior.
-Here we use Random Forest, an ensemble ML algorithm based on decision trees.
+In natural hazard and susceptibility mapping, RF can analyze complex relationships between environmental variables such as topography, soil type, vegetation cover, and climate data to predict the likelihood of hazardous events, like landslides, floods, or earthquakes, across a landscape.
+Its ability to handle large datasets, manage variable interactions, and provide importance rankings for predictor variables makes it an invaluable tool for generating reliable susceptibility maps, which are crucial for disaster risk management and land-use planning.
 
-### The main objective
+## RF for landslides susceptibility mapping
 
+In this application, we explore the capabilities RF to elaborate landslides susceptibility mapping in Canton Vaud, Switzerland.
 Landslides are one of the major hazard occurring around the world.
-In Switzerland, landslides cause damages to infrastructures and sometimes threaten human lives.
-Shallow landslides are triggered by intense rainfalls.
-Such slope movements are generally very rapid and hardly predictable.
-Different quantitative approaches have been developed to assess the most susceptible areas.
+In Switzerland, landslides cause damages to infrastructures and sometimes threaten human lives, especially shallow landslides.
+Such slope movements are mainly triggered by intense rainfalls and generally very rapid and hardly predictable.
 
-This project applies a data-driven methodology based on Random Forest (RF) (@breiman_random_2001) to elaborate the landslides susceptibility map of canton of Vaud, in Switzerland.
+In this computing lab we introduce a data-driven methodology based on RF to elaborate the landslides susceptibility map of canton of Vaud, in Switzerland.
 RF is applied to a set of independent variables (i.e., the predictors) and dependent variables (the inventoried landslides and an equal number of locations for absences).
 The overall methodology is described in the following graphic (\autoref{Methodology}).
-
-### The overall methodology
-
-The methodological overview is described in the following graphic: \autoref{Methodology}.
 
 <div class="figure" style="text-align: center">
 <img src="images/Methodology.png" alt="Basic elements of the generic methodology \label{Methodology}" width="80%" height="80%" />
 <p class="caption">(\#fig:gen-met)Basic elements of the generic methodology \label{Methodology}</p>
 </div>
 
-### Load libraries
+## Computing lab: Random Forest
+
+### Load the libraries
 
 To perform the analysis, you have first to install the following libraries:
 
--   **library(terra)**: Methods for spatial data analysis with vector (points, lines, polygons) and raster (grid) data.
-
--   **library(sp)**: Classes and methods for spatial data.
-
--   **library(readr)**: The goal of 'readr' is to provide a fast and friendly way to read rectangular data (like 'csv', 'tsv', and 'fwf').
-
--   **library(randomForest)**: Classification and regression based on a forest of trees using random inputs, based on Breiman (2001) <doi:10.1023/A:1010933404324>.
-
--   **library(dplyr)**: It is the next iteration of plyr, focused on tools for working with data frames (hence the d in the name).
-
--   **library(pROC)**: Allowing to compute, analyze ROC curves, and
-
-    -   **library(plotROC)** to display ROC curve
-
--   **(ggplot2)**: Is a system for declaratively creating graphics.
+-   **terra**: Methods for spatial data analysis with vector (points, lines, polygons) and raster (grid) data.
+-   **sp**: Classes and methods for spatial data.
+-   **readr**: The goal of 'readr' is to provide a fast and friendly way to read rectangular data (like 'csv', 'tsv', and 'fwf').
+-   **randomForest**: Classification and regression based on a forest of trees using random inputs, based on Breiman (2001) <doi:10.1023/A:1010933404324>.
+-   **dplyr**: It is the next iteration of plyr, focused on tools for working with data frames (hence the d in the name).
+-   **pROC**: Allowing to compute, analyze ROC curves, and
+    -   **plotROC:** to display ROC curve
+-   **ggplot2**: Is a system for declaratively creating graphics.
 
 **List of the loaded libraries**
 
 
 ```
 ##  [1] "plotROC"      "ggplot2"      "pROC"         "dplyr"        "randomForest"
-##  [6] "readr"        "terra"        "distill"      "stats"        "graphics"    
-## [11] "grDevices"    "utils"        "datasets"     "methods"      "base"
+##  [6] "readr"        "terra"        "stats"        "graphics"     "grDevices"   
+## [11] "utils"        "datasets"     "methods"      "base"
 ```
 
-## Import and process geodata
+### Import and process geodata
 
-Import *landslides punctual dataset* presences and absences (LS_pa) and *predictors* (in raster format).
+Import landslides punctual dataset presences and absences (*LS_pa*) and predictor variables (in raster format).
 This help the exploratory data analyses step and to understand the input data structure.
 
 ### Landslides dataset
 
-The **landslide inventory** has been provided by the environmental office of the canton of Vaud.
-Only *shallow landslides* are used for susceptibility modelling.
+The **landslide inventory** has been provided by the environmental office of the Canton Vaud.
+Only shallow landslides are used for susceptibility modelling.
 One pixel per landslide-area (namely the one located at the highest elevation) has been extracted.
 Since the landslide scarp is located in the upper part of the polygon, it makes sense to consider the highest pixel to characterize each single event.
 
 Our model includes the implementation of the landslide **pseudo-absences**, which are the areas where the hazardous events did not took place (i.e. landslide location is known and the mapped footprint areas are available, but the non-landslide areas have to be defined).
 Indeed, to assure a good generalization of the model and to avoid the overestimation of the absence, pseudo-absences need to be generated in all the cases where they are not explicitly expressed.
-In this case study, an equal number of point as for presences has been randomly generated in the study area, except within landslides polygons, lakes and glaciers (that is what is called "validity domain", where events could potentially occur).
-
-**The landslides dataset**
+In this case study, an equal number of point as for presences has been randomly generated in the study area, except within landslides polygons, lakes and glaciers (that is what is called "*validity domain*", where events could potentially occur).
 
 
 ``` r
@@ -119,7 +109,7 @@ plot(LS_vect, col=LS_pa$LS, pch=20, cex=0.5, add=TRUE)
 
 Selecting predictive variables is a key stage of landslide susceptibility modelling when using a data-driven approach.
 There is no consensus about the number of variables and which variables should be used.
-In the present exercice e will use the following:
+In the present exercise e will use the following:
 
 -   **DEM (digital elevation model)**: provided by the Swiss Federal Offce of Topography.
     The elevation is not a direct conditioning factor for landslide; however, it can reflect differences in vegetation characteristics and soil
@@ -147,8 +137,8 @@ $$TWI=ln(\alpha/tan(\beta))$$
 -   **Geology**: The use of the lithology increase the performance of the susceptibility landslide models.
     We use here the map elaborated by the Canton Vaud, defining the geotypes and reclassified in 10 classes in order to differentiate sedimentary rocks.
 
-Than the predictor variables have to be aggregated into single object, storing multiple raster.
-We use here the generic function **c** to combine the single raster into multiple raster objet.
+Than the predictor variables have to be aggregated into a single object, storing multiple raster.
+We use here the generic function **c** to combine the single raster into a multiple raster object.
 
 
 ``` r
@@ -211,12 +201,10 @@ plot(landCover)
 
 \newpage
 
-## Extract velues
+## Extract values
 
 In this step, you will extract the values of the predictors at each location in the landslides (presences and absences) dataset.
 The final output represents the input dataset with dependent (LS = landslides) and independent (raster features) variables.
-
-**The final input dataset**
 
 
 ``` r
@@ -240,10 +228,7 @@ str(LS_input)
 A well-established procedure in ML is to split the input dataset into training, validation, and testing.
 
 -   The **training dataset** is needed to calibrate the parameters of the model, which will be used to get predictions on new data.
-
--   The purpose of the **validation dataset** is to optimize the hyperparameter of the model (*training phase*).
-    **NB**: in Random Forest this subset is represented by the Out-Of-Bag (**OOB**)!
-
+-   The purpose of the **validation dataset** is to optimize the hyperparameter of the model (*training phase*). **NB**: in RF this subset is represented by the Out-Of-Bag (**OOB**)!
 -   To provide an unbiased evaluation of the final model and to assess its performance, results are then predicted over unused observations (*prediction phase*), defined as the **testing dataset**.
 
 
@@ -289,9 +274,9 @@ RF_LS<-randomForest(y=LS_train$LS, x=LS_train[1:8],data=LS_train, ntree=500, mtr
 
 ### RF main outputs
 
-Printing the results of RF allows you to gain insight into the outputs of the implemented model, namely the following: - a summary of the model hyperparameters - the OOB estimate of error rate - the confusion matrix; in this case a 2x2 matrix used for evaluating the performance of the classification model (1-presence vs 0-absence).
+Printing the results of RF allows you to gain insight into the outputs of the implemented model, namely the following: a summary of the model hyperparameters, the OOB estimate of error rate, the confusion matrix (in this case a 2x2 matrix used for evaluating the performance of the classification model: 1==presence *vs* 0==absence).
 
-The plotting the of the error rate is useful to estimate the decreasing values on the OOB and on the predictions (presence (1) / absence (0)) over increasing number of trees.
+The plot of the error rate is useful to estimate the decreasing values on the OOB and on the predictions (1==presence *vs* 0==absence) over increasing number of trees.
 
 
 ``` r
@@ -344,7 +329,7 @@ legend(x="topright", legend=c("perd 0", "pred 1", "OOB error"),
 The prediction capability of the implemented RF model can be evaluated by predicting the results over previously unseen data, that is the testing dataset.
 The *Area Under the "Receiver Operating Characteristic (ROC)" Curve* (**AUC**) represents the evaluation score used here as indicator of the goodness of the model in classifying areas more susceptible to landslides.
 ROC curve is a graphical technique based on the plot of the percentage of correct classification (the true positives rate) against the false positives rate (occurring when an outcome is incorrectly predicted as belonging to the class "1" when it actually belongs to the class "0"), evaluates for many thresholds.
-The AUC value lies between 0.5, denoting a bad classifier, and 1, denoting an excellent classifier, which, on the other hand, can in this case overfit.
+The AUC value lies between 0.5, denoting a bad classifier, and 1, denoting an excellent classifier, which, on the other hand, can indicate overfitting.
 
 
 ``` r
@@ -370,10 +355,10 @@ roc_test
 roc_oob
 ```
 
-## Susceptibility map
+## Susceptibility mapping
 
-You have now all the elements to elaborate the final landslide susceptibility map.
-This will be achieved by making predictions (of presence only) based on the values of the predictors, which are stored into multiple raster named \*features\*, created above.
+You have now all the elements necessary to elaborate the final landslide susceptibility map.
+This will be achieved by making predictions (of presence only) based on the values of the predictor variables, which are stored into the multiple raster named *features*, created above.
 
 
 ``` r
@@ -409,15 +394,15 @@ writeRaster(scp_rast,"Susceptibility_LSmap.tif",overwrite=T)
 
 ### Class intervals for decision maker
 
-What can you say by looking at the map?
+What can you say by looking at this map?
 Actually a risk heat map is a data visualization tool for communicating the level for a specific risk to occur.
 These maps helps authorities to identify and prioritize the risks associated with a given hazard.
 
 Normally an authority (i.e., a decision maker) prioritize its efforts based on the available resources it has.
-So, it can be more useful to detect the areas with the highest probability of burning based given intervals (i.e., breaks).
-The authority can thus concentrate its resources for preventive actions on a given percentage (such as 5%, 10%, or 20%) of the area with the highest probability of burning, instead of concentrate on the areas with a "stochastic" output probability value of 0.8 (for example).
+So, it can be more useful to detect the areas with the highest probability of burning based on certain intervals (i.e., breaks).
+The authority can thus concentrate its resources for preventive actions on a given threshold (such as 5%, 10%, or 20%) of the area with the highest probability of burning, instead of concentrate on the areas with a "stochastic" output probability value of 0.8 (for example).
 
--   Susceptibility maps based on equal intervals, five classes (each 20%)
+-   Susceptibility maps based on **equal intervals**, five classes (each 20%)
 
 
 ``` r
@@ -471,7 +456,7 @@ plot(scp_rast, xlab = "East [m]", ylab = "North [m]",
 
 This exercise allowed you to familiarize with Random Forest, by the proposed application about landslides susceptibility mapping and variables importance assessment.
 
-To be sure that everything is perfectly clear for you, we propose you to **answer the following questions** and to discuss your answers with the other participants to the course or directly with the teacher.
+To ensure that everything is perfectly clear, we propose you to **answer the following questions**.
 
 1)  Why is it important to implement the pseudo-absence, other that the presences (i.e., the observations) in a data-driven modelization?
 
@@ -484,8 +469,7 @@ To be sure that everything is perfectly clear for you, we propose you to **answe
     Which parameters you can change to try to reduce it?
     Be brave and do it (i.e., change the values for *ntree* and *mtry,* than analyse which values for the AUC you obtain and which model perform better.
 
-    \newpage
+## Further reading on this topic
 
-## References
-
-The research framework that inspired this computational lab refers to a pioneering study in susceptibility mapping for wildfire events by [@tonini_machine_2020] and further developed for the assessment of variable importance by [@trucchia_machine-learning_2022].
+The research framework that inspired this computing lab refers to a pioneering study in susceptibility mapping for wildfire events by [@tonini_machine_2020] and further developed for the assessment of variable importance by [@trucchia_machine-learning_2022].
+Analyses have been adapted to the case study of landslides.

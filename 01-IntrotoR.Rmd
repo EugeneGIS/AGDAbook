@@ -2,7 +2,7 @@
 bibliography: book.bib
 link-citations: true
 biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
+csl: apa.csl
 editor_options: 
   markdown: 
     wrap: sentence

@@ -2,38 +2,40 @@
 bibliography: book.bib
 link-citations: true
 biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
+csl: apa.csl
 editor_options: 
   markdown: 
     wrap: sentence
+    urlcolor: blue
 ---
+
+
 
 # Introduction to R
 
 ## R Language
 
 R is a complete programming language and software environment for statistical computing and graphical representation.
-As part of the GNU Project - free software, mass collaboration project (<https://www.gnu.org/software/software.en.html>) , the source code is free available.
-Its functionalities can be expanded by importing packages.
+As part of the GNU Project - free software, mass collaboration project - (<https://www.gnu.org/software/software.en.html>), the source code is free available.
 
 For more details on R see <https://www.r-project.org/>.
 
 ### R Packages
 
+Functionalities in R can be expanded by importing packages.
 A package is a collection of R functions, data and compiled code.
 The location where the packages are stored is called the *library*.
 If there is a particular functionality that you require, you can download the package from the appropriate site and it will be stored in your library.
 
 In all operation systems the function `install.packages()` can be used to download and install a package automatically.
 Otherwise, a package already installed in R can be loaded in a session by using the command `library(package_name)`.
-
 When you open an R Markdown document (*.Rmd*) the program propose you automatically to install the libraries listed there.
 
 ### Some tips
 
 -   R is case sensitive!
--   Previously used command can be recalled in the console by using the *up arrow* on the keyboard.
--   The working directory by default is "*C:/user/.../Documents*".
+-   Previously used command can be recalled in the console by using the up arrow on the keyboard.
+-   The working directory by default is "`C:/user/.../Documents`".
     -   It can be found using the command `getwd()`
     -   It can be changed using the command line `setwd("C:/Your/own/path")`
 -   In R Markdown the working directory when evaluating R code chunks is the directory of the input document by default.
@@ -46,9 +48,7 @@ Many table resuming the main R commands can be found online.
 Here some useful links:
 
 -   [A short list of the most useful R commands](https://www.maths.usyd.edu.au/u/jchan/Rcommands.pdf)
-
 -   [Table of Useful R commands](https://sites.calvin.edu/scofield/courses/m143/materials/RcmdsFromClass.pdf)
-
 -   [Basic Commands to Get Started with R](https://rpubs.com/ssammut/ResearchStats)
 
 ## R Markdown
@@ -56,13 +56,13 @@ Here some useful links:
 This is an R Markdown document :-)
 
 Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents.
-It is a simple and easy to use **plain text language** allowing to combine R code, results from data analysis (including plots and tables), and comments into a single nicely formatted and *reproducible* document (like a report, publication, thesis chapter or web pages).
+It is a simple and easy to use plain text language allowing to combine R code, results from data analysis (including plots and tables), and comments into a single nicely formatted and reproducible document (like a report, publication, thesis chapter or web pages).
 
 Code lines are organized into code blocks, seeking to solve specified tasks, and referred to as **"code chunk"**.
 For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 All what you have to do during the computing labs is to read each explanatory paragraph before running each individual R code chunk, one by one, and to interpret the results.
-Finally, to create a personal document (usually a PDF) from rmarkdown, you need to **Knit** the document.
+Finally, to create a personal document (usually a PDF) from R Markdown, you need to **Knit** the document.
 Knitting a document simply means taking all the text and code and creating a nicely formatted document.
 
 ## Data type in computational analysis
@@ -88,7 +88,6 @@ The fundamental or atomic data in R Programming can be:
 ### Data structure in R
 
 R's base data structures can be organised by their dimensionality (1d, 2d, or nd) and whether they are homogeneous (all contents must be of the same type) or heterogeneous (the contents can be of different types).
-
 This gives rise to the four data structures most often used in data analysis:
 
 <div class="figure" style="text-align: center">
@@ -209,7 +208,7 @@ w5<-v5[-3]; w5
 ```
 
 A **Matrix** is a two-dimensional structure winch can contain object of one type only.
-The function \textcolor{red}{matrix()} can be used to construct matrices with specific dimensions.
+The function `matrix()` can be used to construct matrices with specific dimensions.
 
 
 ``` r
@@ -262,16 +261,14 @@ m2[2,3]
 ## [1] 8
 ```
 
-### Data Frame
-
-A **data frame** allows to collect data of different type.
+A **data frame** allows to collect heterogeneous data.
 All elements must have the same length.
 
 A **list** is a more flexible structure since it can contain variables of different types and lengths.
 Nevertheless, the preferred structure for statistical analyses and computation is the data frame.
 
 It is a good practice to explore the data frame before performing further computation on the data.
-This can be simply accomplished by using the commands `str()` to explore the structure of the data and *summary()* to display the summary statistics and quickly summarize the data.
+This can be simply accomplished by using the commands `str()` to explore the structure of the data and `summary()` to display the summary statistics and quickly summarize the data.
 For numerical vectors the command `hist()` can be used to plot the basic histogram of the given values.
 
 
@@ -362,4 +359,4 @@ pop
 hist(pop) # plot the histogram
 ```
 
-<img src="01-IntrotoR_files/figure-html/data-exp-1.png" width="672" />
+<img src="01-IntrotoR_files/figure-html/data-exp-1.png" width="672" style="display: block; margin: auto;" />

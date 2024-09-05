@@ -1,5 +1,6 @@
 ---
 bibliography: book.bib
+csl: apa.csl
 editor_options: 
   markdown: 
     wrap: sentence

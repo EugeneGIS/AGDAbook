@@ -30,3 +30,8 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+/* Hide footnotes */
+.footnotes {
+  display: none;
+}

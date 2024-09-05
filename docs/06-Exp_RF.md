@@ -1,45 +1,46 @@
 ---
 bibliography: book.bib
-link-citations: true
-biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
+csl: apa.csl
 editor_options: 
   markdown: 
     wrap: sentence
+    urlcolor: blue
 ---
 
 
 
-# Interpretability & Explainability in Random Forest
+# Interpretability & Explainability with Random Forest
 
-## Introduction
+The distinction between interpretability and explainability lies in their focus and depth.
+We can say that interpretability focuses on understanding the inner workings of the models, while explainability focuses on explaining the decisions made. 
 
-### Basic definations
+**Model complexity:** when dealing with intricate models like Random Forest (with tens of variables and thousands of trees), up to deep neural networks, interpretability becomes challenging due to their complexity and the interplay among their components.
+In such scenarios, explainability proves to be a more practical approach, as it focuses on clarifying decisions rather than delving into the complexities of the model.
 
-The distinction between interpretability and explainability lies in their **focus and depth**.
-
--   *Interpretability* delves into comprehending the inner mechanisms of the algorithm.
-
--   *Explainability* aims to elucidate the decisions is makes.
-
-**Model complexity:** when dealing with intricate models like Random Forest (with tens of variables and thousands of trees), up to deep neural networks, *interpretability* becomes challenging due to their complexity and the interplay among their components.
-In such scenarios, *explainability* proves to be a more practical approach, as it focuses on clarifying decisions rather than delving into the complexities of the model.
-
-**Communication**: in terms of audience and purpose, *interpretability* primarily concerns AI specialists and researchers, whereas *explainability* targets end users seeking to grasp model decisions.
+**Communication**: in terms of audience and purpose, interpretability primarily concerns machine learning specialists , whereas explainability targets end users seeking to grasp model decisions.
 Consequently, explainability necessitates a more straightforward and intuitive communication of information.
 
-### Aim of the present lab
+While Random Forest models are powerful and often yield high accuracy, interpretability can be challenging due to their complex structure and the high number of tress.
+However, the following techniques can enhance the interpretability and explainability of Random Forest models.
 
-In this exercise you will work with the outputs of Random Forest resulting from the landslides susceptibility map project (LSM_RF).
+-   A **surrogate model**, such as a single decision tree, can approximate the predictions of a more complex model like a Random Forest, which is composed of thousands of decision trees.
+    The surrogate model is more interpretable and helps in understanding the general rules that the Random Forest model follows.
 
--   Firstly, we will explore the relative importance of the predictor variables, and then their relative probability of prediction success.
+-   For explainability, examining **feature importance scores**, which measure the contribution of each variable to the model's predictions, allows us to identify the most influential variables in the model's decisions.
+    In addition, **partial dependence plots** enable us to visualize how changes in a variable influence the model's predictions, making this tool useful for interpreting the global effects of predictors across the entire dataset.
 
--   Finally we will apply a local version of Random Forest (named Geographical Random Forest) to analyse the spatial heterogeneity of the local variable importance.
+## Aim of the present lab
 
-### Re-load lybraries and workspace
+In this computing lab you will work with the outputs of Random Forest resulting from the lab on landslides susceptibility map (LSM_RF).
+
+-   Firstly, we will explore the relative importance of the predictor variables (feature importance scores**)** , and their relative probability of prediction success (partial dependence plots).
+
+-   In the second part, we will apply a local version of Random Forest (named "Geographical Random Forest") to analyse the spatial heterogeneity of the local variable importance.
+
+### Re-load libraries and workspace
 
 If you have quit the workspace where you have run the RF model for landslide susceptibility map you need to load it again in this new project.
-"*Loading the workspace*" refers to the action of restoring the saved state of the R environment.
+Loading the workspace refers to the action of restoring the saved state of R environment.
 When you save your workspace in R, it typically includes all the objects (such as variables, functions, data frames, etc.) that are currently present in your R session.
 Loading the workspace means to restore this saved state, bringing back all the previously saved objects into your current R session.
 
@@ -47,14 +48,14 @@ Loading the workspace means to restore this saved state, bringing back all the p
 ```
 ##  [1] "RColorBrewer" "tidyr"        "randomForest" "classInt"     "plotROC"     
 ##  [6] "ggplot2"      "pROC"         "dplyr"        "readr"        "foreign"     
-## [11] "terra"        "distill"      "stats"        "graphics"     "grDevices"   
-## [16] "utils"        "datasets"     "methods"      "base"
+## [11] "terra"        "stats"        "graphics"     "grDevices"    "utils"       
+## [16] "datasets"     "methods"      "base"
 ```
 
-## Variable importance plot
+## Features importance score
 
 Although machine learning algorithms are often considered as a black box, with RF is possible to plot a sample tree (selected randomly) to analyse its structure and investigate how decisions have been made.
-In addition RF provides two metrics allowing to assess the importance of each variables in the model: the mean decrease in accuracy (MDA), and the mean decrease in Gini index.
+In addition RF provides two scores allowing to assess the importance of each variables in the model: the mean decrease in accuracy (MDA), and the mean decrease in Gini index.
 Higher values indicate the most important variables.
 
 
@@ -76,8 +77,8 @@ varImpPlot(RF_LS)
 
 ### Partial dependence plot
 
-In addition, the Partial Dependence Plot (PDP) allows to estimate, for each single variable, the relative probability of prediction success over different ranges of values.
-It gives a graphical depiction of the marginal effect of each variable on the class probability over different ranges of continuous or discrete values.
+In addition, the Partial Dependence Plot (PDP) allows us to estimate, for each single variable, the relative probability of prediction success over different ranges of values.
+PDP provides a graphical depiction of the marginal effect of each variable on the class probability over different ranges of continuous or discrete values.
 Positive values are associated with the probability of occurrence of the phenomena (i.e., landslides presence), while negative vales indicate its absence.
 
 
@@ -153,23 +154,22 @@ partialPlot(RF_LS, LS_train, x.var = landCover, rug = TRUE,
 
 <img src="06-Exp_RF_files/figure-html/par-plot-8.png" width="672" style="display: block; margin: auto;" />
 
-## Local Random Forest
+# Local Random Forest
 
-Standard machine learning algorithms like Random Forest (RF) lack spatial calibration, hindering capturing the spatial non-stationarity in the relationship between a dependent and a set of independent variables.
-
-To account for the spatial heterogeneity (i.e. non-stationarity) when modeling landslides spatial patterns as function of geographical features, in the present work we explore the **local feature importance** of geographical independent predisposing variables on the spatial distribution of landslides in canton Vaud (Switzerland).
+Standard machine learning algorithms like Random Forest (RF) lack spatial calibration, hindering capturing the spatial heterogeneity in the relationship between a dependent and a set of independent variables.
+To account for spatial heterogeneity (i.e. non-stationarity) when modeling landslides spatial patterns as function of geographical features, in the present work we explore the **local feature importance** of geographical independent predisposing variables on the spatial distribution of landslides in canton Vaud (Switzerland).
 
 We adopted **Geographically Random Forest** (GRF), a spatial analysis method using a local version of RF algorithm [@georganos_forest_2022] .
-This is achieved by fitting a sub-model for each observation in space, taking into account the neighbouring observations.
-GRF can model the non-stationarity coupled with a non-linear model (RF) which tends not to overfit due to its bootstrapping nature.
-In addition it is suited for datasets with numerous predictors.
+This is achieved by fitting a sub-model for each observation in space, taking into account the neighboring observations.
+GRF can model the non-stationarity coupled with a non-linear model (RF), which, compared to liner models, tends not to overfit due to its bootstrapping nature.
+In addition RF is suited for datasets with numerous predictor variables.
 
 Essentially, GRF was designed to be a bridge between machine learning and geographical models, combining inferential and explanatory power.
 
-### Run GRF
+## Computing lab: GRF
 
 We will use the last development of **Geographical Random Forest** (GRF) [4].
-This function have been implemented for regression problem, so we need to transform our binary response variable (i.e., presence=1 / absence = 0) as a numeric value which can assume a range of values from zero to one.
+This function have been implemented for regression problem, so we need to transform our binary response variable (i.e., presence==1 / absence==0) as a numeric value which can assume a range of values from zero to one.
 
 
 ```
@@ -267,12 +267,12 @@ gwRF_LS<-grf(LSregr~distRoad+DEM+landCover+TWI+planCurv+profCurv+slope+geology, 
 saveRDS(gwRF_LS, "gwRF_LS.rds")
 ```
 
-### Variable importance plot
+### Feature importance
 
 #### Global variable importance plot
 
-Based on the results of the GRF, we present a plot of the variable importance ranking for illustrative purposes.
-Values came from "Global ML Model Summary" - "Importance.
+Based on the results of the GRF, we can plot of the variable importance ranking for illustrative purposes.
+Values came from "Global ML Model Summary" --\> "Importance"
 
 
 ``` r
@@ -295,13 +295,13 @@ ggplot(data = variable_importance, aes(x = Variable, y = Importance, fill = Colo
 
 <img src="06-Exp_RF_files/figure-html/Global-Var-Imp-1.png" width="672" style="display: block; margin: auto;" />
 
-#### Local Variable importance
+#### Local feature importance
 
-##### Slope
+We can plot the local feature importance (FI) scores for the two variables that are globally most important, slope and distrance to road with the output values mapped over the geographic space.
 
 
 ``` r
-# Create a data frame with the values of the local variables importance and the coordinates for each location¨
+# Create a data frame with the values of the local variables importance and the coordinates for each location
 gwRF_LS_var<-gwRF_LS$Local.Variable.Importance
 gwRF_LS_var_XY<-cbind(gwRF_LS_var,LS_train$x,LS_train$y ) # add coordinates
 colnames(gwRF_LS_var_XY)[9]<- "X" #rename column X-coordinate 
@@ -352,13 +352,11 @@ ggplot() +
                        breaks = c(0.00, 0.40, 1.15, 2.11, 3.23, 4.91), 
                        labels=c(0.00, 0.40, 1.15, 2.11, 3.23, 4.91)) +
         labs( x = "X Coordinate", y = "Y Coordinate")+
-    ggtitle("Local average feature importance")+
+    ggtitle("Local average FI - Slope")+
     geom_sf(data = Vaud_sf, fill = "transparent", color = "black", size=2) #overlap borders
 ```
 
 <img src="06-Exp_RF_files/figure-html/Slope_Imp-1.png" width="672" style="display: block; margin: auto;" />
-
-##### Distance to roads
 
 
 ``` r
@@ -383,7 +381,7 @@ ggplot() +
                        breaks = c(0.00, 0.37, 1.02, 2.17, 3.58, 4.85), 
                        labels=c(0.00, 0.37, 1.02, 2.17, 3.58, 4.85)) +
     labs( x = "X Coordinate", y = "Y Coordinate")+
-    ggtitle("Local average feature importance")+
+    ggtitle("Local average FI - Distance to roads")+
     geom_sf(data = Vaud_sf, fill = "transparent", color = "black", size=2) #overlap borders
 ```
 
@@ -391,7 +389,7 @@ ggplot() +
 
 ### Local R squared
 
-The Local R-squared value ranges from 0 to 1 and represents the strength of the correlations of the local model on the features.
+The Local R-squared value represents the strength of the correlations of the local model on the features and ranges from 0 to 1.
 
 
 ``` r
@@ -422,12 +420,12 @@ ggplot () +
 
 ## Conclusions and further analyses
 
-In the present exercise GRF has been used as a purely exploratory tool to estimate the spatial variation of the relationship between landslides in canton Vaud (Switzerland) and the influencing factors.
-It allowed to elaborate maps delineating the local average importance of the most highly correlated features and to visualise the local fitting performance (R2 local value) into a map.
+In the present exercise GRF has been used as a purely exploratory tool to estimate the spatial variation of the relationship between landslides in Canton Vaud (Switzerland) and the influencing factors.
+It allowed to elaborate maps delineating the local average importance of the most highly correlated features and to visualize the local fitting performance (R2 local value) into a map.
 
-To be sure that everything is perfectly clear for you, we propose you to **answer the following questions** and to discuss your answers with the other participants to the course or directly with the teacher.
+To ensure that everything is perfectly clear, we propose you to answer the following questions:
 
-1.  Among the following angorithm evaluate them in therms of their interpretability and explainability: Support Vector Machines , linear regression, Deep Learning Models, Decision Trees, K-Nearest Neighbors, Neural Networks, Random Forests, logistic regression.
+1.  Among the following algorithms evaluate them in therms of their interpretability and explainability: Support Vector Machines , linear regression, Deep Learning Models, Decision Trees, K-Nearest Neighbors, Neural Networks, Random Forests, logistic regression.
 
 2.  Which are the three most important variables of your model (based on the MDA)?
 
@@ -437,3 +435,5 @@ To be sure that everything is perfectly clear for you, we propose you to **answe
 4.  Evaluate the spatial variation of the relationship between landslides and slope / distance to roads in your study area by visually inspecting the local average importance of these features.
 
 5.  You can replicate this code (some chiuncks of it) to evaluate the local average importance of the third most important variable, as well as to map the local mean squared error.
+
+## Further reading on this topic
