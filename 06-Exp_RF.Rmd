@@ -305,5 +305,3 @@ To ensure that everything is perfectly clear, we propose you to answer the follo
 4.  Evaluate the spatial variation of the relationship between landslides and slope / distance to roads in your study area by visually inspecting the local average importance of these features.
 
 5.  You can replicate this code (some chiuncks of it) to evaluate the local average importance of the third most important variable, as well as to map the local mean squared error.
-
-## Further reading on this topic
