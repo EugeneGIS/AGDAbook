@@ -196,5 +196,3 @@ The proposed method allowed to detection of features of changes on a rock glacie
 Single cluster features of erosion and deposition/front movements were extracted directly from point clouds, detected by DBSCAN without the necessity of interpolate the 3-D original data.
 
 To ensure that everything is perfectly clear, we propose you to do this lab again, by changing the values of *MinPts* and *eps* and discuss the compare the resulting extracted features.
-
-## Further reading on this topic
